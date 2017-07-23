@@ -4,6 +4,8 @@ touch ssh
 sed -i.orig s/\ init="\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt
 
 configuration:
+fdisk /dev/mmcblk0
+sudo resize2fs /dev/mmcblk0p2
 systemctl disable hciuart
 patch -b /boot/config.txt config.txt.patch
 patch -b /etc/rsyslog.conf rsyslog.conf.patch
