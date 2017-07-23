@@ -1,0 +1,2 @@
+Switch	Daylight	"Daylight [%s]"	<clock>	(dummy)
+Number	chartPeriod

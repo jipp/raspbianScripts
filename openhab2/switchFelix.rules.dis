@@ -1,0 +1,55 @@
+rule "SwitchFelix-1-short"
+when
+	Item SF_1short received update ON
+then
+	logInfo("switchFelix", "SwitchFelix-1-short")
+	if (LCSw1_Felix.state == ON) {
+		logInfo("Light", "OFF")
+		sendCommand(LCSw1_Felix, OFF)
+	} else if (LCSw1_Felix.state != ON) {
+		logInfo("Light", "ON")
+		sendCommand(LCSw1_Felix, ON)
+	}
+end
+
+rule "SwitchFelix-2-short"
+when
+	Item SF_2short received update ON
+then
+	logInfo("switchFelix", "SwitchFelix-2-short")
+	if (PMSw1_Felix.state == ON) {
+		logInfo("Light", "OFF")
+		sendCommand(PMSw1_Felix, OFF)
+	} else if (PMSw1_Felix.state != ON) {
+		logInfo("Light", "ON")
+		sendCommand(PMSw1_Felix, ON)
+	}
+end
+
+rule "SwitchFelix-1-long"
+when
+	Item SF_1long received update ON
+then
+	logInfo("switchFelix", "SwitchFelix-1-long")
+	if (LCSw1_Felix.state == ON) {
+		logInfo("Light", "OFF")
+		sendCommand(LCSw1_Felix, OFF)
+	} else if (LCSw1_Felix.state != ON) {
+		logInfo("Light", "ON")
+		sendCommand(LCSw1_Felix, ON)
+	}
+end
+
+rule "SwitchFelix-2-long"
+when
+	Item SF_2long received update ON
+then
+	logInfo("switchFelix", "SwitchFelix-2-long")
+	if (PMSw1_Felix.state == ON) {
+		logInfo("Light", "OFF")
+		sendCommand(PMSw1_Felix, OFF)
+	} else if (PMSw1_Felix.state != ON) {
+		logInfo("Light", "ON")
+		sendCommand(PMSw1_Felix, ON)
+	}
+end

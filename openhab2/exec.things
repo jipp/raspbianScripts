@@ -1,0 +1,4 @@
+Thing	exec:command:localhost_vcc		[ command="/home/pi/bin/check.py vcc", interval=600, timeoout=60 ]
+Thing	exec:command:localhost_temp		[ command="/home/pi/bin/check.py temp", interval=300, timeoout=30 ]
+Thing	exec:command:localhost_echo_0	[ command="/home/pi/bin/echo.py 0", interval=300, timeoout=30 ]
+Thing	exec:command:localhost_openhab	[ command="/home/pi/bin/mem.py openhab", interval=300, timeoout=30 ]

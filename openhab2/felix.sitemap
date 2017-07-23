@@ -1,0 +1,22 @@
+sitemap felix label="Felix" {
+	Frame label="Info" icon="none" {
+		Text item=Date label="Date" icon="calendar"
+		Text item=SunriseTime label="Sunrise" icon="sunrise"
+		Text item=SunsetTime label="Sunset" icon="sunset"
+	}
+	Frame label="Function" icon="none" {
+		Switch item=PMSw1_Felix label="OG Felix Schreibtisch" icon="light"
+		Switch item=LCSw1_Felix label="OG Felix Decke" icon="light"
+	}
+	Frame label="Chart" icon="chart" {
+		Text label="Sensor" icon="chart" {
+			Selection item=chartPeriod icon="none" label="Period" mappings=[0="1 day", 1="3 days", 2="1 week"]
+			Chart item=sensorChartTemperature period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartTemperature period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartTemperature period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+			Chart item=sensorChartHumidity period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartHumidity period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartHumidity period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+		}
+	}
+}

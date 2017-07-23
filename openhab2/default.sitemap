@@ -1,0 +1,68 @@
+sitemap default label="default" {
+	Frame label="Info" icon="none" {
+		Text item=Date label="Date" icon="calendar"
+		Text item=SunriseTime label="Sunrise" icon="sunrise"
+		Text item=SunsetTime label="Sunset" icon="sunset"
+	}
+	Frame label="Function" icon="none" {
+		Group item=lamp label="Lamp" icon="light"
+		Group item=switcher label="Switcher" icon="poweroutlet"
+		Group item=sensor label="Sensor" icon="temperature"
+		Group item=smokeDetector label="Smoke detector" icon="fire"
+	}
+	Frame label="Service" icon="none" {
+		Group item=security label="Security" icon="alarm"
+		Group item=battery label="Battery" icon="battery"
+		Group item=power label="Power" icon="energy"
+		Group item=voltage label="Voltage" icon="energy"
+		Group item=localhost label="localhost" icon="none"
+		Group item=rssi label="RSSI" icon="network"
+	}
+	Frame label="Chart" icon="chart" {
+		Text label="Power" icon="chart" {
+			Selection item=chartPeriod icon="none" label="Period" mappings=[0="1 day", 1="3 days", 2="1 week"]
+			Chart item=powerChartLow period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=powerChartLow period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=powerChartLow period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+			Chart item=powerChartHigh period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=powerChartHigh period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=powerChartHigh period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+		}
+		Text label="Voltage" icon="chart" {
+			Selection item=chartPeriod icon="none" label="Period" mappings=[0="1 day", 1="3 days", 2="1 week"]
+			Chart item=voltageChart period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=voltageChart period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=voltageChart period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+		}
+		Text label="Sensor" icon="chart" {
+			Selection item=chartPeriod icon="none" label="Period" mappings=[0="1 day", 1="3 days", 2="1 week"]
+			Chart item=sensorChartTemperature period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartTemperature period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartTemperature period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+			Chart item=sensorChartHumidity period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartHumidity period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartHumidity period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+			Chart item=sensorChartLux period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartLux period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartLux period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+			Chart item=sensorChartPressure period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartPressure period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartPressure period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+		}
+		Text label="localhost" icon="chart" {
+			Selection item=chartPeriod icon="none" label="Period" mappings=[0="1 day", 1="3 days", 2="1 week"]
+			Chart item=sensorChartLocalhost period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartLocalhost period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartLocalhost period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+			Chart item=sensorChartLolcahostMem period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=sensorChartLolcahostMem period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=sensorChartLolcahostMem period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+		}
+		Text label="RSSI" icon="chart" {
+			Selection item=chartPeriod icon="none" label="Period" mappings=[0="1 day", 1="3 days", 2="1 week"]
+			Chart item=rssiChart period=D refresh=1800 visibility=[chartPeriod==0]
+			Chart item=rssiChart period=3D refresh=5400 visibility=[chartPeriod==1]
+			Chart item=rssiChart period=W refresh=12600 visibility=[chartPeriod==2, chartPeriod=="Uninitialized"]
+		}
+	}
+}

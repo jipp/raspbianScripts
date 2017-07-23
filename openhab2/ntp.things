@@ -1,0 +1,1 @@
+ntp:ntp:local	[ hostname="fritz.box", refreshInterval=60, refreshNtp=30 ]

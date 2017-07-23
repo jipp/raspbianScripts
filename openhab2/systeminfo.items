@@ -1,0 +1,5 @@
+Number	CPU_Load					"cpu [%.2f %%]"			<none>	(localhost,sensorChartLocalhost)	{ channel="systeminfo:computer:localhost:cpu#load"} 
+Number	CPU_Uptime					"uptime [%.2f min]"		<clock>	(localhost)						{ channel="systeminfo:computer:localhost:cpu#uptime" }
+Number	Storage_Available_Percent	"free disk [%.2f %%]"	<none>	(localhost,sensorChartLocalhost)	{ channel="systeminfo:computer:localhost:storage#availablePercent" }
+Number	Memory_Available_Percent	"free memory [%.2f %%]"	<none>	(localhost,sensorChartLocalhost)	{ channel="systeminfo:computer:localhost:memory#availablePercent" }
+Number	Swap_Available_Percent		"free swap [%.2f %%]"	<none>	(localhost,sensorChartLocalhost)	{ channel="systeminfo:computer:localhost:swap#availablePercent" }
