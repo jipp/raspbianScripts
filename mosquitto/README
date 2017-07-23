@@ -1,0 +1,22 @@
+installation:
+wget -qO - http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | apt-key add -
+cd /etc/apt/sources.list.d/
+wget http://repo.mosquitto.org/debian/mosquitto-jessie.list
+apt-get update
+apt-get -y install mosquitto mosquitto-clients
+
+configuration:
+patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch
+touch /etc/mosquitto/passwd
+patch -b /etc/mosquitto/passwd passwd.patch
+touch /etc/mosquitto/conf.d/debug.conf
+patch -b /etc/mosquitto/conf.d/debug.conf debug.conf.patch
+touch /etc/mosquitto/conf.d/security.conf
+patch -b /etc/mosquitto/conf.d/security.conf security.conf.patch
+
+enable/start:
+systemctl enable mosquitto
+systemctl start mosquitto
+
+backup:
+/etc/mosquitto

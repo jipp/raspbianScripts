@@ -1,0 +1,13 @@
+installation:
+touch /boot/ssh
+remove "init=/usr/lib/raspi-config/init_resize.sh"
+sed -i.orig s/\ init="\/usr\/lib\/raspi-config\/init_resize.sh"// /boot/cmdline.txt
+
+configuration:
+systemctl disable hciuart
+patch -b /boot/config.txt config.txt.patch
+patch -b /etc/rsyslog.conf rsyslog.conf.patch
+
+enable/start:
+
+backup:

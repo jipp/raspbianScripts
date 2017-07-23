@@ -1,0 +1,4 @@
+1420c1420
+< session.save_path = "/var/lib/homegear/tmp/php"
+---
+> session.save_path = "/var/tmp/homegear/php"

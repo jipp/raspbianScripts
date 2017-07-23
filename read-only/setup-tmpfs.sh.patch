@@ -1,0 +1,40 @@
+0a1,39
+> #!/bin/bash
+> 
+> mkdir /var/tmp/systemd
+> chmod 755 /var/tmp/systemd
+> touch /var/tmp/systemd/random-seed
+> chmod 600 /var/tmp/systemd/random-seed
+> 
+> 
+> which homegear > /dev/null 2>&1
+> if [ $? -eq 0 ]; then
+> 	mkdir /var/log/homegear
+> 	chown homegear:homegear /var/log/homegear
+> 	chmod 750 /var/log/homegear
+> fi
+> 
+> 
+> which mosquitto > /dev/null 2>&1
+> if [ $? -eq 0 ]; then
+> 	mkdir /var/log/mosquitto
+> 	chown mosquitto:root /var/log/mosquitto
+> 	chmod 755 /var/log/mosquitto
+> fi
+> 
+> 
+> which lighttpd > /dev/null 2>&1
+> if [ $? -eq 0 ]; then
+> 	mkdir /var/log/lighttpd
+> 	chown www-data:www-data /var/log/lighttpd
+> 	chmod 750 /var/log/lighttpd
+> 
+> 	mkdir /var/cache/lighttpd
+> 	chmod 755 /var/cache/lighttpd
+> 	mkdir /var/cache/lighttpd/compress
+> 	chown www-data:www-data /var/cache/lighttpd/compress
+> 	chmod 755 /var/cache/lighttpd/compress
+> 	mkdir /var/cache/lighttpd/uploads
+> 	chown www-data:www-data /var/cache/lighttpd/uploads
+> 	chmod 755 /var/cache/lighttpd/uploads
+> fi
