@@ -1,7 +1,7 @@
 installation:
 
 UNIX tools:
-apt-get -y install nmap dnsutils tcpdump
+apt-get -y install nmap dnsutils tcpdump git
 
 PHP tools:
 apt-get -y install python-dev python-pip
