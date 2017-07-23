@@ -1,7 +1,6 @@
 installation:
 cd /boot
 touch ssh
-remove "init=/usr/lib/raspi-config/init_resize.sh"
 sed -i.orig s/\ init="\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt
 
 configuration:
