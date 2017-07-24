@@ -4,6 +4,7 @@ bash <(curl -sL https://raw.githubusercontent.com/node-red/raspbian-deb-package/
 npm -g install node-red-dashboard
 apt install sqlite3
 npm -g install node-red-node-sqlite
+npm install -g node-red-admin
 
 configuration:
 
