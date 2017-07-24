@@ -1,4 +1,4 @@
-Bridge	homematic:bridge:scc	[ gatewayAddress="homegear" ] {
+Bridge	homematic:bridge:scc	[ gatewayAddress="lemonpi" ] {
 	Thing	HG-HM-Sec-SD		IRW0017416
 	Thing	HG-HM-Sec-SD		IRW0002508
 	Thing	HG-HM-Sec-SD		LEQ0725030

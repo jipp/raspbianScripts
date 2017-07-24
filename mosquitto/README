@@ -6,7 +6,6 @@ apt-get update
 apt-get -y install mosquitto mosquitto-clients
 
 configuration:
-patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch
 touch /etc/mosquitto/passwd
 patch -b /etc/mosquitto/passwd passwd.patch
 touch /etc/mosquitto/conf.d/debug.conf
