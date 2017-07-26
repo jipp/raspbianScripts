@@ -1,0 +1,3 @@
+http://www.airspayce.com/mikem/bcm2835/
+apt-get install wiringpi
+apt-get install python-dev python-smbus python-serial python-spidev
