@@ -1,4 +1,4 @@
-1,5c1,13
+1,5c1,11
 < proc            /proc           proc    defaults          0       0
 < PARTUUID=5906b8f2-01  /boot           vfat    defaults          0       2
 < PARTUUID=5906b8f2-02  /               ext4    defaults,noatime  0       1
@@ -9,12 +9,10 @@
 > /dev/mmcblk0p1	/boot			vfat	defaults,ro						0	2
 > /dev/mmcblk0p2	/			ext4	defaults,noatime,ro					0	1
 > /dev/mmcblk0p3	/data			ext4	defaults,noatime					0	2
-> tmpfs		/run			tmpfs	defaults,noatime,mode=755,uid=root,gid=root,size=50m	0	0
 > tmpfs		/tmp			tmpfs	defaults,noatime,mode=1777,uid=root,gid=root,size=100m	0	0
 > tmpfs		/var/cache		tmpfs	defaults,noatime,mode=755,uid=root,gid=root,size=200m	0	0
 > tmpfs		/var/lib/dhcp		tmpfs	defaults,noatime,mode=755,uid=root,gid=root,size=10m	0	0
 > tmpfs		/var/lib/dhcpcd5	tmpfs	defaults,noatime,mode=755,uid=root,gid=root,size=10m	0	0
 > tmpfs		/var/lib/ntp		tmpfs	defaults,noatime,mode=755,uid=ntp,gid=ntp,size=10m	0	0
-> tmpfs		/var/lock		tmpfs	defaults,noatime,mode=1777,uid=root,gid=root,size=10m	0	0
 > tmpfs		/var/log		tmpfs	defaults,noatime,mode=755,uid=root,gid=root,size=100m	0	0
 > tmpfs		/var/tmp		tmpfs	defaults,noatime,mode=1777,uid=root,gid=root,size=100m	0	0
