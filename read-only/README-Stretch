@@ -34,9 +34,13 @@ resolv
 mv /etc/resolv.conf /etc/resolv.conf.orig
 ln -s /var/tmp/resolv.conf /etc/resolv.conf
 
-apt-lock
+daily_lock
 mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
 ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
+
+cron
+mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
+ln -s /var/tmp/hwclock.data /etc/fake-hwclock.data
 
 rsyslog
 touch /etc/rsyslog.d/DS416play.conf
