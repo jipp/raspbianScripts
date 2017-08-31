@@ -1,0 +1,64 @@
+installation:
+
+configuration:
+disable swap:
+swapoff -a
+systemctl disable dphys-swapfile
+
+fsck:
+remove "fsck.repair=yes" from /boot/cmdline.txt.orig
+sed -i s/" fsck.repair=yes"// cmdline.txt
+
+change fstab:
+patch -b /etc/fstab fstab.patch
+
+change file/folder:
+mv /etc/resolv.conf /etc/resolv.conf.orig
+ln -s /var/tmp/resolv.conf /etc/resolv.conf
+ln -s /var/tmp/adjtime /etc/adjtime
+
+change random-seed:
+mv /var/lib/systemd/random-seed /var/lib/systemd/random-seed.orig
+ln -s /var/tmp/systemd/random-seed /var/lib/systemd/random-seed
+
+modify rsyslogd:
+touch /etc/rsyslog.d/DS416play.conf
+patch -b /etc/rsyslog.d/DS416play.conf DS416play.conf.patch
+
+add aliases:
+patch -b /etc/bash.bashrc bash.bashrc.patch
+
+create service:
+touch /lib/systemd/system/setup-tmpfs.service
+patch -b /lib/systemd/system/setup-tmpfs.service setup-tmpfs.service.patch
+systemctl enable setup-tmpfs.service
+mkdir /lib/systemd/scripts
+touch /lib/systemd/scripts/setup-tmpfs.sh
+patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh.patch
+chmod +x /lib/systemd/scripts/setup-tmpfs.sh
+
+modify lighttpd:
+mkdir /data/lighttpd
+mv /var/www/html/esp /data/lighttpd/esp
+chown -R www-data:www-data /data/lighttpd
+ln -s /data/lighttpd/esp /var/www/html/esp
+
+modify mosquitto:
+mkdir /data/mosquitto
+chown -R mosquitto:root /data/mosquitto
+patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch
+
+modify homegear:
+patch -b /etc/homegear/main.conf main.conf.patch
+patch -b /etc/homegear/php.ini php.ini.patch
+patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch
+mkdir -p /data/homegear/families
+mkdir -p /data/homegear/db
+mkdir -p /data/homegear/backup
+mkdir -p /data/homegear/flows/data
+chown homegear:homegear /data/homegear
+
+
+enable/start:
+
+backup:
