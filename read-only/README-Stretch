@@ -1,33 +1,61 @@
 installation:
 
 configuration:
-prepare image
+prepare image before installation
 cp config.txt config.txt.orig
 cp cmdline.txt cmdline.txt.orig
 sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt
 
 raspi-config
+sudo raspi-config
+1 Change User Password
+4 Localisation Options
+I2 Change Timezone
+I4 Change Wi-fi Country
+5 Interfacing Options
+P2 SSH
+P6 Serial
+7 Advanced Options
+A3 Memory Split
 
-parition resize
-parted /dev/mmcblk0 resizepart 2 8000M
-resize2fs /dev/mmcblk0p2
-blkid
+Software update
+sudo apt update
+sudo apt list --upgradable
+sudo apt upgrade
 
-partition create
-parted mkpart primary 15630336s 100%
-mkfs.ext4 /dev/mmcblk0p3
+reboot
+
+-> installaation ready
 
 disable swap
-systemctl stop dphys-swapfile
-systemctl disable dphys-swapfile
-dphys-swapfile swapoff
-dphys-swapfile uninstall
+sudo systemctl stop dphys-swapfile
+sudo systemctl disable dphys-swapfile
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+
+parition resize
+sudo parted /dev/mmcblk0 print
+sudo blkid
+sudo parted /dev/mmcblk0 resizepart 2 8000M
+sudo resize2fs /dev/mmcblk0p2
+sudo blkid
+sudo cp /etc/fstab /etc/fstab.orig
+sudo vi /etc/fstab
+sudo vi /boot/cmdline.txt
+
+partition create
+sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%
+sudo mkdir /data
+sudo vi /etc/fstab
+
+reboot
+
+-> repartitioning ready
 
 fsck disable
 sed -i s/" fsck.repair=yes"// cmdline.txt
 
 fstab
-mv /etc/fstab /etc/fstab.orig
 cat fstab-Stretch > /etc/fstab
 
 resolv
