@@ -67,6 +67,10 @@ cron
 mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
 ln -s /data/fake-hwclock.data /etc/fake-hwclock.data
 
+rsyslog
+touch /etc/rsyslog.d/DS416play.conf
+patch -b /etc/rsyslog.d/DS416play.conf DS416play.conf.patch
+systemctl restart rsyslog
 
 
 
@@ -74,14 +78,6 @@ ln -s /data/fake-hwclock.data /etc/fake-hwclock.data
 daily_lock
 mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
 ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
-
-
-
-
-
-rsyslog
-touch /etc/rsyslog.d/DS416play.conf
-patch -b /etc/rsyslog.d/DS416play.conf DS416play.conf.patch
 
 aliases
 patch -b /etc/bash.bashrc bash.bashrc.patch
