@@ -62,19 +62,23 @@ cat fstab-Stretch > /etc/fstab
 
 resolv
 mv /etc/resolv.conf /etc/resolv.conf.orig
-ln -s /var/tmp/resolv.conf /etc/resolv.conf
-
-daily_lock
-mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
-ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
+ln -s /data/resolv.conf /etc/resolv.conf
 
 cron
 mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
-ln -s /var/tmp/hwclock.data /etc/fake-hwclock.data
+ln -s /data/fake-hwclock.data /etc/fake-hwclock.data
 
 rsyslog
 touch /etc/rsyslog.d/DS416play.conf
 patch -b /etc/rsyslog.d/DS416play.conf DS416play.conf.patch
+systemctl restart rsyslog
+
+
+
+
+daily_lock
+mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
+ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
 
 aliases
 patch -b /etc/bash.bashrc bash.bashrc.patch
