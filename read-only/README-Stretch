@@ -61,15 +61,23 @@ cat fstab-Stretch > /etc/fstab
 
 resolv
 mv /etc/resolv.conf /etc/resolv.conf.orig
-ln -s /var/tmp/resolv.conf /etc/resolv.conf
+ln -s /data/resolv.conf /etc/resolv.conf
+
+cron
+mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
+ln -s /data/fake-hwclock.data /etc/fake-hwclock.data
+
+
+
+
 
 daily_lock
 mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
 ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
 
-cron
-mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
-ln -s /var/tmp/hwclock.data /etc/fake-hwclock.data
+
+
+
 
 rsyslog
 touch /etc/rsyslog.d/DS416play.conf
