@@ -45,6 +45,7 @@ sudo vi /boot/cmdline.txt
 
 partition create
 sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%
+sudo mkfs.ext4 /dev/mmcblk0p3
 sudo mkdir /data
 sudo vi /etc/fstab
 
