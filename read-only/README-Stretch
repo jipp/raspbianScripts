@@ -77,6 +77,10 @@ touch /etc/rsyslog.d/DS416play.conf
 patch -b /etc/rsyslog.d/DS416play.conf DS416play.conf.patch
 systemctl restart rsyslog
 
+clock
+mv /var/lib/systemd/clock /var/lib/systemd/clock.orig
+ln -s /data/clock /var/lib/systemd/clock
+
 
 
 
