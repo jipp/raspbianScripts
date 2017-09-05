@@ -22,7 +22,11 @@ Software update
 sudo apt update
 sudo apt list --upgradable
 sudo apt upgrade
-- sudo apt install ntp
+
+Software addon
+sudo apt install ntp
+patch -b /etc/init.d/ntp ntp.patch
+
 reboot
 
 -> installation ready
