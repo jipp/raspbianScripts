@@ -21,11 +21,12 @@ A3 Memory Split
 Software update
 sudo apt update
 sudo apt list --upgradable
-sudo apt upgrade
+sudo apt -y upgrade
 
 Software addon
-sudo apt install ntp
+sudo apt -y install ntp
 patch -b /etc/init.d/ntp ntp.patch
+systemctl daemon-reload
 
 reboot
 
@@ -59,7 +60,7 @@ reboot
 -> repartitioning ready
 
 fsck disable
-sed -i s/" fsck.repair=yes"// cmdline.txt
+sudo sed -i s/" fsck.repair=yes"// /boot/cmdline.txt
 
 fstab
 cat fstab-Stretch > /etc/fstab
