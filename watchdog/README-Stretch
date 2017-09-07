@@ -1,0 +1,10 @@
+installation:
+get -y install watchdog
+
+configuration:
+patch -b /etc/watchdog.conf watchdog.conf.patch
+
+enable/start:
+
+backup:
+/etc/watchdog.conf
