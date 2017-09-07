@@ -67,7 +67,7 @@ cat fstab-Stretch > /etc/fstab
 
 resolv
 mv /etc/resolv.conf /etc/resolv.conf.orig
-ln -s /data/resolv.conf /etc/resolv.conf
+ln -s /var/tmp/resolv.conf /etc/resolv.conf
 
 daily_lock
 mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
