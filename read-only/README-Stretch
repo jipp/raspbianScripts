@@ -9,11 +9,13 @@ sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt
 raspi-config
 sudo raspi-config
 1 Change User Password
+2 Hostname
 4 Localisation Options
 I2 Change Timezone
 I4 Change Wi-fi Country
 5 Interfacing Options
 P2 SSH
+P5 I2C
 P6 Serial
 7 Advanced Options
 A3 Memory Split
@@ -25,8 +27,8 @@ sudo apt -y upgrade
 
 Software addon
 sudo apt -y install ntp
-patch -b /etc/init.d/ntp ntp.patch
-systemctl daemon-reload
+sudo patch -b /etc/init.d/ntp ntp.patch
+sudo systemctl daemon-reload
 
 reboot
 
