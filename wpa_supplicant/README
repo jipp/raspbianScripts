@@ -1,0 +1,8 @@
+installation:
+
+configuration:
+patch -b /etc/wpa_supplicant/wpa_supplicant.conf wpa_supplicant.conf.patch
+
+enable/start:
+
+backup:
