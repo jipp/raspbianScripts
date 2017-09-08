@@ -77,6 +77,9 @@ cron
 mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
 ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data
 
+dhcp
+ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret
+
 rsyslog
 touch /etc/rsyslog.d/loghost.conf
 patch -b /etc/rsyslog.d/loghost.conf loghost.conf.patch
