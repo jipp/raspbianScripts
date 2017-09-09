@@ -104,17 +104,20 @@ mkdir /data/mosquitto
 chown -R mosquitto:root /data/mosquitto
 patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch
 
+modify lighttpd:
+mv /var/lib/php5/sessions /var/lib/php5/sessions.orig
+ln -s /var/tmp/sessions /var/lib/php5/sessions
+mkdir /data/lighttpd
+mv /var/www/html/esp /data/lighttpd/esp
+chown -R www-data:www-data /data/lighttpd
+ln -s /data/lighttpd/esp /var/www/html/esp
 
 
 
 aliases
 patch -b /etc/bash.bashrc bash.bashrc.patch
 
-modify lighttpd:
-mkdir /data/lighttpd
-mv /var/www/html/esp /data/lighttpd/esp
-chown -R www-data:www-data /data/lighttpd
-ln -s /data/lighttpd/esp /var/www/html/esp
+
 
 modify homegear:
 patch -b /etc/homegear/main.conf main.conf.patch
