@@ -20,6 +20,10 @@ P6 Serial
 7 Advanced Options
 A3 Memory Split
 
+disable services
+systemctl disable hciuart
+patch -b /boot/config.txt config.txt.patch
+
 Software update
 sudo apt update
 sudo apt list --upgradable
