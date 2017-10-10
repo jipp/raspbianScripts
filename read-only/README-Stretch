@@ -84,7 +84,7 @@ mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
 ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data
 
 dhcp
-cp /etc/dhcpcd.secret /etc/dhcpcd.secret.orig
+mv /etc/dhcpcd.secret /etc/dhcpcd.secret.orig
 ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret
 
 rsyslog
