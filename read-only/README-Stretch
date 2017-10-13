@@ -1,11 +1,13 @@
 installation:
-
-configuration:
-prepare image before installation
+dd if=2017-09-07-raspbian-stretch-lite.img of=/dev/sda
+mount /dev/sda1 /mnt
+cd /mnt
 cp config.txt config.txt.orig
 cp cmdline.txt cmdline.txt.orig
 sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt
+touch ssh
 
+configuration:
 raspi-config
 sudo raspi-config
 1 Change User Password
@@ -14,15 +16,13 @@ sudo raspi-config
 I2 Change Timezone
 I4 Change Wi-fi Country
 5 Interfacing Options
+P1 Camera
 P2 SSH
+P4 SPI
 P5 I2C
 P6 Serial
 7 Advanced Options
 A3 Memory Split
-
-disable services
-systemctl disable hciuart
-patch -b /boot/config.txt config.txt.patch
 
 Software update
 sudo apt update
@@ -30,9 +30,13 @@ sudo apt list --upgradable
 sudo apt -y upgrade
 
 Software addon
-sudo apt -y install ntp
+sudo apt -y install ntp git
 sudo patch -b /etc/init.d/ntp ntp.patch
 sudo systemctl daemon-reload
+
+disable bluetooth services
+systemctl disable hciuart
+echo 'pi3-disable-bt' >> /boot/config.txt
 
 reboot
 
