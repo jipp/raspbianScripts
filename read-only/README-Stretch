@@ -16,13 +16,13 @@ sudo raspi-config
 I2 Change Timezone
 I4 Change Wi-fi Country
 5 Interfacing Options
-P1 Camera
+P1 Camera (enable on demand)
 P2 SSH
 P4 SPI
 P5 I2C
 P6 Serial
 7 Advanced Options
-A3 Memory Split
+A3 Memory Split (set to 32 or for camera min 128)
 
 Software update
 sudo apt update
