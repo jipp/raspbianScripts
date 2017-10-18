@@ -92,7 +92,7 @@ You can follw this if you plan to run the system in read-only mode
   * systemctl enable setup-tmpfs.service
   * mkdir /lib/systemd/scripts
   * touch /lib/systemd/scripts/setup-tmpfs.sh
-  * patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh-Stretch.patch
+  * patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh.patch
   * chmod +x /lib/systemd/scripts/setup-tmpfs.sh
 
 ## system add-on
