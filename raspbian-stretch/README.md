@@ -44,7 +44,8 @@ You can follow this if you plan to run the system as normal
     * A1 Expand Filesystem
   
 ## configuration - read-only
-You can follw this if you plan to run the system in read-only mode
+You can follow this if you plan to run the system in read-only mode
+### system
 * disable swap
   * sudo systemctl stop dphys-swapfile
   * sudo systemctl disable dphys-swapfile
@@ -65,7 +66,7 @@ You can follw this if you plan to run the system in read-only mode
   * sudo mount /data
 * disable fsck
   * sudo sed s/" fsck.repair=yes"// /boot/cmdline.txt
-* app modifications
+* system app modifications
   * ntpd
     * sudo apt -y install ntp
     * sudo patch -b /etc/init.d/ntp ntp.patch
@@ -86,15 +87,39 @@ You can follw this if you plan to run the system in read-only mode
     * touch /etc/rsyslog.d/loghost.conf
     * patch -b /etc/rsyslog.d/loghost.conf loghost.conf.patch
     * systemctl restart rsyslog
-* create service
-  * touch /lib/systemd/system/setup-tmpfs.service
-  * patch -b /lib/systemd/system/setup-tmpfs.service setup-tmpfs.service.patch
-  * systemctl enable setup-tmpfs.service
-  * mkdir /lib/systemd/scripts
-  * touch /lib/systemd/scripts/setup-tmpfs.sh
-  * patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh.patch
-  * chmod +x /lib/systemd/scripts/setup-tmpfs.sh
+* create service and script for read-only workarounds
+  * service
+    * touch /lib/systemd/system/setup-tmpfs.service
+    * patch -b /lib/systemd/system/setup-tmpfs.service setup-tmpfs.service.patch
+    * systemctl enable setup-tmpfs.service
+  * script
+    * mkdir /lib/systemd/scripts
+    * touch /lib/systemd/scripts/setup-tmpfs.sh
+    * patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh.patch
+    * chmod +x /lib/systemd/scripts/setup-tmpfs.sh
 
+### apps
+#### mosquitto
+* mkdir /data/mosquitto
+* chown -R mosquitto:root /data/mosquitto
+* patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch
+
+#### lighttpd
+* mv /var/lib/php5/sessions /var/lib/php5/sessions.orig
+* ln -s /var/tmp/sessions /var/lib/php5/sessions
+* mkdir /data/lighttpd
+* chown -R www-data:www-data /data/lighttpd
+
+#### homegear
+* patch -b /etc/homegear/main.conf main.conf.patch
+* patch -b /etc/homegear/php.ini php.ini.patch
+* patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch
+* mkdir -p /data/homegear/families
+* mkdir -p /data/homegear/db
+* mkdir -p /data/homegear/backup
+* mkdir -p /data/homegear/flows/data
+* chown homegear:homegear /data/homegear
+  
 ## system add-on
 * unix
   * apt-get -y install nmap dnsutils tcpdump
