@@ -1,29 +1,29 @@
 0a1,42
 > #!/bin/bash
->
->
+> 
+> 
 > which homegear > /dev/null 2>&1
 > if [ $? -eq 0 ]; then
 >       mkdir /var/log/homegear
 >       chown homegear:homegear /var/log/homegear
 >       chmod 750 /var/log/homegear
 > fi
->
->
+> 
+> 
 > which mosquitto > /dev/null 2>&1
 > if [ $? -eq 0 ]; then
 >       mkdir /var/log/mosquitto
 >       chown mosquitto:root /var/log/mosquitto
 >       chmod 755 /var/log/mosquitto
 > fi
->
->
+> 
+> 
 > which lighttpd > /dev/null 2>&1
 > if [ $? -eq 0 ]; then
 >       mkdir /var/log/lighttpd
 >       chown www-data:www-data /var/log/lighttpd
 >       chmod 750 /var/log/lighttpd
->
+> 
 >       mkdir /var/cache/lighttpd
 >       chmod 755 /var/cache/lighttpd
 >       mkdir /var/cache/lighttpd/compress
@@ -33,8 +33,8 @@
 >       chown www-data:www-data /var/cache/lighttpd/uploads
 >       chmod 755 /var/cache/lighttpd/uploads
 > fi
->
-
+> 
+> 
 > which tor > /dev/null 2>&1
 > if [ $? -eq 0 ]; then
 >       mkdir /var/log/tor
