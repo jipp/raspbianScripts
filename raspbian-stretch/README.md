@@ -34,14 +34,58 @@
 * disable bluetooth
   * sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"
   * sudo systemctl disable hciuart
+* disable audio
+  * sed s/dtparam=audio=on/dtparam=audio=off/ /boot/config.txt
 
 ## configuration - normal
+You can follow this if you plan to run the system as normal
 * partition resize
   * sudo raspi-config
     * A1 Expand Filesystem
-* disable audio
-  *
+  
 ## configuration - read-only
+You can follw this if you plan to run the system in read-only mode
+* disable swap
+  * sudo systemctl stop dphys-swapfile
+  * sudo systemctl disable dphys-swapfile
+  * sudo dphys-swapfile swapoff
+  * sudo dphys-swapfile uninstall
+* resize parition
+  * sudo parted /dev/mmcblk0 resizepart 2 8000M
+  * sudo resize2fs /dev/mmcblk0p2
+  * sudo cp fstab /etc/fstab
+  * change blkid inside fstab and cmdline.txt
+    * sudo blkid
+    * sudo vi /etc/fstab
+    * sudo vi /boot/cmdline.txt
+* partition create
+  * sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%
+  * sudo mkfs.ext4 /dev/mmcblk0p3
+  * sudo mkdir /data
+  * sudo mount /data
+* disable fsck
+  * sudo sed s/" fsck.repair=yes"// /boot/cmdline.txt
+* app modifications
+  * ntpd
+    * sudo apt -y install ntp
+    * sudo patch -b /etc/init.d/ntp ntp.patch
+    * sudo systemctl daemon-reload
+  * resolv.conf
+    * mv /etc/resolv.conf /etc/resolv.conf.orig
+    * ln -s /var/tmp/resolv.conf /etc/resolv.conf
+  * daily_lock
+    * mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
+    * ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
+  * fake-hwclock
+    * mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
+    * ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data
+  * dhcpcd
+    * mv /etc/dhcpcd.secret /etc/dhcpcd.secret.orig
+    * ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret
+  * rsyslog
+    * touch /etc/rsyslog.d/loghost.conf
+    * patch -b /etc/rsyslog.d/loghost.conf loghost.conf.patch
+    * systemctl restart rsyslog
 
 ## system add-on
 * unix
