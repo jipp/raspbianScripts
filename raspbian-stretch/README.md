@@ -72,31 +72,31 @@ You can follow this if you plan to run the system in read-only mode
     * sudo patch -b /etc/init.d/ntp ntp.patch
     * sudo systemctl daemon-reload
   * resolv.conf
-    * mv /etc/resolv.conf /etc/resolv.conf.orig
-    * ln -s /var/tmp/resolv.conf /etc/resolv.conf
+    * sudo mv /etc/resolv.conf /etc/resolv.conf.orig
+    * sudo ln -s /var/tmp/resolv.conf /etc/resolv.conf
   * daily_lock
-    * mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
-    * ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
+    * sudo mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig
+    * sudo ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock
   * fake-hwclock
-    * mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
-    * ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data
+    * sudo mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig
+    * sudo ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data
   * dhcpcd
-    * mv /etc/dhcpcd.secret /etc/dhcpcd.secret.orig
-    * ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret
+    * sudo mv /etc/dhcpcd.secret /etc/dhcpcd.secret.orig
+    * sudo ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret
   * rsyslog
-    * touch /etc/rsyslog.d/loghost.conf
-    * patch -b /etc/rsyslog.d/loghost.conf loghost.conf.patch
-    * systemctl restart rsyslog
+    * sudo touch /etc/rsyslog.d/loghost.conf
+    * sudo patch -b /etc/rsyslog.d/loghost.conf loghost.conf.patch
+    * sudo systemctl restart rsyslog
 * create service and script for read-only workarounds
   * service
-    * touch /lib/systemd/system/setup-tmpfs.service
-    * patch -b /lib/systemd/system/setup-tmpfs.service setup-tmpfs.service.patch
-    * systemctl enable setup-tmpfs.service
+    * sudo touch /lib/systemd/system/setup-tmpfs.service
+    * sudo patch -b /lib/systemd/system/setup-tmpfs.service setup-tmpfs.service.patch
+    * sudo systemctl enable setup-tmpfs.service
   * script
-    * mkdir /lib/systemd/scripts
-    * touch /lib/systemd/scripts/setup-tmpfs.sh
-    * patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh.patch
-    * chmod +x /lib/systemd/scripts/setup-tmpfs.sh
+    * sudo mkdir /lib/systemd/scripts
+    * sudo touch /lib/systemd/scripts/setup-tmpfs.sh
+    * sudo patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh.patch
+    * sudo chmod +x /lib/systemd/scripts/setup-tmpfs.sh
 
 ### apps
 #### mosquitto
