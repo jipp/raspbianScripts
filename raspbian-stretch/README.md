@@ -54,10 +54,10 @@ You can follow this if you plan to run the system in read-only mode
 * resize parition
   * sudo parted /dev/mmcblk0 resizepart 2 8000M
   * sudo resize2fs /dev/mmcblk0p2
+  * sudo cp /etc/fstab /etc/fstab.orig
   * sudo cp fstab /etc/fstab
   * change blkid inside fstab and cmdline.txt
     * sudo blkid
-    * sudo vi /etc/fstab
     * sudo vi /boot/cmdline.txt
 * partition create
   * sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%
@@ -65,7 +65,7 @@ You can follow this if you plan to run the system in read-only mode
   * sudo mkdir /data
   * sudo mount /data
 * disable fsck
-  * sudo sed -i s/" fsck.repair=yes"// /boot/cmdline.txt
+  * sudo sh -c "sed -i s/\ fsck.repair=yes// /boot/cmdline.txt"
 * system app modifications
   * ntpd
     * sudo apt -y install ntp
