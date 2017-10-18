@@ -35,7 +35,7 @@
   * sudo sh -c "echo 'dtoverlay=pi3-disable-bt' >> /boot/config.txt"
   * sudo systemctl disable hciuart
 * disable audio
-  * sed -i s/dtparam=audio=on/dtparam=audio=off/ /boot/config.txt
+  * sudo sh -c "sed -i s/dtparam=audio=on/dtparam=audio=off/ /boot/config.txt"
 
 ## configuration - normal
 You can follow this if you plan to run the system as normal
