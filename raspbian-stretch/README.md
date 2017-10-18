@@ -86,6 +86,14 @@ You can follw this if you plan to run the system in read-only mode
     * touch /etc/rsyslog.d/loghost.conf
     * patch -b /etc/rsyslog.d/loghost.conf loghost.conf.patch
     * systemctl restart rsyslog
+* create service
+  * touch /lib/systemd/system/setup-tmpfs.service
+  * patch -b /lib/systemd/system/setup-tmpfs.service setup-tmpfs.service.patch
+  * systemctl enable setup-tmpfs.service
+  * mkdir /lib/systemd/scripts
+  * touch /lib/systemd/scripts/setup-tmpfs.sh
+  * patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh-Stretch.patch
+  * chmod +x /lib/systemd/scripts/setup-tmpfs.sh
 
 ## system add-on
 * unix
