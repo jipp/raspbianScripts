@@ -1,4 +1,0 @@
-121c121
-< 	*.=notice;*.=warn	|/dev/xconsole
----
-> 	*.=notice;*.=warn	|/dev/console
