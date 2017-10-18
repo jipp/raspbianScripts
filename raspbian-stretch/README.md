@@ -4,7 +4,7 @@
 * cd /mnt
   * cp config.txt config.txt.orig
   * cp cmdline.txt cmdline.txt.orig
-  * sed s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt
+  * sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt
   * touch ssh
 
 # installation
@@ -23,7 +23,7 @@
     * P2 SSH
     * P4 SPI
     * P5 I2C
-    * P6 Serial - (onsole disabled, Serial enabled
+    * P6 Serial - (Console disabled, Serial enabled
   * 7 Advanced Options
     * A3 Memory Split - set to 32 or for camera min 128
     * A7 Network interface names
@@ -32,10 +32,10 @@
 * disable wifi
   * sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"
 * disable bluetooth
-  * sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"
+  * sudo sh -c "echo 'dtoverlay=pi3-disable-bt' >> /boot/config.txt"
   * sudo systemctl disable hciuart
 * disable audio
-  * sed s/dtparam=audio=on/dtparam=audio=off/ /boot/config.txt
+  * sed -i s/dtparam=audio=on/dtparam=audio=off/ /boot/config.txt
 
 ## configuration - normal
 You can follow this if you plan to run the system as normal
@@ -65,7 +65,7 @@ You can follow this if you plan to run the system in read-only mode
   * sudo mkdir /data
   * sudo mount /data
 * disable fsck
-  * sudo sed s/" fsck.repair=yes"// /boot/cmdline.txt
+  * sudo sed -i s/" fsck.repair=yes"// /boot/cmdline.txt
 * system app modifications
   * ntpd
     * sudo apt -y install ntp
