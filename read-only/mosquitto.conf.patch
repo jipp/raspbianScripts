@@ -1,4 +1,0 @@
-9c9
-< persistence_location /var/lib/mosquitto/
----
-> persistence_location /data/mosquitto/

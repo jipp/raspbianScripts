@@ -1,9 +1,0 @@
-55a56,63
-> 
-> # alias ro/rw 
-> alias roroot='mount -o remount,ro /'
-> alias rwroot='mount -o remount,rw /'
-> alias roboot='mount -o remount,ro /boot'
-> alias rwboot='mount -o remount,rw /boot'
-> # alias for checking
-> alias check='echo -n "/    : " ; mount | sed -n -e "s/^.* on \/ .*(\(r[w|o]\).*/\1/p" ; echo -n "/boot: " ; mount | sed -n -e "s/^.* on \/boot .*(\(r[w|o]\).*/\1/p"'
