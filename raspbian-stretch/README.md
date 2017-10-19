@@ -23,7 +23,7 @@
     * P2 SSH
     * P4 SPI
     * P5 I2C
-    * P6 Serial - (Console disabled, Serial enabled
+    * P6 Serial - Console disabled, Serial enabled
   * 7 Advanced Options
     * A3 Memory Split - set to 32 or for camera min 128
     * A7 Network interface names
@@ -143,4 +143,4 @@ You can follow this if you plan to run the system in read-only mode
 * sudo cp hostapd.conf /etc/hostapd/hostapd.conf
 * sudo touch /etc/dnsmasq.d/wlan0.conf.orig
 * sudo cp wlan0.conf /etc/dnsmasq.d/
-  * sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases (for read-only)
+  * sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases - for read-only
