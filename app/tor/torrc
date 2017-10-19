@@ -1,0 +1,9 @@
+RelayBandwidthRate	200 KB
+RelayBandwidthBurst	400 KB
+AccountingStart		month 1 00:00
+SocksPort		192.168.0.47:9050
+ContactInfo		jipp <jipp AT wobilix dot de>
+Nickname		jipp
+ORPort			9001
+DirPort			9030
+ExitPolicy		reject *:*

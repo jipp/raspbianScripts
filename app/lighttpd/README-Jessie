@@ -1,0 +1,18 @@
+installation:
+apt-get -y install lighttpd php5-cgi php5 php5-sqlite sqlite3
+lighty-enable-mod fastcgi
+lighty-enable-mod fastcgi-php
+service lighttpd force-reload
+
+configuration:
+touch /var/www/html/info.php
+patch -b /var/www/html/info.php info.php.patch
+mkdir -p /var/www/html/esp/update/bin
+cp *.php /var/www/html/esp/update
+chown -R www-data:www-data /var/www/html/esp
+
+enable/start:
+
+backup:
+/etc/lighttpd
+/var/www

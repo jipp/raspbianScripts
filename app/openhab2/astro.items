@@ -1,0 +1,2 @@
+DateTime	SunriseTime	"Sunrise [%1$tH:%1$tM]"	<sunrise>	{ channel="astro:sun:home:rise#start" }
+DateTime	SunsetTime	"Sunset [%1$tH:%1$tM]"	<sunset>	{ channel="astro:sun:home:set#start" }

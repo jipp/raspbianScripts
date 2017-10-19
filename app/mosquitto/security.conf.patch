@@ -1,0 +1,3 @@
+0a1,2
+> password_file /etc/mosquitto/passwd
+> allow_anonymous false

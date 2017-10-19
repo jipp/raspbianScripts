@@ -1,0 +1,24 @@
+17c17
+< #package = minimal
+---
+> package = minimal
+29c29
+< #legacy = true
+---
+> legacy = true
+32c32
+< #binding = 
+---
+> binding = astro,homematic,mqtt1,ntp,exec,systeminfo,network
+35c35
+< #ui = 
+---
+> ui = basic
+38c38
+< #persistence = 
+---
+> persistence = rrd4j,mapdb
+44c44
+< #transformation = 
+---
+> transformation = map,regex

@@ -1,0 +1,8 @@
+installation:
+apt -y install tor tor-arm
+
+configuration:
+
+enable/start:
+
+backup:
