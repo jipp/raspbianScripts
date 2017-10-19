@@ -130,6 +130,9 @@ You can follow this if you plan to run the system in read-only mode
 * avr
   * apt-get -y install gcc-avr avr-libc avrdude
 
-# wifi client
+# system settings
+## wifi client
 * sudo cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf.orig
 * wpa_passphrase "testing" "testingPassword" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null
+
+## wifi ap
