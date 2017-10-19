@@ -136,3 +136,7 @@ You can follow this if you plan to run the system in read-only mode
 * wpa_passphrase "testing" "testingPassword" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null
 
 ## wifi ap
+* sudo apt-get install dnsmasq hostapd
+* sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
+* sudo touch /etc/hostapd/hostapd.conf.orig
+* sudo touch /etc/dnsmasq.d/wlan0.conf.orig
