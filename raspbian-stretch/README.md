@@ -138,5 +138,8 @@ You can follow this if you plan to run the system in read-only mode
 ## wifi ap
 * sudo apt-get install dnsmasq hostapd
 * sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
+* sudo sh -c "cat dhcpcd.conf >> /etc/dhcpcd.conf"
 * sudo touch /etc/hostapd/hostapd.conf.orig
+* sudo cp hostapd.conf /etc/hostapd/hostapd.conf
 * sudo touch /etc/dnsmasq.d/wlan0.conf.orig
+* sudo cp wlan0.conf /etc/dnsmasq.d/
