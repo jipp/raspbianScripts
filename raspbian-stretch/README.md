@@ -37,7 +37,7 @@
 * disable audio
   * sudo sh -c "sed -i s/dtparam=audio=on/dtparam=audio=off/ /boot/config.txt"
 
-## configuration - normal
+## configuration - read-write
 You can follow this if you plan to run the system as normal
 * partition resize
   * sudo raspi-config
@@ -64,8 +64,6 @@ You can follow this if you plan to run the system in read-only mode
   * sudo mkfs.ext4 /dev/mmcblk0p3
   * sudo mkdir /data
   * sudo mount /data
-* disable fsck
-  * sudo sh -c "sed -i s/\ fsck.repair=yes// /boot/cmdline.txt"
 * system app modifications
   * ntpd
     * sudo apt -y install ntp
