@@ -1,5 +1,6 @@
 installation:
-apt -y install lighttpd php5-cgi php5 php5-sqlite sqlite3
+apt -y install lighttpd php php-cgi php-sqlite3 sqlite3
+lighty-enable-mod cgi
 lighty-enable-mod fastcgi
 lighty-enable-mod fastcgi-php
 service lighttpd force-reload
