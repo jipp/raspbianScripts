@@ -103,8 +103,8 @@ You can follow this if you plan to run the system in read-only mode
 * patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch
 
 #### lighttpd
-* mv /var/lib/php5/sessions /var/lib/php5/sessions.orig
-* ln -s /var/tmp/sessions /var/lib/php5/sessions
+* mv /var/lib/php/sessions /var/lib/php/sessions.orig
+* ln -s /var/tmp/sessions /var/lib/php/sessions
 * mkdir /data/lighttpd
 * chown -R www-data:www-data /data/lighttpd
 
