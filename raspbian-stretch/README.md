@@ -120,13 +120,13 @@ You can follow this if you plan to run the system in read-only mode
   
 ## system add-on
 * unix
-  * apt-get -y install nmap dnsutils tcpdump
+  * apt -y install nmap dnsutils tcpdump
 * git
   * sudo apt -y install git
 * php
-  * apt-get -y install python-dev python-pip
+  * apt -y install python-dev python-pip
 * avr
-  * apt-get -y install gcc-avr avr-libc avrdude
+  * apt -y install gcc-avr avr-libc avrdude
 
 # system settings
 ## wifi client
@@ -134,11 +134,12 @@ You can follow this if you plan to run the system in read-only mode
 * wpa_passphrase "testing" "testingPassword" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null
 
 ## wifi ap
-* sudo apt-get install dnsmasq hostapd
+* sudo apt -y  install dnsmasq hostapd
 * sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
 * sudo sh -c "cat dhcpcd.conf >> /etc/dhcpcd.conf"
 * sudo touch /etc/hostapd/hostapd.conf.orig
 * sudo cp hostapd.conf /etc/hostapd/hostapd.conf
+* sudo patch -b /etc/default/hostapd hostapd.patch
 * sudo touch /etc/dnsmasq.d/wlan0.conf.orig
 * sudo cp wlan0.conf /etc/dnsmasq.d/
   * sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases - for read-only
