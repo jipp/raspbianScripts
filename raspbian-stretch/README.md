@@ -123,7 +123,7 @@ You can follow this if you plan to run the system in read-only mode
   * apt -y install nmap dnsutils tcpdump
 * git
   * sudo apt -y install git
-* php
+* python
   * apt -y install python-dev python-pip
 * avr
   * apt -y install gcc-avr avr-libc avrdude
