@@ -151,10 +151,40 @@ EOT"
 ## wifi ap
 * sudo apt -y  install dnsmasq hostapd
 * sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig
-* sudo sh -c "cat dhcpcd.conf >> /etc/dhcpcd.conf"
+```
+sudo sh -c "cat <<EOT >> /etc/dhcpcd.conf
+interface wlan0
+static ip_address=192.168.1.1/24
+EOT"
+```
 * sudo touch /etc/hostapd/hostapd.conf.orig
-* sudo cp hostapd.conf /etc/hostapd/hostapd.conf
+```
+sudo sh -c "cat <<EOT >> /etc/hostapd/hostapd.conf
+interface=wlan0
+
+ssid=woke
+channel=1
+hw_mode=g
+ieee80211n=1
+ieee80211d=1
+country_code=DE
+wmm_enabled=1
+
+auth_algs=1
+wpa=2
+wpa_key_mgmt=WPA-PSK
+rsn_pairwise=CCMP
+wpa_passphrase=testtest
+EOT"
+```
 * sudo patch -b /etc/default/hostapd hostapd.patch
 * sudo touch /etc/dnsmasq.d/wlan0.conf.orig
-* sudo cp wlan0.conf /etc/dnsmasq.d/
+```
+sudo sh -c "cat <<EOT >> /etc/dnsmasq.d/wlan0.conf
+domain-needed
+interface=wlan0
+listen-address=192.168.1.1
+dhcp-range=192.168.1.100,192.168.1.150,12h
+EOT"
+```
   * sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases - for read-only
