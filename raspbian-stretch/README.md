@@ -187,4 +187,4 @@ listen-address=192.168.1.1
 dhcp-range=192.168.1.100,192.168.1.150,12h
 EOT"
 ```
-  * sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases - for read-only
+* for read-only: sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases
