@@ -55,7 +55,22 @@ You can follow this if you plan to run the system in read-only mode
   * sudo parted /dev/mmcblk0 resizepart 2 8000M
   * sudo resize2fs /dev/mmcblk0p2
   * sudo cp /etc/fstab /etc/fstab.orig
-  * sudo cp fstab /etc/fstab
+```
+cat <<EOT > /etc/fstab
+proc           /proc              proc  defaults                                               0 0
+/dev/mmcblk0p1 /boot              vfat  defaults,ro                                            0 2
+/dev/mmcblk0p2 /                  ext4  defaults,noatime,ro                                    0 1
+/dev/mmcblk0p3 /data              ext4  defaults,noatime                                       0 2
+tmpfs          /tmp               tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
+tmpfs          /var/backups       tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=100m  0 0
+tmpfs          /var/cache         tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=200m  0 0
+tmpfs          /var/lib/dhcpcd5   tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=1m    0 0
+tmpfs          /var/lib/logrotate tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=1m    0 0
+tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=1m      0 0
+tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=100m  0 0
+tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
+EOT
+```
   * change blkid inside fstab and cmdline.txt
     * sudo blkid
     * sudo vi /boot/cmdline.txt
