@@ -56,7 +56,7 @@ You can follow this if you plan to run the system in read-only mode
   * sudo resize2fs /dev/mmcblk0p2
   * sudo cp /etc/fstab /etc/fstab.orig
 ```
-cat <<EOT > /etc/fstab
+sudo sh -c "cat <<EOT > /etc/fstab
 proc           /proc              proc  defaults                                               0 0
 /dev/mmcblk0p1 /boot              vfat  defaults,ro                                            0 2
 /dev/mmcblk0p2 /                  ext4  defaults,noatime,ro                                    0 1
@@ -69,7 +69,7 @@ tmpfs          /var/lib/logrotate tmpfs defaults,noatime,mode=755,uid=root,gid=r
 tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=1m      0 0
 tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=100m  0 0
 tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
-EOT
+EOT"
 ```
   * change blkid inside fstab and cmdline.txt
     * sudo blkid
