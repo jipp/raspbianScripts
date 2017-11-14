@@ -77,8 +77,8 @@ tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=
 EOT"
 ```
  - change blkid inside fstab and cmdline.txt
-    - `sudo blkid`
-    - `sudo vi /boot/cmdline.txt`
+	 - `sudo blkid`
+	 - `sudo vi /boot/cmdline.txt`
  - `sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%`
  - `sudo mkfs.ext4 /dev/mmcblk0p3`
  - `sudo mkdir /data`
@@ -264,4 +264,4 @@ dhcp-range=192.168.1.100,192.168.1.150,12h
 EOT"
 ```
  - for read-only 
-  - `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
+    - `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
