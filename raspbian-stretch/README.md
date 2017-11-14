@@ -97,19 +97,80 @@ EOT"
     * sudo mv /etc/dhcpcd.secret /etc/dhcpcd.secret.orig
     * sudo ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret
   * rsyslog
-    * sudo touch /etc/rsyslog.d/loghost.conf
-    * sudo patch -b /etc/rsyslog.d/loghost.conf loghost.conf.patch
+    * sudo touch /etc/rsyslog.d/loghost.conf.orig
+    * sudo sh -c "echo '*.*     @192.168.0.27' >> /etc/rsyslog.d/loghost.conf"
     * sudo systemctl restart rsyslog
 * create service and script for read-only workarounds
   * service
-    * sudo touch /lib/systemd/system/setup-tmpfs.service
-    * sudo patch -b /lib/systemd/system/setup-tmpfs.service setup-tmpfs.service.patch
+    * sudo touch /lib/systemd/system/setup-tmpfs.service.orig
+```
+sudo sh -c "cat <<EOT > /lib/systemd/system/setup-tmpfs.service
+[Unit]
+Description=setup-tmpfs
+DefaultDependencies=no
+After=var-log.mount var-cache.mount var-lib-ntp.mount var-lib-dhcpcd5.mount var-
+lib-dhcp.mount
+Before=systemd-random-seed.service avahi-daemon.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/lib/systemd/scripts/setup-tmpfs.sh
+TimeoutSec=30s
+
+[Install]
+WantedBy=sysinit.target
+EOT"
+```
     * sudo systemctl enable setup-tmpfs.service
   * script
     * sudo mkdir /lib/systemd/scripts
-    * sudo touch /lib/systemd/scripts/setup-tmpfs.sh
-    * sudo patch -b /lib/systemd/scripts/setup-tmpfs.sh setup-tmpfs.sh.patch
+    * sudo touch /lib/systemd/scripts/setup-tmpfs.sh.orig
+```
+sudo sh -c "cat <<EOT > /lib/systemd/scripts/setup-tmpfs.sh
+#!/bin/bash
+
+mkdir /var/tmp/systemd
+chmod 755 /var/tmp/systemd
+touch /var/tmp/systemd/random-seed
+chmod 600 /var/tmp/systemd/random-seed
+
+
+which homegear > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+        mkdir /var/log/homegear
+        chown homegear:homegear /var/log/homegear
+        chmod 750 /var/log/homegear
+fi
+
+
+which mosquitto > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+        mkdir /var/log/mosquitto
+        chown mosquitto:root /var/log/mosquitto
+        chmod 755 /var/log/mosquitto
+fi
+
+
+which lighttpd > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+        mkdir /var/log/lighttpd
+        chown www-data:www-data /var/log/lighttpd
+        chmod 750 /var/log/lighttpd
+
+        mkdir /var/cache/lighttpd
+        chmod 755 /var/cache/lighttpd
+        mkdir /var/cache/lighttpd/compress
+        chown www-data:www-data /var/cache/lighttpd/compress
+        chmod 755 /var/cache/lighttpd/compress
+        mkdir /var/cache/lighttpd/uploads
+        chown www-data:www-data /var/cache/lighttpd/uploads
+        chmod 755 /var/cache/lighttpd/uploads
+fi
+EOT"
+```
     * sudo chmod +x /lib/systemd/scripts/setup-tmpfs.sh
+
 
 ### apps
 #### mosquitto
