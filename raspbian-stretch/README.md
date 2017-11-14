@@ -71,6 +71,7 @@ tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=r
 tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
 EOT"
 ```
+
   * change blkid inside fstab and cmdline.txt
     * sudo blkid
     * sudo vi /boot/cmdline.txt
@@ -122,7 +123,7 @@ TimeoutSec=30s
 WantedBy=sysinit.target
 EOT"
 ```
-    * sudo systemctl enable setup-tmpfs.service
+* sudo systemctl enable setup-tmpfs.service
   * script
     * sudo mkdir /lib/systemd/scripts
     * sudo touch /lib/systemd/scripts/setup-tmpfs.sh.orig
@@ -169,7 +170,7 @@ if [ $? -eq 0 ]; then
 fi
 EOT"
 ```
-    * sudo chmod +x /lib/systemd/scripts/setup-tmpfs.sh
+* sudo chmod +x /lib/systemd/scripts/setup-tmpfs.sh
 
 
 ### apps
@@ -218,7 +219,7 @@ interface wlan0
 static ip_address=192.168.1.1/24
 EOT"
 ```
-* sudo touch /etc/hostapd/hostapd.conf.orig
+  * sudo touch /etc/hostapd/hostapd.conf.orig
 ```
 sudo sh -c "cat <<EOT >> /etc/hostapd/hostapd.conf
 interface=wlan0
