@@ -121,8 +121,7 @@ sudo sh -c "cat <<EOT > /lib/systemd/system/setup-tmpfs.service
 [Unit]
 Description=setup-tmpfs
 DefaultDependencies=no
-After=var-log.mount var-cache.mount var-lib-ntp.mount var-lib-dhcpcd5.mount var-
-lib-dhcp.mount
+After=var-log.mount var-cache.mount var-lib-ntp.mount var-lib-dhcpcd5.mount var-lib-dhcp.mount
 Before=systemd-random-seed.service avahi-daemon.service
 
 [Service]
