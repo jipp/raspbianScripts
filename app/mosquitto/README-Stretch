@@ -21,6 +21,7 @@ deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free r
 deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
 
 enable/start:
+systemctl enable mosquitto
 
 backup:
 /etc/mosquitto
