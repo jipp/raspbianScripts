@@ -209,13 +209,13 @@ EOT"
 
 ## system add-on
  - unix
-	 - `apt -y install nmap dnsutils tcpdump`
+	 - `sudo apt -y install nmap dnsutils tcpdump`
  - git
 	 - `sudo apt -y install git`
  - python
-	 - `apt -y install python-dev python-pip`
+	 - `sudo apt -y install python-dev python-pip`
  - avr
-	 - `apt -y install gcc-avr avr-libc avrdude`
+	 - `sudo apt -y install gcc-avr avr-libc avrdude`
 
 # system settings
 
