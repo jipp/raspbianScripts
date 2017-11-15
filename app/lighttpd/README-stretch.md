@@ -6,6 +6,7 @@
  - `sudo service lighttpd force-reload`
 
 # configuration
+ - `sudo patch -b /etc/lighttpd/conf-enabled/10-cgi.conf 10-cgi.conf.patch`
  - info.php
 ```bash
 sudo sh -c "cat <<EOT > /var/www/html/info.php
