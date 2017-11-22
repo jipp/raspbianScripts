@@ -1,5 +1,5 @@
 # installation
- - `sudo apt -y install lighttpd php php-cgi php-sqlite3 sqlite3`
+ - `sudo apt -y install lighttpd php php-cgi php-sqlite3 sqlite3 php-gd`
  - `sudo lighty-enable-mod cgi`
  - `sudo lighty-enable-mod fastcgi`
  - `sudo lighty-enable-mod fastcgi-php`
