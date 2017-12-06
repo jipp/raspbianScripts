@@ -14,20 +14,21 @@
  - `sudo apt list --upgradable`
  - `sudo apt -y upgrade`
  - `sudo raspi-config`
-	 - 1 Change User Password
-	 - 2 Hostname
-	 - 4 Localisation Options
-		 - I2 Change Timezone
-		 - I4 Change Wi-fi Country
-	 - 5 Interfacing Options
-		 - P1 Camera - enable on demand
-	     - P2 SSH
-	     - P4 SPI
-	     - P5 I2C
-	     - P6 Serial - Console disabled, Serial enabled
-	 - 7 Advanced Options
-	     - A3 Memory Split - set to 32 or for camera min 128
-	     - A7 Network interface names
+	- 1 Change User Password
+	- 2 Network Options
+	 	- N1 Hostname
+	- 4 Localisation Options
+		- I2 Change Timezone
+		- I4 Change Wi-fi Country
+	- 5 Interfacing Options
+		- P1 Camera - enable on demand
+		- P2 SSH
+		- P4 SPI
+		- P5 I2C
+		- P6 Serial - Console disabled, Serial enabled
+	- 7 Advanced Options
+		- A3 Memory Split - set to 32 or for camera min 128
+		- A7 Network interface names
     
 ## configuration - optional
 
