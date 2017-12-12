@@ -6,8 +6,8 @@
 < brokerHostname = localhost
 ---
 > brokerHostname = lemonpi
-34,35c34,35
-< #userName = myUser
+35,36c35,36
+< #username = myUser
 < #password = myPassword
 ---
 > userName = homegear
