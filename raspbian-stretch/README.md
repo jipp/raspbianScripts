@@ -14,20 +14,21 @@
  - `sudo apt list --upgradable`
  - `sudo apt -y upgrade`
  - `sudo raspi-config`
-	 - 1 Change User Password
-	 - 2 Hostname
-	 - 4 Localisation Options
-		 - I2 Change Timezone
-		 - I4 Change Wi-fi Country
-	 - 5 Interfacing Options
-		 - P1 Camera - enable on demand
-	     - P2 SSH
-	     - P4 SPI
-	     - P5 I2C
-	     - P6 Serial - Console disabled, Serial enabled
-	 - 7 Advanced Options
-	     - A3 Memory Split - set to 32 or for camera min 128
-	     - A7 Network interface names
+	- 1 Change User Password
+	- 2 Network Options
+	 	- N1 Hostname
+	- 4 Localisation Options
+		- I2 Change Timezone
+		- I4 Change Wi-fi Country
+	- 5 Interfacing Options
+		- P1 Camera - enable on demand
+		- P2 SSH
+		- P4 SPI
+		- P5 I2C
+		- P6 Serial - Console disabled, Serial enabled
+	- 7 Advanced Options
+		- A3 Memory Split - set to 32 or for camera min 128
+		- A7 Network interface names
     
 ## configuration - optional
 
@@ -143,30 +144,41 @@ EOT"
 sudo sh -c "cat <<EOT > /lib/systemd/scripts/setup-tmpfs.sh
 #!/bin/bash
 
+logger "setup systemd folder"
 mkdir /var/tmp/systemd
 chmod 755 /var/tmp/systemd
+
+logger "setup random-seed folder"
 touch /var/tmp/systemd/random-seed
 chmod 600 /var/tmp/systemd/random-seed
 
+which watchdog > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+        logger "setup watchdog folder"
+        mkdir /var/log/watchdog
+        chown root:root /var/log/watchdog
+        chmod 750 /var/log/watchdog
+fi
 
 which homegear > /dev/null 2>&1
 if [ $? -eq 0 ]; then
+        logger "setup homegear folder"
         mkdir /var/log/homegear
         chown homegear:homegear /var/log/homegear
         chmod 750 /var/log/homegear
 fi
 
-
 which mosquitto > /dev/null 2>&1
 if [ $? -eq 0 ]; then
+        logger "mosquitto folder"
         mkdir /var/log/mosquitto
         chown mosquitto:root /var/log/mosquitto
         chmod 755 /var/log/mosquitto
 fi
 
-
 which lighttpd > /dev/null 2>&1
 if [ $? -eq 0 ]; then
+        logger "setup lighttpd folder"
         mkdir /var/log/lighttpd
         chown www-data:www-data /var/log/lighttpd
         chmod 750 /var/log/lighttpd
