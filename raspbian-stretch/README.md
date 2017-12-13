@@ -153,7 +153,7 @@ touch /var/tmp/systemd/random-seed
 chmod 600 /var/tmp/systemd/random-seed
 
 which watchdog > /dev/null 2>&1
-if [ $? -eq 0 ]; then
+if [ \$? -eq 0 ]; then
         logger "setup watchdog folder"
         mkdir /var/log/watchdog
         chown root:root /var/log/watchdog
@@ -161,7 +161,7 @@ if [ $? -eq 0 ]; then
 fi
 
 which homegear > /dev/null 2>&1
-if [ $? -eq 0 ]; then
+if [ \$? -eq 0 ]; then
         logger "setup homegear folder"
         mkdir /var/log/homegear
         chown homegear:homegear /var/log/homegear
@@ -169,7 +169,7 @@ if [ $? -eq 0 ]; then
 fi
 
 which mosquitto > /dev/null 2>&1
-if [ $? -eq 0 ]; then
+if [ \$? -eq 0 ]; then
         logger "mosquitto folder"
         mkdir /var/log/mosquitto
         chown mosquitto:root /var/log/mosquitto
@@ -177,7 +177,7 @@ if [ $? -eq 0 ]; then
 fi
 
 which lighttpd > /dev/null 2>&1
-if [ $? -eq 0 ]; then
+if [ \$? -eq 0 ]; then
         logger "setup lighttpd folder"
         mkdir /var/log/lighttpd
         chown www-data:www-data /var/log/lighttpd
