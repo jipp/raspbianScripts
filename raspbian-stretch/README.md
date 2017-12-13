@@ -14,21 +14,21 @@
  - `sudo apt list --upgradable`
  - `sudo apt -y upgrade`
  - `sudo raspi-config`
-	- 1 Change User Password
+	- 1 Change User Password - passwd pi
 	- 2 Network Options
-	 	- N1 Hostname
+	 	- N1 Hostname - sudo raspi-config nonint do_hostname <hostname>
 	- 4 Localisation Options
-		- I2 Change Timezone
-		- I4 Change Wi-fi Country
+		- I2 Change Timezone - sudo raspi-config nonint do_change_timezone Europe/Berlin
+		- I4 Change Wi-fi Country - sudo raspi-config nonint do_wifi_country DE
 	- 5 Interfacing Options
-		- P1 Camera - enable on demand
-		- P2 SSH
-		- P4 SPI
-		- P5 I2C
-		- P6 Serial - Console disabled, Serial enabled
+		- P1 Camera - sudo raspi-config nonint do_camera 0|1 (enable|disable)
+		- P2 SSH - sudo raspi-config nonint do_ssh 0|1 (enable|disable)
+		- P4 SPI - sudo raspi-config nonint do_spi 0|1 (enable|disable)
+		- P5 I2C - sudo raspi-config nonint do_i2c 0|1 (enable|disable)
+		- P6 Serial - sudo raspi-config nonint do_serial 0|1; - sudo raspi-config nonint set_config_var enable_uart 0|1 /boot/config.txt - Console disabled, Serial enabled
 	- 7 Advanced Options
-		- A3 Memory Split - set to 32 or for camera min 128
-		- A7 Network interface names
+		- A3 Memory Split - sudo raspi-config nonint do_memory_split 32|128 (normal|camera)
+		- A7 Network interface names - sudo raspi-config nonint do_net_names 0|1 (enable|disable)
     
 ## configuration - optional
 
