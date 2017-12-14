@@ -5,6 +5,7 @@
 	 - `cp config.txt config.txt.orig`
 	 - `cp cmdline.txt cmdline.txt.orig`
 	 - `sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
+	 - change "root=PARTUUID=37665771-02" to "root=/dev/mmcblk0p2"
 	 - `touch ssh`
 
 # installation
@@ -79,9 +80,6 @@ tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=r
 tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
 EOT"
 ```
- - change blkid inside fstab and cmdline.txt
-	 - `sudo blkid`
-	 - `sudo vi /boot/cmdline.txt`
  - `sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%`
  - `sudo mkfs.ext4 /dev/mmcblk0p3`
  - `sudo mkdir /data`
