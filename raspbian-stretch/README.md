@@ -13,6 +13,9 @@
  - `sudo apt update`
  - `sudo apt list --upgradable`
  - `sudo apt -y upgrade`
+ - `sudo reboot`
+ - `sudo rpi-update`
+ - `sudo reboot`
  - `sudo raspi-config`
 	- 1 Change User Password - passwd pi
 	- 2 Network Options
@@ -25,10 +28,9 @@
 		- P2 SSH - sudo raspi-config nonint do_ssh 0|1 (enable|disable)
 		- P4 SPI - sudo raspi-config nonint do_spi 0|1 (enable|disable)
 		- P5 I2C - sudo raspi-config nonint do_i2c 0|1 (enable|disable)
-		- P6 Serial - sudo raspi-config nonint do_serial 0|1; - sudo raspi-config nonint set_config_var enable_uart 0|1 /boot/config.txt - Console disabled, Serial enabled
+		- P6 Serial - sudo raspi-config nonint do_serial 0|1; - sudo raspi-config nonint set_config_var enable_uart 1|0 /boot/config.txt - Console disabled, Serial enabled
 	- 7 Advanced Options
 		- A3 Memory Split - sudo raspi-config nonint do_memory_split 32|128 (normal|camera)
-		- A7 Network interface names - sudo raspi-config nonint do_net_names 0|1 (enable|disable)
     
 ## configuration - optional
 
