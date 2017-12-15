@@ -74,6 +74,9 @@
 #### handle partition
  - `sudo parted /dev/mmcblk0 resizepart 2 8000M`
  - `sudo resize2fs /dev/mmcblk0p2`
+ - `sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%`
+ - `sudo mkfs.ext4 /dev/mmcblk0p3`
+ - `sudo mkdir /data`
  - `sudo cp /etc/fstab /etc/fstab.orig`
 ```bash
 sudo sh -c "cat <<EOT > /etc/fstab
@@ -90,10 +93,7 @@ tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=r
 tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
 EOT"
 ```
- - `sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%`
- - `sudo mkfs.ext4 /dev/mmcblk0p3`
- - `sudo mkdir /data`
- - `sudo mount /data`
+ - `sudo mount -a`
 
 #### system app modifications
 
