@@ -18,24 +18,35 @@
  - `sudo rpi-update`
  - `sudo reboot`
  - `sudo raspi-config`
-	- 1 Change User Password - passwd pi
+	- 1 Change User Password - `sudo passwd pi`
 	- 2 Network Options
-	 	- N1 Hostname - sudo raspi-config nonint do_hostname <hostname>
+	 	- N1 Hostname
+		`sudo raspi-config nonint do_hostname <hostname>`
 	- 4 Localisation Options
-		- I2 Change Timezone - sudo raspi-config nonint do_change_timezone Europe/Berlin
-		- I4 Change Wi-fi Country - sudo raspi-config nonint do_wifi_country DE
+		- I2 Change Timezone
+		`sudo raspi-config nonint do_change_timezone Europe/Berlin`
+		- I4 Change Wi-fi Country
+		`sudo raspi-config nonint do_wifi_country DE`
 	- 5 Interfacing Options
-		- P1 Camera - sudo raspi-config nonint do_camera 0|1 (enable|disable)
-		- P2 SSH - sudo raspi-config nonint do_ssh 0|1 (enable|disable)
-		- P4 SPI - sudo raspi-config nonint do_spi 0|1 (enable|disable)
-		- P5 I2C - sudo raspi-config nonint do_i2c 0|1 (enable|disable)
-		- P6 Serial - sudo raspi-config nonint do_serial 0|1; - sudo raspi-config nonint set_config_var enable_uart 1|0 /boot/config.txt - Console disabled, Serial enabled
+		- P1 Camera
+		`sudo raspi-config nonint do_camera 0|1` (enable|disable)
+		- P2 SSH
+		`sudo raspi-config nonint do_ssh 0`
+		- P4 SPI
+		`sudo raspi-config nonint do_spi 0|1` (enable|disable)
+		- P5 I2C
+		`sudo raspi-config nonint do_i2c 0|1` (enable|disable)
+		- P6 Serial
+		`sudo raspi-config nonint do_serial 1`; `sudo raspi-config nonint set_config_var enable_uart 1 /boot/config.txt`
 	- 7 Advanced Options
-		- A3 Memory Split - sudo raspi-config nonint do_memory_split 32|128 (normal|camera)
+		- A3 Memory Split
+		`sudo raspi-config nonint do_memory_split 32|128` (normal|camera)
+ - `sudo reboot`
     
 ## configuration - optional
 
 ###  disable wifi
+ - `sudo raspi-config nonint set_config_var dtoverlay=pi3-disable-wifi /boot/config.txt`
  - `sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"`
 
 ### disable bluetooth
@@ -43,7 +54,7 @@
  - `sudo systemctl disable hciuart`
 
 ### disable audio
- - `sudo sh -c "sed -i s/dtparam=audio=on/dtparam=audio=off/ /boot/config.txt"`
+ - `sudo raspi-config nonint set_config_var dtparam=audio off /boot/config.txt`
   
 ## configuration - read-write
  - partition resize
@@ -75,7 +86,6 @@ tmpfs          /var/backups       tmpfs defaults,noatime,mode=755,uid=root,gid=r
 tmpfs          /var/cache         tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=200m  0 0
 tmpfs          /var/lib/dhcpcd5   tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=1m    0 0
 tmpfs          /var/lib/logrotate tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=1m    0 0
-tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=1m      0 0
 tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=100m  0 0
 tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
 EOT"
@@ -91,6 +101,11 @@ EOT"
  - `sudo apt -y install ntp`
  - `sudo patch -b /etc/init.d/ntp ntp.patch`
  - `sudo systemctl daemon-reload`
+```bash
+sudo sh -c "cat <<EOT >> /etc/fstab
+tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=1m      0 0
+EOT"
+``` 
  
 ##### resolv.conf
  - `sudo mv /etc/resolv.conf /etc/resolv.conf.orig`
