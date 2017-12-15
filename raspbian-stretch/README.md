@@ -5,7 +5,7 @@
 	 - `cp config.txt config.txt.orig`
 	 - `cp cmdline.txt cmdline.txt.orig`
 	 - `sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
-	 - change "root=PARTUUID=37665771-02" to "root=/dev/mmcblk0p2"
+	 - `sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
 	 - `touch ssh`
 
 # installation
