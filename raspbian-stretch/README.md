@@ -163,7 +163,7 @@ logger \"setup systemd folder\"
 mkdir /var/tmp/systemd
 chmod 755 /var/tmp/systemd
 
-logger "setup random-seed folder"
+logger \"setup random-seed folder\"
 touch /var/tmp/systemd/random-seed
 chmod 600 /var/tmp/systemd/random-seed
 
