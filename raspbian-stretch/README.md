@@ -159,7 +159,7 @@ EOT"
 sudo sh -c "cat <<EOT > /lib/systemd/scripts/setup-tmpfs.sh
 #!/bin/bash
 
-logger "setup systemd folder"
+logger \"setup systemd folder\"
 mkdir /var/tmp/systemd
 chmod 755 /var/tmp/systemd
 
@@ -169,7 +169,7 @@ chmod 600 /var/tmp/systemd/random-seed
 
 which watchdog > /dev/null 2>&1
 if [ \$? -eq 0 ]; then
-        logger "setup watchdog folder"
+        logger \"setup watchdog folder\"
         mkdir /var/log/watchdog
         chown root:root /var/log/watchdog
         chmod 750 /var/log/watchdog
@@ -177,7 +177,7 @@ fi
 
 which homegear > /dev/null 2>&1
 if [ \$? -eq 0 ]; then
-        logger "setup homegear folder"
+        logger \"setup homegear folder\"
         mkdir /var/log/homegear
         chown homegear:homegear /var/log/homegear
         chmod 750 /var/log/homegear
@@ -185,7 +185,7 @@ fi
 
 which mosquitto > /dev/null 2>&1
 if [ \$? -eq 0 ]; then
-        logger "mosquitto folder"
+        logger \"mosquitto folder\"
         mkdir /var/log/mosquitto
         chown mosquitto:root /var/log/mosquitto
         chmod 755 /var/log/mosquitto
@@ -193,7 +193,7 @@ fi
 
 which lighttpd > /dev/null 2>&1
 if [ \$? -eq 0 ]; then
-        logger "setup lighttpd folder"
+        logger \"setup lighttpd folder\"
         mkdir /var/log/lighttpd
         chown www-data:www-data /var/log/lighttpd
         chmod 750 /var/log/lighttpd
