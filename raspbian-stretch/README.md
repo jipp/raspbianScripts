@@ -185,7 +185,7 @@ fi
 
 which mosquitto > /dev/null 2>&1
 if [ \$? -eq 0 ]; then
-        logger \"mosquitto folder\"
+        logger \"setup mosquitto folder\"
         mkdir /var/log/mosquitto
         chown mosquitto:root /var/log/mosquitto
         chmod 755 /var/log/mosquitto
