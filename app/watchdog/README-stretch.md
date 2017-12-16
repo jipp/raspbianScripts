@@ -1,4 +1,4 @@
-gnstallation
+installation
 - `sudo apt -y install watchdog`
 
 # configuration
