@@ -240,7 +240,7 @@ EOT"
  - git
 	 - `sudo apt -y install git`
  - python
-	 - `sudo apt -y install python-dev python-pip`
+	 - `sudo apt -y install python-dev python-pip virtualenv`
  - avr
 	 - `sudo apt -y install gcc-avr avr-libc avrdude`
 
