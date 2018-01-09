@@ -99,6 +99,7 @@ EOT"
 
 ##### ntpd
  - `sudo apt -y install ntp`
+ - `sudo sed -i.orig  s/"run\/ntp.conf.dhcp"/"var\/lib\/ntp\/ntp.conf.dhcp"/ /etc/init.d/ntp`
  - `sudo patch -b /etc/init.d/ntp ntp.patch`
  - `sudo systemctl daemon-reload`
 ```bash
