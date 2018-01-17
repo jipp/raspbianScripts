@@ -2,11 +2,11 @@
  - `dd if=2017-09-07-raspbian-stretch-lite.img of=/dev/sda`
  - `mount /dev/sda1 /mnt`
  - `cd /mnt`
-	 - `cp config.txt config.txt.orig`
-	 - `cp cmdline.txt cmdline.txt.orig`
-	 - `sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
-	 - `sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
-	 - `touch ssh`
+	 - `sudo cp /boot/config.txt /boot/config.txt.orig`
+	 - `sudo cp /boot/cmdline.txt /boot/cmdline.txt.orig`
+	 - `sudo sed s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// /boot/cmdline.txt`
+	 - `sudo sed s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ /boot/cmdline.txt`
+	 - `touch /boot/ssh`
 
 # installation
 
@@ -14,7 +14,8 @@
  - `sudo apt update`
  - `sudo apt list --upgradable`
  - `sudo apt -y upgrade`
- - `sudo reboot`
+ - `sudo apt -y upgrade`
+ - `sudo apt clean`
  - `sudo rpi-update`
  - `sudo reboot`
  - `sudo raspi-config`
@@ -46,7 +47,6 @@
 ## configuration - optional
 
 ###  disable wifi
- - `sudo raspi-config nonint set_config_var dtoverlay=pi3-disable-wifi /boot/config.txt`
  - `sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"`
 
 ### disable bluetooth
