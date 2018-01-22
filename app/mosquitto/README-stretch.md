@@ -1,9 +1,9 @@
 # installation
- - wget -qO - http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | apt-key add -
- - cd /etc/apt/sources.list.d/
- - wget http://repo.mosquitto.org/debian/mosquitto-stretch.list
- - apt update
- - apt -y install mosquitto mosquitto-clients
+ - `wget -qO - http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | apt-key add -`
+ - `cd /etc/apt/sources.list.d/`
+ - `wget http://repo.mosquitto.org/debian/mosquitto-stretch.list`
+ - `apt update`
+ - `apt -y install mosquitto mosquitto-clients`
 
 # configuration
  - `sudo touch /etc/mosquitto/passwd.orig`
