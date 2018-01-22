@@ -30,8 +30,5 @@ allow_anonymous false
 EOT"
 ```
 
-# enable
- - `sudo systemctl enable mosquitto`
-
 # backup
  - /etc/mosquitto
