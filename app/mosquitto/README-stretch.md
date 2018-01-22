@@ -5,9 +5,6 @@
  - apt update
  - apt -y install mosquitto mosquitto-clients
 
-## workaround
- - deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
-
 # configuration
  - `sudo touch /etc/mosquitto/passwd.orig`
 ```bash
