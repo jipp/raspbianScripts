@@ -1,28 +1,28 @@
 13c13
-< debugLevel = 3
+< debugLevel = 4
 ---
-> debugLevel = 4
+> debugLevel = 3
 24c24
-< enableCoreDumps = false
+< enableCoreDumps = true
 ---
-> enableCoreDumps = true
+> enableCoreDumps = false
 56c56
-< familyDataPath = /data/homegear/families
+< familyDataPath = /var/lib/homegear/families
 ---
-> familyDataPath = /var/lib/homegear/families
+> familyDataPath = /data/homegear/families
 83c83
-< databasePath = /data/homegear/db
+< # databasePath =
 ---
-> # databasePath =
+> databasePath = /data/homegear/db
 87c87
-< databaseBackupPath = /data/homegear/backup
+< # databaseBackupPath =
 ---
-> # databaseBackupPath =
+> databaseBackupPath = /data/homegear/backup
 205c205
-< flowsDataPath = /data/homegear/flows/data
+< flowsDataPath = /var/lib/homegear/flows/data
 ---
-> flowsDataPath = /var/lib/homegear/flows/data
+> flowsDataPath = /data/homegear/flows/data
 230c230
-< tempPath = /var/tmp/homegear
+< tempPath = /var/lib/homegear/tmp
 ---
-> tempPath = /var/lib/homegear/tmp
+> tempPath = /var/tmp/homegear

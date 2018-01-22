@@ -232,7 +232,7 @@ EOT"
  - `mkdir -p /data/homegear/db`
  - `mkdir -p /data/homegear/backup`
  - `mkdir -p /data/homegear/flows/data`
- - `chown homegear:homegear /data/homegear`
+ - `chown -R homegear:homegear /data/homegear`
 
 ## system add-on
  - unix
