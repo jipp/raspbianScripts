@@ -4,8 +4,8 @@
  - `cd /mnt`
 	 - `sudo cp /boot/config.txt /boot/config.txt.orig`
 	 - `sudo cp /boot/cmdline.txt /boot/cmdline.txt.orig`
-	 - `sudo sed s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// /boot/cmdline.txt`
-	 - `sudo sed s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ /boot/cmdline.txt`
+	 - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// /boot/cmdline.txt`
+	 - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ /boot/cmdline.txt`
 	 - `touch /boot/ssh`
 
 # installation
@@ -13,7 +13,6 @@
 ## configuration - general
  - `sudo apt update`
  - `sudo apt list --upgradable`
- - `sudo apt -y upgrade`
  - `sudo apt -y upgrade`
  - `sudo apt clean`
  - `sudo rpi-update`
@@ -106,6 +105,7 @@ sudo sh -c "cat <<EOT >> /etc/fstab
 tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=1m      0 0
 EOT"
 ``` 
+ - `sudo mount -a`
  
 ##### resolv.conf
  - `sudo mv /etc/resolv.conf /etc/resolv.conf.orig`
