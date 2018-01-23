@@ -1,5 +1,4 @@
 # installation
- - `apt install apt-transport-https`
  - `wget https://apt.homegear.eu/Release.key && apt-key add Release.key && rm Release.key`
  - `echo 'deb https://apt.homegear.eu/Raspbian/ stretch/' >> /etc/apt/sources.list.d/homegear.list`
  - `apt update`
