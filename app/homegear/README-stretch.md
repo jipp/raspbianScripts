@@ -8,7 +8,6 @@
  - `patch -b /etc/udev/rules.d/99-com.rules 99-com.rules.patch`
  - `patch -b /etc/homegear/families/homematicbidcos.conf homematicbidcos.conf.patch`
  - `patch -b /etc/homegear/mqtt.conf mqtt.conf.patch`
- - `patch -b /lib/systemd/system/homegear.service homegear.service.patch`
 
 # backup:
  - /etc/homegear
