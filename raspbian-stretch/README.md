@@ -95,17 +95,6 @@ EOT"
  - `sudo mount -a`
 
 #### system app modifications
-
-##### ntpd
- - `sudo apt -y install ntp`
- - `sudo sed -i.orig  s/"run\/ntp.conf.dhcp"/"var\/lib\/ntp\/ntp.conf.dhcp"/ /etc/init.d/ntp`
- - `sudo systemctl daemon-reload`
-```bash
-sudo sh -c "cat <<EOT >> /etc/fstab
-tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=1m      0 0
-EOT"
-``` 
- - `sudo mount -a`
  
 ##### resolv.conf
  - `sudo mv /etc/resolv.conf /etc/resolv.conf.orig`
@@ -119,7 +108,7 @@ EOT"
  - `sudo mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig`
  - `sudo ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data`
 
-##### dhcpcd
+##### dhcpcd - ???
  - `sudo mv /etc/dhcpcd.secret /etc/dhcpcd.secret.orig`
  - `sudo ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret`
 
@@ -137,8 +126,8 @@ sudo sh -c "cat <<EOT > /lib/systemd/system/setup-tmpfs.service
 [Unit]
 Description=setup-tmpfs
 DefaultDependencies=no
-After=var-log.mount var-cache.mount var-lib-ntp.mount var-lib-dhcpcd5.mount var-lib-dhcp.mount
-Before=systemd-random-seed.service avahi-daemon.service
+After=var-log.mount
+Before=
 
 [Service]
 Type=oneshot
@@ -159,20 +148,12 @@ EOT"
 sudo sh -c "cat <<EOT > /lib/systemd/scripts/setup-tmpfs.sh
 #!/bin/bash
 
-logger \"setup systemd folder\"
-mkdir /var/tmp/systemd
-chmod 755 /var/tmp/systemd
-
-logger \"setup random-seed folder\"
-touch /var/tmp/systemd/random-seed
-chmod 600 /var/tmp/systemd/random-seed
-
-which watchdog > /dev/null 2>&1
+which mosquitto > /dev/null 2>&1
 if [ \$? -eq 0 ]; then
-        logger \"setup watchdog folder\"
-        mkdir /var/log/watchdog
-        chown root:root /var/log/watchdog
-        chmod 750 /var/log/watchdog
+        logger \"setup mosquitto folder\"
+        mkdir /var/log/mosquitto
+        chown mosquitto:root /var/log/mosquitto
+        chmod 755 /var/log/mosquitto
 fi
 
 which homegear > /dev/null 2>&1
@@ -181,14 +162,6 @@ if [ \$? -eq 0 ]; then
         mkdir /var/log/homegear
         chown homegear:homegear /var/log/homegear
         chmod 750 /var/log/homegear
-fi
-
-which mosquitto > /dev/null 2>&1
-if [ \$? -eq 0 ]; then
-        logger \"setup mosquitto folder\"
-        mkdir /var/log/mosquitto
-        chown mosquitto:root /var/log/mosquitto
-        chmod 755 /var/log/mosquitto
 fi
 
 which lighttpd > /dev/null 2>&1
@@ -218,21 +191,21 @@ EOT"
  - `chown -R mosquitto:root /data/mosquitto`
  - `patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch`
 
+#### homegear
+ - `patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch`
+ - `patch -b /etc/homegear/main.conf main.conf.patch`
+ - `patch -b /etc/homegear/php.ini php.ini.patch`
+ - `mkdir -p /data/homegear/backup`
+ - `mkdir -p /data/homegear/db`
+ - `mkdir -p /data/homegear/families`
+ - `mkdir -p /data/homegear/flows/data`
+ - `chown -R homegear:homegear /data/homegear`
+ 
 #### lighttpd
  - `mv /var/lib/php/sessions /var/lib/php/sessions.orig`
  - `ln -s /var/tmp/sessions /var/lib/php/sessions`
  - `mkdir /data/lighttpd`
  - `chown -R www-data:www-data /data/lighttpd`
-
-#### homegear
- - `patch -b /etc/homegear/main.conf main.conf.patch`
- - `patch -b /etc/homegear/php.ini php.ini.patch`
- - `patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch`
- - `mkdir -p /data/homegear/families`
- - `mkdir -p /data/homegear/db`
- - `mkdir -p /data/homegear/backup`
- - `mkdir -p /data/homegear/flows/data`
- - `chown -R homegear:homegear /data/homegear`
 
 ## system add-on
  - unix
