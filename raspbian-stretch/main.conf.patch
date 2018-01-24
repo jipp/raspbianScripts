@@ -2,14 +2,22 @@
 < debugLevel = 4
 ---
 > debugLevel = 3
-24c24
-< enableCoreDumps = true
----
-> enableCoreDumps = false
 56c56
 < familyDataPath = /var/lib/homegear/families
 ---
 > familyDataPath = /data/homegear/families
+70c70
+< databaseMemoryJournal = false
+---
+> databaseMemoryJournal = true
+75c75
+< databaseWALJournal = true
+---
+> databaseWALJournal = false
+80c80
+< databaseSynchronous = true
+---
+> databaseSynchronous = false
 83c83
 < # databasePath =
 ---
@@ -17,7 +25,7 @@
 87c87
 < # databaseBackupPath =
 ---
-> databaseBackupPath = /data/homegear/backup
+> databaseBackupPath = /data/homegear/db
 205c205
 < flowsDataPath = /var/lib/homegear/flows/data
 ---
