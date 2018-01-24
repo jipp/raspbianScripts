@@ -2,13 +2,9 @@
 < enabled = false
 ---
 > enabled = true
-11c11
-< brokerHostname = localhost
----
-> brokerHostname = lemonpi
 35,36c35,36
 < #username = myUser
 < #password = myPassword
 ---
-> userName = homegear
+> username = homegear
 > password = 0acht15
