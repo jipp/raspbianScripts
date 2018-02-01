@@ -6,59 +6,27 @@
 < rfKey = 00112233445566778899AABBCCDDEEFF
 ---
 > rfKey = 037539348579599A9876F77699BCEFFA
-66c66
-< #[HomeMatic Wireless LAN Gateway]
----
-> ##[HomeMatic Wireless LAN Gateway]
-69c69
-< #id = My-HM-LGW
----
-> ##id = A3E299
-76c76
-< #deviceType = hmlgw
----
-> ##deviceType = hmlgw
-79c79
-< #host = 192.168.178.100
----
-> ##host = 192.168.0.36
-82c82
-< #port = 2000
----
-> ##port = 2000
-85c85
-< #portKeepAlive = 2001
----
-> ##portKeepAlive = 2001
-88c88
-< #lanKey = SecurityKey
----
-> ##lanKey = %V4!2%nydT
-92c92
-< #responseDelay = 60
----
-> ##responseDelay = 60
-137c137
+173c173
 < #[COC, SCC, CSM, CCD]
 ---
 > [COC, SCC, CSM, CCD]
-140c140
+176c176
 < #id = My-COC
 ---
 > id = A3E298
-148c148
+184c184
 < #deviceType = coc
 ---
 > deviceType = coc
-150c150
+186c186
 < #device = /dev/ttyAMA0
 ---
 > device = /dev/ttyAMA0
-158c158
+194c194
 < #gpio1 = 17
 ---
 > gpio1 = 17
-162c162
+198c198
 < #gpio2 = 18
 ---
 > gpio2 = 18
