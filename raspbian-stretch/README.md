@@ -108,10 +108,6 @@ EOT"
  - `sudo mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig`
  - `sudo ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data`
 
-##### dhcpcd - ???
- - `sudo mv /etc/dhcpcd.secret /etc/dhcpcd.secret.orig`
- - `sudo ln -s /var/tmp/dhcpcd.secret /etc/dhcpcd.secret`
-
 ##### rsyslog
  - `sudo touch /etc/rsyslog.d/loghost.conf.orig`
  - `sudo sh -c "echo '*.*     @192.168.0.27' >> /etc/rsyslog.d/loghost.conf"`
