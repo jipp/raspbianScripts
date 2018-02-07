@@ -4,6 +4,8 @@
 
 require('CheckDate.php');
 
+date_default_timezone_set('Europe/Berlin');
+
 $checkDate = new CheckDate("bankholiday.txt");
 
 $checkDate->printContent();

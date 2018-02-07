@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 class CheckDate {
 
@@ -9,7 +9,7 @@ class CheckDate {
 			if ($this->parse($file)) {
 				return true;
 			} else {
-				exit();
+				retur false;
 			}
 		}
 	}
