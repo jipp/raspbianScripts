@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-class CheckDate {
+class Ical {
 
 	private $dates = array();
 
@@ -19,8 +19,16 @@ class CheckDate {
 
 	public function parse($file) {
 		if ($this->fileRead($file)) {
-			foreach($this->dates as &$value) {
-				$value = explode(" ", $value);
+			$block = explode("BEGIN", $this->string);
+			foreach($block as $key => $value) {
+				$this->dates[$key] = explode("\n", $value);
+			}
+			foreach($this->dates as $key => $value) {
+				foreach($value as $key => $value1) {
+//					$woke = explode(":", $value1, 2);
+//					//var_dump(explode(":", $value1, 2));
+					var_dump($value1);
+				}
 			}
 			return true;
 		} else {
@@ -30,8 +38,8 @@ class CheckDate {
 
 	public function fileRead($file) {
 		if ($this->fileExist($file)) {
-			$this->dates = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-			if ($this->dates === false) {
+			$this->string = file_get_contents($file);
+			if ($this->string === false) {
 				print("error file: ".$file."\n");
 				return false;
 			}
