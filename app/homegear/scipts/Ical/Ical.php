@@ -2,7 +2,7 @@
 
 class Ical {
 
-	private $dates = array();
+	private $events = array();
 
 	public function __construct($file = null) {
 		if (isset($file)) {
@@ -18,16 +18,18 @@ class Ical {
 	}
 
 	public function parse($file) {
-		if ($this->fileRead($file)) {
-			$block = explode("BEGIN", $this->string);
+		$string = $this->fileRead($file);
+		if (isset($string)) {
+			$block = explode("BEGIN", $string);
 			foreach($block as $key => $value) {
-				$this->dates[$key] = explode("\n", $value);
+				$dates[$key] = explode("\n", $value);
 			}
-			foreach($this->dates as $key => $value) {
-				foreach($value as $key => $value1) {
-//					$woke = explode(":", $value1, 2);
-//					//var_dump(explode(":", $value1, 2));
-					var_dump($value1);
+			foreach($dates as $key => $value) {
+				foreach($value as $subKey => $subValue) {
+					$entry = explode(":", $subValue, 2);
+					if (isset($entry[1])) {
+						$this->events[$key][$entry[0]] = $entry[1];
+					}
 				}
 			}
 			return true;
@@ -38,14 +40,14 @@ class Ical {
 
 	public function fileRead($file) {
 		if ($this->fileExist($file)) {
-			$this->string = file_get_contents($file);
-			if ($this->string === false) {
+			$string = file_get_contents($file);
+			if ($string === false) {
 				print("error file: ".$file."\n");
 				return false;
 			}
-			return true;
+			return $string;
 		} else {
-			return false;
+			return null;
 		}
 	}
 
@@ -60,24 +62,20 @@ class Ical {
 
 	public function match($date = null) {
 		if (!isset($date)) {
-			$date = date("Y-m-d");
+			$date = date("Ymd");
 		}
-		foreach($this->dates as $value) {
-			if (count($value) == 1) {
-				if ($date == $value[0]) {
-					return true;
-				}
-			} elseif (count($value) == 2) {
-				if ($date >= $value[0] and $date <= $value[1]) {
-					return true;
+		foreach($this->events as $value) {
+			if (isset($value["SUMMARY"])) {
+				if ($date >= $value["DTSTART;VALUE=DATE"] and $date < $value["DTEND;VALUE=DATE"]) {
+					return $value["SUMMARY"];
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public function printContent() {
-		var_dump($this->dates);
+		var_dump($this->events);
 	}
 
 }
