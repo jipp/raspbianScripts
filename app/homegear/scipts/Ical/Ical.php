@@ -4,20 +4,27 @@ class Ical {
 
 	private $events = array();
 
-	public function __construct($file = null) {
-		if (isset($file)) {
-			if ($this->parse($file)) {
-				return true;
-			} else {
-				exit();
+	public function __construct(...$files) {
+		$created = true;
+		if (count($files) != 0) {
+			foreach($files as $file) {
+				if (!$this->parse($file)) {
+					$created = false;
+				}
 			}
+		} else {
+			$created = false;
 		}
+		if ($created == false) {
+			exit();
+		}
+		return true;
 	}
 
 	function __destruct() {
 	}
 
-	public function parse($file) {
+	private function parse($file) {
 		$string = $this->fileRead($file);
 		if (isset($string)) {
 			$block = explode("BEGIN", $string);
@@ -25,10 +32,11 @@ class Ical {
 				$dates[$key] = explode("\n", $value);
 			}
 			foreach($dates as $key => $value) {
+				$keyCount = count($this->events);
 				foreach($value as $subKey => $subValue) {
 					$entry = explode(":", $subValue, 2);
 					if (isset($entry[1])) {
-						$this->events[$key][$entry[0]] = $entry[1];
+						$this->events[$keyCount][$entry[0]] = $entry[1];
 					}
 				}
 			}
@@ -38,7 +46,7 @@ class Ical {
 		}
 	}
 
-	public function fileRead($file) {
+	private function fileRead($file) {
 		if ($this->fileExist($file)) {
 			$string = file_get_contents($file);
 			if ($string === false) {
@@ -51,7 +59,7 @@ class Ical {
 		}
 	}
 
-	public function fileExist($file) {
+	private function fileExist($file) {
 		if (!file_exists($file)) {
 			print("file does not exist: ".$file."\n");
 			return false;
