@@ -158,6 +158,9 @@ if [ \$? -eq 0 ]; then
         mkdir /var/log/homegear
         chown homegear:homegear /var/log/homegear
         chmod 750 /var/log/homegear
+        mkdir -p /var/tmp/homegear/tmp/php
+        chown -R homegear:homegear /var/tmp/homegear
+        chmod -R 770 /var/tmp/homegear
 fi
 
 which lighttpd > /dev/null 2>&1
