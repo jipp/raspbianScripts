@@ -263,3 +263,14 @@ EOT"
 ```
  - for read-only 
     - `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
+    
+## RTC
+ - `sudo raspi-config nonint do_i2c 0`
+ - `sudo install apt -y install i2c-tools``
+ - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
+ - `sudo systemctl stop fake-hwclock.service`
+ - `sudo systemctl disable fake-hwclock.service`
+ - `patch -b hwclock.patch /etc/default/hwclock`
+ - `patch -b hwclock-set.patch /lib/udev/hwclock-set`
+ - `hwclock -r`
+ - `hwclock -w`
