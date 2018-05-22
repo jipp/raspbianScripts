@@ -215,6 +215,8 @@ EOT"
 	 - `sudo apt -y install python-dev python-pip virtualenv`
  - avr
 	 - `sudo apt -y install gcc-avr avr-libc avrdude`
+ - ntp
+	 - `sudo apt -y install ntp`
 
 # system settings
 
