@@ -6,27 +6,27 @@
 < rfKey = 00112233445566778899AABBCCDDEEFF
 ---
 > rfKey = 037539348579599A9876F77699BCEFFA
-173c173
+177c177
 < #[COC, SCC, CSM, CCD]
 ---
 > [COC, SCC, CSM, CCD]
-176c176
+180c180
 < #id = My-COC
 ---
 > id = A3E298
-184c184
+188c188
 < #deviceType = coc
 ---
 > deviceType = coc
-186c186
+190c190
 < #device = /dev/ttyAMA0
 ---
 > device = /dev/ttyAMA0
-194c194
+198c198
 < #gpio1 = 17
 ---
 > gpio1 = 17
-198c198
+202c202
 < #gpio2 = 18
 ---
 > gpio2 = 18

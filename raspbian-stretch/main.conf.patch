@@ -26,11 +26,11 @@
 < # databaseBackupPath =
 ---
 > databaseBackupPath = /data/homegear/db
-205c205
+181c181
 < nodeBlueDataPath = /var/lib/homegear/node-blue/data
 ---
 > nodeBlueDataPath = /data/homegear/node-blue/data
-256c256
+232c232
 < tempPath = /var/lib/homegear/tmp
 ---
 > tempPath = /var/tmp/homegear/tmp
