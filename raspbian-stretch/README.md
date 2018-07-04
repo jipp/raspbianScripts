@@ -193,6 +193,7 @@ EOT"
 #### homegear
  - `patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch`
  - `patch -b /etc/homegear/main.conf main.conf.patch`
+ - `patch -b /etc/homegear/management.conf management.conf.patch`
  - `patch -b /etc/homegear/php.ini php.ini.patch`
  - `mkdir -p /data/homegear/backup`
  - `mkdir -p /data/homegear/db`
