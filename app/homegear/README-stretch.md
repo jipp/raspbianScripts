@@ -2,7 +2,7 @@
  - `wget https://apt.homegear.eu/Release.key && apt-key add Release.key && rm Release.key`
  - `echo 'deb https://apt.homegear.eu/Raspbian/ stretch/' >> /etc/apt/sources.list.d/homegear.list`
  - `apt update`
- - `apt -y install homegear homegear-nodes-core homegear-homematicbidcos`
+ - `apt -y install homegear homegear-nodes-core homegear-management homegear-homematicbidcos`
 
 # configuration
  - `patch -b /etc/udev/rules.d/99-com.rules 99-com.rules.patch`
