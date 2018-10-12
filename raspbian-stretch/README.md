@@ -84,12 +84,13 @@ proc           /proc              proc  defaults                                
 /dev/mmcblk0p2 /                  ext4  defaults,noatime,ro                                    0 1
 /dev/mmcblk0p3 /data              ext4  defaults,noatime                                       0 2
 tmpfs          /tmp               tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
-tmpfs          /var/backups       tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=100m  0 0
+tmpfs          /var/backups       tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=15m   0 0
 tmpfs          /var/cache         tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=200m  0 0
-tmpfs          /var/lib/dhcpcd5   tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=1m    0 0
-tmpfs          /var/lib/logrotate tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=1m    0 0
-tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=100m  0 0
-tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=100m 0 0
+tmpfs          /var/lib/dhcpcd5   tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=80k   0 0
+tmpfs          /var/lib/logrotate tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=40k   0 0
+tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=4m    0 0
+tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=10m  0 0
+tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=40k     0 0
 EOT"
 ```
  - `sudo mount -a`
