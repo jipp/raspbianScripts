@@ -2,3 +2,7 @@
 < debugLevel = 4
 ---
 > debugLevel = 3
+42c42
+< settingsWhitelist = ^main\.conf$ dataPath debugLevel nodeBlueDebugOutput
+---
+> settingsWhitelist = ^main\.conf$ dataPath writeableDataPath familyDataPath debugLevel nodeBlueDebugOutput
