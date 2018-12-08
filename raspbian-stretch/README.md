@@ -270,7 +270,7 @@ EOT"
     
 ## RTC
  - `sudo raspi-config nonint do_i2c 0`
- - `sudo install apt -y install i2c-tools``
+ - `sudo apt -y install i2c-tools`
  - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
  - `sudo systemctl stop fake-hwclock.service`
  - `sudo systemctl disable fake-hwclock.service`
