@@ -1,4 +1,4 @@
 14c14
 < #HWCLOCKPARS=
 ---
-> HWCLOCKPARS=--noadjfile --utc
+> HWCLOCKPARS="--noadjfile --utc"
