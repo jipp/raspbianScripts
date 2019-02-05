@@ -1,32 +1,32 @@
-15c15
+17c17
 < #centralAddress = 0xFD0001
 ---
 > centralAddress = 0xFD0801
-22c22
+24c24
 < rfKey = 00112233445566778899AABBCCDDEEFF
 ---
 > rfKey = 037539348579599A9876F77699BCEFFA
-177c177
+179c179
 < #[COC, SCC, CSM, CCD]
 ---
 > [COC, SCC, CSM, CCD]
-180c180
+182c182
 < #id = My-COC
 ---
 > id = A3E298
-188c188
+190c190
 < #deviceType = coc
 ---
 > deviceType = coc
-190c190
+192c192
 < #device = /dev/ttyAMA0
 ---
 > device = /dev/ttyAMA0
-198c198
+200c200
 < #gpio1 = 17
 ---
 > gpio1 = 17
-202c202
+204c204
 < #gpio2 = 18
 ---
 > gpio2 = 18
