@@ -46,29 +46,57 @@ EOT"
 
 # tls
  - Certificate Authority:
- ```bash
- openssl req -new -x509 -days 3650 -extensions v3_ca -keyout ca.key -out ca.crt -subj "/C=DE/ST=NRW/L=Aachen/O=wobilix/OU=lemonpi/CN=wobilix.de"
- ```
+```bash
+openssl req -new -x509 -days 3650 -extensions v3_ca -keyout ca.key -out ca.crt -subj "/C=DE/ST=NRW/L=Aachen/O=wobilix/OU=lemonpi/CN=wobilix.de"
+```
  - Generate a server key without encryption:
- ```bash
- openssl genrsa -out server.key 2048
- ```
+```bash
+openssl genrsa -out server.key 2048
+```
  - Generate a certificate signing request to send to the CA:
- ```bash
- openssl req -out server.csr -key server.key -new -config openssl.cnf
- ```
+```bash
+openssl req -out server.csr -key server.key -new -config openssl.cnf
+```
  - Send the CSR to the CA, or sign it with your CA key:
- ```bash
- openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 3650 -extensions req_cert_extensions -extfile openssl.cnf
- ```
+```bash
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 3650 -extensions req_cert_extensions -extfile openssl.cnf
+```
+ - create openssl.cnf:
+```bash
+sudo sh -c "cat <<EOT > openssl.cnf
+[ req ]
+distinguished_name = req_distinguished_name
+req_extensions = req_cert_extensions
+prompt = no
+
+[ req_distinguished_name ]
+C = DE
+ST = NRW
+L = Aachen
+O = wobilix
+OU = lemonpi
+CN = lemonpi
+emailAddress = wolfgang.keller@wobilix.de
+
+[ req_cert_extensions ]
+subjectAltName = @subject_alt_name
+
+[ subject_alt_name ]
+DNS.1 = lemonpi
+DNS.2 = lemonpi.fritz.box
+DNS.3 = dyndns.wobilix.de
+IP.1 = 127.0.0.1
+IP.2 = ::1
+EOT"
+```
  - install certificates:
- ```bash
- cp ca.crt /etc/mosquitto/ca_certificates/
- cp server.crt server.key /etc/mosquitto/certs/
- systemctl stop mosquitto
- systemctl start mosquitto
- systemctl status mosquitto
- ```
+```bash
+cp ca.crt /etc/mosquitto/ca_certificates/
+cp server.crt server.key /etc/mosquitto/certs/
+systemctl stop mosquitto
+systemctl start mosquitto
+systemctl status mosquitto
+```
  - get fingerprint:
 ```bash
 echo | openssl s_client -connect localhost:8883 | openssl x509 -fingerprint -noout
@@ -79,8 +107,6 @@ openssl req -text -noout -verify -in server.csr
 openssl x509 -in server.crt  -text -noout
 openssl x509 -in ca.crt  -text -noout
 ```
-
-
 
 # backup
  - /etc/mosquitto
