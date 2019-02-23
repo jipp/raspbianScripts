@@ -30,6 +30,57 @@ password_file /etc/mosquitto/passwd
 allow_anonymous false
 EOT"
 ```
+ - `sudo touch /etc/mosquitto/conf.d/tls.conf.orig`
+```bash
+sudo sh -c "cat <<EOT > /etc/mosquitto/conf.d/tls.conf
+listener 1883 127.0.0.1
+listener 1883 ::1
+
+listener 8883
+tls_version tlsv1.2
+cafile /etc/mosquitto/ca_certificates/ca.crt
+certfile /etc/mosquitto/certs/server.crt
+keyfile /etc/mosquitto/certs/server.key
+EOT"
+```
+
+# tls
+ - Certificate Authority:
+ ```bash
+ openssl req -new -x509 -days 3650 -extensions v3_ca -keyout ca.key -out ca.crt -subj "/C=DE/ST=NRW/L=Aachen/O=wobilix/OU=lemonpi/CN=wobilix.de"
+ ```
+ - Generate a server key without encryption:
+ ```bash
+ openssl genrsa -out server.key 2048
+ ```
+ - Generate a certificate signing request to send to the CA:
+ ```bash
+ openssl req -out server.csr -key server.key -new -config openssl.cnf
+ ```
+ - Send the CSR to the CA, or sign it with your CA key:
+ ```bash
+ openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 3650 -extensions req_cert_extensions -extfile openssl.cnf
+ ```
+ - install certificates:
+ ```bash
+ cp ca.crt /etc/mosquitto/ca_certificates/
+ cp server.crt server.key /etc/mosquitto/certs/
+ systemctl stop mosquitto
+ systemctl start mosquitto
+ systemctl status mosquitto
+ ```
+ - get fingerprint:
+```bash
+echo | openssl s_client -connect localhost:8883 | openssl x509 -fingerprint -noout
+```
+- display content:
+```bash
+openssl req -text -noout -verify -in server.csr
+openssl x509 -in server.crt  -text -noout
+openssl x509 -in ca.crt  -text -noout
+```
+
+
 
 # backup
  - /etc/mosquitto
