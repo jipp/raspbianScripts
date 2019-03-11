@@ -1,5 +1,5 @@
 # preparation
- - `dd if=2017-09-07-raspbian-stretch-lite.img of=/dev/sda`
+ - `sudo dd if=<image> of=/dev/sda`
  - `mount /dev/sda1 /mnt`
  - `cd /mnt`
 	 - `sudo cp /boot/config.txt /boot/config.txt.orig`
