@@ -2,10 +2,10 @@
  - `sudo dd if=<image> of=/dev/sda`
  - `sudo mount /dev/sda1 /mnt`
  - `cd /mnt`
-	 - `sudo cp /boot/config.txt /boot/config.txt.orig`
-	 - `sudo cp /boot/cmdline.txt /boot/cmdline.txt.orig`
-	 - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// /boot/cmdline.txt`
-	 - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ /boot/cmdline.txt`
+	 - `sudo cp config.txt config.txt.orig`
+	 - `sudo cp cmdline.txt cmdline.txt.orig`
+	 - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
+	 - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
 	 - `sudo touch ssh`
 
 # installation
