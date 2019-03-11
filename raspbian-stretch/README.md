@@ -6,7 +6,7 @@
 	 - `sudo cp /boot/cmdline.txt /boot/cmdline.txt.orig`
 	 - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// /boot/cmdline.txt`
 	 - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ /boot/cmdline.txt`
-	 - `touch /boot/ssh`
+	 - `sudo touch ssh`
 
 # installation
 
