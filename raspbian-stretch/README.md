@@ -8,7 +8,7 @@
  - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
  - `sudo touch ssh`
  - `cd /`
- - sudo umount /mnt`
+ - `sudo umount /mnt`
 
 # installation
 
