@@ -21,9 +21,6 @@
  - `sudo reboot`
  - `sudo raspi-config`
 	- 1 Change User Password - `sudo passwd pi`
-	- 2 Network Options
-	 	- N1 Hostname
-		`sudo raspi-config nonint do_hostname <hostname>`
 	- 4 Localisation Options
 		- I2 Change Timezone
 		`sudo raspi-config nonint do_change_timezone Europe/Berlin`
@@ -43,6 +40,10 @@
 	- 7 Advanced Options
 		- A3 Memory Split
 		`sudo raspi-config nonint do_memory_split 32|128` (normal|camera)
+	- 2 Network Options
+	 	- N1 Hostname
+		`sudo raspi-config nonint do_hostname <hostname>`
+
  - `sudo reboot`
     
 ## configuration - optional
