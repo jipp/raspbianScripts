@@ -259,6 +259,8 @@ wpa_passphrase=testtest
 EOT"
 ```
  - `sudo patch -b /etc/default/hostapd hostapd.patch`
+ - `systemctl unmask hostapd`
+ - `systemctl enable hostapd`
  - `sudo touch /etc/dnsmasq.d/wlan0.conf.orig`
 ```bash
 sudo sh -c "cat <<EOT >> /etc/dnsmasq.d/wlan0.conf
