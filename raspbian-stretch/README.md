@@ -236,21 +236,20 @@ EOT"
 sudo sh -c "cat <<EOT >> /etc/dhcpcd.conf
 interface wlan0
 static ip_address=192.168.1.1/24
+nohook wpa_supplicant
 EOT"
 ```
  - `sudo touch /etc/hostapd/hostapd.conf.orig`
 ```bash
 sudo sh -c "cat <<EOT >> /etc/hostapd/hostapd.conf
 interface=wlan0
-
-ssid=woke
-channel=1
-hw_mode=g
-ieee80211n=1
-ieee80211d=1
+driver=nl80211
 country_code=DE
-wmm_enabled=1
+hw_mode=g
+channel=7
+wmm_enabled=0
 
+ssid=raspi
 auth_algs=1
 wpa=2
 wpa_key_mgmt=WPA-PSK
@@ -264,10 +263,8 @@ EOT"
  - `sudo touch /etc/dnsmasq.d/wlan0.conf.orig`
 ```bash
 sudo sh -c "cat <<EOT >> /etc/dnsmasq.d/wlan0.conf
-domain-needed
 interface=wlan0
-listen-address=192.168.1.1
-dhcp-range=192.168.1.100,192.168.1.150,12h
+dhcp-range=192.168.1.100,192.168.1.150,24h
 EOT"
 ```
  - for read-only 
