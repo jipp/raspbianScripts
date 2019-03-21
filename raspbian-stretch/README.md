@@ -279,7 +279,7 @@ EOT"
  - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
  - `sudo systemctl stop fake-hwclock.service`
  - `sudo systemctl disable fake-hwclock.service`
- - `patch -b /etc/default/hwclock hwclock.patch`
- - `patch -b /lib/udev/hwclock-set hwclock-set.patch`
- - `hwclock -r`
- - `hwclock -w`
+ - `sudo patch -b /etc/default/hwclock hwclock.patch`
+ - `sudo patch -b /lib/udev/hwclock-set hwclock-set.patch`
+ - `sudo hwclock -r`
+ - `sudo hwclock -w`
