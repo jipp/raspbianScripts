@@ -7,7 +7,7 @@
  - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
  - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
  - `sudo touch ssh`
- - `cd /`
+ - `cd`
  - `sudo umount /mnt`
 
 # installation
