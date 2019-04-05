@@ -93,7 +93,7 @@ tmpfs          /var/lib/dhcpcd5   tmpfs defaults,noatime,mode=755,uid=root,gid=r
 tmpfs          /var/lib/logrotate tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=40k   0 0
 tmpfs          /var/log           tmpfs defaults,noatime,mode=755,uid=root,gid=root,size=4m    0 0
 tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=root,size=10m  0 0
-tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=40k     0 0
+#tmpfs          /var/lib/ntp       tmpfs defaults,noatime,mode=755,uid=ntp,gid=ntp,size=40k     0 0
 EOT"
 ```
  - `sudo mount -a`
