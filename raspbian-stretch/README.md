@@ -148,6 +148,10 @@ EOT"
 sudo sh -c "cat <<EOT > /lib/systemd/scripts/setup-tmpfs.sh
 #!/bin/bash
 
+touch /var/log/lastlog
+chmod 664 lastlog
+chgrp utmp lastlog
+
 which mosquitto > /dev/null 2>&1
 if [ \$? -eq 0 ]; then
         logger \"setup mosquitto folder\"
