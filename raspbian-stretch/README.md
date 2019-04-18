@@ -1,5 +1,5 @@
 # preparation
- - `sudo dd bs=4M if=<image> of=/dev/sda`
+ - `sudo dd bs=4M if=<image> of=/dev/sda` or `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
  - `sudo mount /dev/sda1 /mnt` or `sudo mount /dev/mmcblk0p1 /mnt`
  - `cd /mnt`
  - `sudo cp config.txt config.txt.orig`
