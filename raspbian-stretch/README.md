@@ -1,6 +1,6 @@
 # preparation
- - `sudo dd if=<image> of=/dev/sda`
- - `sudo mount /dev/sda1 /mnt`
+ - `sudo dd bs=4M if=<image> of=/dev/sda`
+ - `sudo mount /dev/sda1 /mnt` or `sudo mount /dev/mmcblk0p1 /mnt`
  - `cd /mnt`
  - `sudo cp config.txt config.txt.orig`
  - `sudo cp cmdline.txt cmdline.txt.orig`
