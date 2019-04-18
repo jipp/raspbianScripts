@@ -1,3 +1,7 @@
+# install docker 
+curl -sSL https://get.docker.com | sh
+do usermod -aG docker pi
+
 # create alpine
 docker import http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/armhf/alpine-minirootfs-3.9.3-armhf.tar.gz alpine:3.9.3
 
