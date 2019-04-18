@@ -67,6 +67,9 @@
 
 ### system
 
+#### disable ssh key save
+ - patch -b /etc/ssh/ssh_config ssh_config.patch
+
 #### disable swap
  - `sudo systemctl stop dphys-swapfile`
  - `sudo systemctl disable dphys-swapfile`
