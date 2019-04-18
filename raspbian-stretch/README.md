@@ -284,5 +284,6 @@ EOT"
  - `sudo systemctl disable fake-hwclock.service`
  - `sudo patch -b /etc/default/hwclock hwclock.patch`
  - `sudo patch -b /lib/udev/hwclock-set hwclock-set.patch`
+ - `sudo reboot`
  - `sudo hwclock -r`
  - `sudo hwclock -w`
