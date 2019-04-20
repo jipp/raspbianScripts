@@ -5,7 +5,7 @@
  - `sudo cp config.txt config.txt.orig`
  - `sudo cp cmdline.txt cmdline.txt.orig`
  - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
- - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
+ - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt` or `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/sda2"/ cmdline.txt`
  - `sudo touch ssh`
  - `cd`
  - `sudo umount /mnt`
@@ -14,7 +14,7 @@
 
 ## configuration - general
  - `sudo apt update`
- - `sudo apt list --upgradable`
+ - `apt list -a --upgradable`
  - `sudo apt -y upgrade`
  - `sudo apt clean`
  - `sudo rpi-update`
@@ -57,6 +57,9 @@
 
 ### disable audio
  - `sudo raspi-config nonint set_config_var dtparam=audio off /boot/config.txt`
+
+### enable gpio-shutdown
+ - `sudo sh -c "echo 'dtoverlay=gpio-shutdown,gpio_pin=21' >> /boot/config.txt"`
   
 ## configuration - read-write
  - partition resize
