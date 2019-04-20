@@ -1,14 +1,27 @@
 # install docker 
-curl -sSL https://get.docker.com | sh
-do usermod -aG docker pi
+ - curl -sSL https://get.docker.com | sh
+ - usermod -aG docker pi
 
 # create alpine
-docker import http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/armhf/alpine-minirootfs-3.9.3-armhf.tar.gz alpine:3.9.3
+ - docker import http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/armhf/alpine-minirootfs-3.9.3-armhf.tar.gz alpine:3.9.3
 
-# create mosquitto
-docker build -t mosquitto:1.5.8 mosquitto
-docker run -d --rm --name mosquitto -p 1883:1883 -p 8883:8883 -v /etc/mosquitto:/etc/mosquitto mosquitto:1.5.8
+# run mosquitto
+ - docker run -it --rm --name mosquitto -p 1883:1883 -v /home/pi/docker/mosquitto/config:/mosquitto/config -v /home/pi/docker/mosquitto/data:/mosquitto/data -v /home/pi/docker/mosquitto/log:/mosquitto/log eclipse-mosquitto
+
+# run influxdb
+ - docker run -d --rm --name influxdb -p 8086:8086 -v /home/pi/docker/influxdb:/var/lib/influxdb influxdb
+
+# run telegraf
+ - docker run -d --rm --name telegraf -v /home/pi/docker/telegraf:/etc/telegraf:ro telegraf --config-directory /etc/telegraf/conf.d
+
+# run chronograf
+ - docker run -d --rm --name chronograf -p 8888:8888 -v /home/pi/docker/chronograf:/var/lib/chronograf chronograf --influxdb-url=http://raspi:8086
+
+# connect to running container
+ - docker exec -it mosquitto /bin/sh
+
+# swarm init
+ - docker swarm init
 
 # deploy
-docker stack deploy -c docker-compose.yml raspi
-
+ - docker stack deploy -c docker-compose.yml raspi
