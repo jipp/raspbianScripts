@@ -4,9 +4,10 @@
  - `cd /mnt`
  - `sudo cp config.txt config.txt.orig`
  - `sudo cp cmdline.txt cmdline.txt.orig`
- - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
- - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt` or `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/sda2"/ cmdline.txt`
+ - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`                                                    
+ - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/sda2"/ cmdline.txt` or `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
  - `sudo touch ssh`
+ - `sudo vi wpa_supplicant.conf` - add known wifi networks
  - `cd`
  - `sudo umount /mnt`
 
@@ -14,7 +15,7 @@
 
 ## configuration - general
  - `sudo apt update`
- - `apt list -a --upgradable`
+ - `apt list --upgradable` or `apt list -a --upgradable`
  - `sudo apt -y upgrade`
  - `sudo apt clean`
  - `sudo rpi-update`
@@ -24,7 +25,7 @@
 	- 4 Localisation Options
 		- I2 Change Timezone
 		`sudo raspi-config nonint do_change_timezone Europe/Berlin`
-		- I4 Change Wi-fi Country
+		- I4 Change Wi-fi Country - not needed in case of headless wifi install
 		`sudo raspi-config nonint do_wifi_country DE`
 	- 5 Interfacing Options
 		- P1 Camera
@@ -33,7 +34,7 @@
 		`sudo raspi-config nonint do_ssh 0`
 		- P4 SPI
 		`sudo raspi-config nonint do_spi 0|1` (enable|disable)
-		- P5 I2C
+		- P5 I2C - not needed incase you use soft i2c
 		`sudo raspi-config nonint do_i2c 0|1` (enable|disable)
 		- P6 Serial
 		`sudo raspi-config nonint do_serial 1`; `sudo raspi-config nonint set_config_var enable_uart 1 /boot/config.txt`
@@ -58,11 +59,20 @@
 ### disable audio
  - `sudo raspi-config nonint set_config_var dtparam=audio off /boot/config.txt`
 
+### enable soft i2c for rtc
+ - `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
+
 ### enable gpio-shutdown
- - `sudo sh -c "echo 'dtoverlay=gpio-shutdown,gpio_pin=21' >> /boot/config.txt"`
-  
+ - `sudo sh -c "echo 'dtoverlay=gpio-shutdown' >> /boot/config.txt"`
+
+### enable gpio-heartbeat
+ - `sudo sh -c "echo 'dtoverlay=pi3-act-led,gpio=21,act_led_trigger=heartbeat' >> /boot/config.txt"`
+
+### enable gpio-fan
+ - `sudo sh -c "echo 'dtoverlay=gpio-fan,gpiopin=12' >> /boot/config.txt"`
+
 ## configuration - read-write
- - partition resize
+ - partition resize - onlfy works for sd card
 	 - `sudo raspi-config`
 		 - A1 Expand Filesystem
 
@@ -283,7 +293,7 @@ EOT"
     - `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
     
 ## RTC
- - `sudo raspi-config nonint do_i2c 0`
+ - `sudo raspi-config nonint do_i2c 0` - not needed for soft i2c
  - `sudo apt -y install i2c-tools`
  - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
  - `sudo systemctl stop fake-hwclock.service`
