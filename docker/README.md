@@ -4,9 +4,8 @@
  
 # install docker-compose
  - sudo apt install -y python-pip
- - sudo apt install libffi-dev libssl-dev
- - pip install docker-compose
- - sudo ln -s /home/pi/.local/bin/docker-compose /usr/bin/
+ - sudo apt install -y libffi-dev libssl-dev
+ - sudo pip install docker-compose
 
 # create alpine
  - docker import http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/armhf/alpine-minirootfs-3.9.3-armhf.tar.gz alpine:3.9.3
