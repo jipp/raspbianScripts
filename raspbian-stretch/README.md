@@ -69,7 +69,7 @@
  - `sudo sh -c "echo 'dtoverlay=pi3-act-led,gpio=21,act_led_trigger=heartbeat' >> /boot/config.txt"`
 
 ### enable gpio-fan
- - `sudo sh -c "echo 'dtoverlay=gpio-fan,gpiopin=12' >> /boot/config.txt"`
+ - `sudo sh -c "echo 'dtoverlay=gpio-fan' >> /boot/config.txt"`
 
 ## configuration - read-write
  - partition resize - onlfy works for sd card
@@ -242,6 +242,8 @@ EOT"
 	 - `sudo apt -y install gcc-avr avr-libc avrdude`
  - ntp (check fstab for mounted filesystem)
 	 - `sudo apt -y install ntp`
+ - i2c tools
+	 - `sudo apt -y install i2c-tools`
  - sshguard
  	 - `sudo apt -y install sshguard`
 
@@ -295,7 +297,7 @@ EOT"
 ## RTC
  - `sudo raspi-config nonint do_i2c 0` - not needed for soft i2c
  - `sudo apt -y install i2c-tools`
- - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
+ - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"` - not needed for soft i2c for rtc
  - `sudo systemctl stop fake-hwclock.service`
  - `sudo systemctl disable fake-hwclock.service`
  - `sudo patch -b /etc/default/hwclock hwclock.patch`
