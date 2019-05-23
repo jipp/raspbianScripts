@@ -84,6 +84,7 @@
  - sudo losetup -P /dev/loop0 raspbian-stretch-lite.img
  - sudo mount /dev/loop0p1 /mnt/
  - sudo umount /mnt
+ - sudo losetup -D
  
 ## configuration - read-only
 
