@@ -7,11 +7,8 @@
  - sudo apt install -y libffi-dev libssl-dev
  - sudo pip install docker-compose
 
-# create alpine
- - docker import http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/armhf/alpine-minirootfs-3.9.3-armhf.tar.gz alpine:3.9.3
-
 # docker-compose
-docker-compose up -c /home/pi/docker/docker-compose.yml --no-start
+docker-compose up -c docker-compose.yml --no-start
 
 # swarm init
  - docker swarm init
