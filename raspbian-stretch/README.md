@@ -1,11 +1,17 @@
 # preparation
- - `sudo dd bs=4M if=<image> of=/dev/sda` or `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
- - `sudo mount /dev/sda1 /mnt` or `sudo mount /dev/mmcblk0p1 /mnt`
+ - create image:
+ 	- `sudo dd bs=4M if=<image> of=/dev/sda`
+	- `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
+ - mount image:
+ 	- `sudo mount /dev/sda1 /mnt`
+ 	- `sudo mount /dev/mmcblk0p1 /mnt`
  - `cd /mnt`
  - `sudo cp config.txt config.txt.orig`
  - `sudo cp cmdline.txt cmdline.txt.orig`
  - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`                                                    
- - `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/sda2"/ cmdline.txt` or `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
+ - change boot reference:
+ 	- `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/sda2"/ cmdline.txt`
+	- `sudo sed -i s/"PARTUUID=........-.."/"\/dev\/mmcblk0p2"/ cmdline.txt`
  - `sudo touch ssh`
  - `sudo vi wpa_supplicant.conf` - add known wifi networks
  - `cd`
@@ -15,17 +21,19 @@
 
 ## configuration - general
  - `sudo apt update`
- - `apt list --upgradable` or `apt list -a --upgradable`
+ - list upgrade packages:
+ 	- `apt list --upgradable`
+	- `apt list -a --upgradable`
  - `sudo apt -y upgrade`
  - `sudo apt clean`
  - `sudo rpi-update`
  - `sudo reboot`
  - `sudo raspi-config`
-	- 1 Change User Password - `sudo passwd pi`
+	- 1 Change User Password `sudo passwd pi`
 	- 4 Localisation Options
 		- I2 Change Timezone
 		`sudo raspi-config nonint do_change_timezone Europe/Berlin`
-		- I4 Change Wi-fi Country - not needed in case of headless wifi install
+		- I4 Change Wi-fi Country
 		`sudo raspi-config nonint do_wifi_country DE`
 	- 5 Interfacing Options
 		- P1 Camera
@@ -34,7 +42,7 @@
 		`sudo raspi-config nonint do_ssh 0`
 		- P4 SPI
 		`sudo raspi-config nonint do_spi 0|1` (enable|disable)
-		- P5 I2C - not needed incase you use soft i2c
+		- P5 I2C
 		`sudo raspi-config nonint do_i2c 0|1` (enable|disable)
 		- P6 Serial
 		`sudo raspi-config nonint do_serial 1`; `sudo raspi-config nonint set_config_var enable_uart 1 /boot/config.txt`
@@ -44,7 +52,6 @@
 	- 2 Network Options
 	 	- N1 Hostname
 		`sudo raspi-config nonint do_hostname <hostname>`
-
  - `sudo reboot`
     
 ## configuration - optional
@@ -59,9 +66,6 @@
 ### disable audio
  - `sudo raspi-config nonint set_config_var dtparam=audio off /boot/config.txt`
 
-### enable soft i2c for rtc
- - `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
-
 ### enable gpio-shutdown
  - `sudo sh -c "echo 'dtoverlay=gpio-shutdown' >> /boot/config.txt"`
 
@@ -72,10 +76,15 @@
  - `sudo sh -c "echo 'dtoverlay=gpio-fan' >> /boot/config.txt"`
 
 ## configuration - read-write
- - partition resize - onlfy works for sd card
+ - partition resize for sd card
 	 - `sudo raspi-config`
 		 - A1 Expand Filesystem
 
+## mount/unmount image
+ - sudo losetup -P /dev/loop0 raspbian-stretch-lite.img
+ - sudo mount /dev/loop0p1 /mnt/
+ - sudo umount /mnt
+ 
 ## configuration - read-only
 
 ### system
@@ -295,9 +304,13 @@ EOT"
     - `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
     
 ## RTC
- - `sudo raspi-config nonint do_i2c 0` - not needed for soft i2c
+ - enable i2c
+ 	- HW i2c:
+		- `sudo raspi-config nonint do_i2c 0`
+		- `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
+	- SW i2c: 
+		- `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
  - `sudo apt -y install i2c-tools`
- - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"` - not needed for soft i2c for rtc
  - `sudo systemctl stop fake-hwclock.service`
  - `sudo systemctl disable fake-hwclock.service`
  - `sudo patch -b /etc/default/hwclock hwclock.patch`
