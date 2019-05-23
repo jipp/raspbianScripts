@@ -1,14 +1,17 @@
 version: '3'
 services:
  mosquitto:
+# sudo chown 1883:1883 /home/pi/docker/mosquitto/data/ /home/pi/docker/mosquitto/log/
   image: eclipse-mosquitto
   ports:
    - "1883:1883"
    - "8883:8883"
   volumes:
-   - /home/pi/docker/mosquitto/config:/mosquitto/config
-   - /home/pi/docker/mosquitto/data:/mosquitto/data
-   - /home/pi/docker/mosquitto/log:/mosquitto/log
+   - ./mosquitto/config:/mosquitto/config
+   - ./mosquitto/data:/mosquitto/data
+   - ./mosquitto/log:/mosquitto/log
+  networks:
+   - woke
   deploy:
    replicas: 1
    resources:
@@ -20,7 +23,9 @@ services:
   ports:
    - "8086:8086"
   volumes:
-   - /home/pi/docker/influxdb/data:/var/lib/influxdb
+   - ./influxdb/data:/var/lib/influxdb
+  networks:
+   - woke
   deploy:
    replicas: 1
    resources:
@@ -31,8 +36,10 @@ services:
   image: telegraf
   command: -config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d
   volumes:
-   - /home/pi/docker/telegraf/config:/etc/telegraf
+   - ./telegraf/config:/etc/telegraf
    - /var/run/docker.sock:/var/run/docker.sock
+  networks:
+   - woke
   deploy:
    replicas: 1
    resources:
@@ -42,27 +49,14 @@ services:
    - influxdb
    - mosquitto
 
- grafana:
-  image: grafana/grafana
-  ports:
-   - "3000:3000"
-  volumes:
-   - /home/pi/docker/grafana/log:/var/log/grafana
-   - /home/pi/docker/grafana/data:/var/lib/grafana
-  deploy:
-   replicas: 1
-   resources:
-    limits:
-     cpus: '0.50'
-  depends_on:
-   - influxdb
-
  chronograf:
   image: chronograf
   ports:
    - "8888:8888"
   volumes:
-   - /home/pi/docker/chronograf/data:/var/lib/chronograf
+   - ./chronograf/data:/var/lib/chronograf
+  networks:
+   - woke
   deploy:
    replicas: 1
    resources:
@@ -76,8 +70,10 @@ services:
   ports:
    - "9092:9092"
   volumes:
-   - /home/pi/docker/kapacitor/config:/etc/kapacitor
-   - /home/pi/docker/kapacitor/data:/var/lib/kapacitor
+   - ./kapacitor/config:/etc/kapacitor
+   - ./kapacitor/data:/var/lib/kapacitor
+  networks:
+   - woke
   deploy:
    replicas: 1
    resources:
@@ -85,3 +81,24 @@ services:
      cpus: '0.50'
   depends_on:
    - influxdb
+
+ grafana:
+# sudo chown 472 /home/pi/docker/grafana/data/
+  image: grafana/grafana
+  ports:
+   - "3000:3000"
+  volumes:
+   - ./grafana/log:/var/log/grafana
+   - ./grafana/data:/var/lib/grafana
+  networks:
+   - woke
+  deploy:
+   replicas: 1
+   resources:
+    limits:
+     cpus: '0.50'
+  depends_on:
+   - influxdb
+
+networks:
+ woke:
