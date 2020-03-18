@@ -319,3 +319,11 @@ EOT"
  - `sudo reboot`
  - `sudo hwclock -r`
  - `sudo hwclock -w`
+
+## OTG (for Raspberry Zero only)
+
+### Serial
+ - cmdline.txt: modules-load=dwc2,g_serial
+ - echo "dtoverlay=dwc2" | sudo tee -a /boot/config.txt
+ - systemctl enable getty@ttyGS0.service
+ 
