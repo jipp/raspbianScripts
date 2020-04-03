@@ -2,7 +2,9 @@
 
 MINECRAFT_FOLDER="/home/pi/minecraft/"
 SERVER="server.jar"
-JAVA="/home/pi/jdk1.8.0_231/bin/java"
+JAVA="/home/pi/java/jdk1.8.0_241/bin/java"
+MEMORY="1024M"
+# MEMORY="2G"
 CONSOLE="console.fifo"
 LOG="logs/latest.log"
 
@@ -44,6 +46,9 @@ get_process() {
 	return 0
 }
 
+init() {
+	$JAVA -Xmx1024M -Xms$MEMORY -jar server.jar nogui
+}
 
 start() {
     FILE=$MINECRAFT_FOLDER$CONSOLE
@@ -58,7 +63,7 @@ start() {
 	if [ "$PID_CONSOLE" = "" ] && [ "$PID_SERVER" = "" ]
 	then
 		cd $MINECRAFT_FOLDER
-		tail -f $CONSOLE | $JAVA -server -Xmx2G -Xms2G -jar $SERVER nogui > /dev/null 2>&1 &
+		tail -f $CONSOLE | $JAVA -server -Xmx$MEMORY -Xms$MEMORY -jar $SERVER nogui > /dev/null 2>&1 &
 	else
 		echo "some process is already running"
 	fi
@@ -131,7 +136,10 @@ case "$1" in
 		shift
 		cmd $*
 		;;
+	init)
+		init
+		;;
 	*)
-		echo "usage: $0 {start|stop|status|log|cmd <command> [parameter]}"
+		echo "usage: $0 {init|start|stop|status|log|cmd <command> [parameter]}"
 		;;
 esac
