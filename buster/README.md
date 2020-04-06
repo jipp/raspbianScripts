@@ -27,13 +27,6 @@
  - change boot reference
  	- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2"/ cmdline.txt`
 	- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ cmdline.txt`
- - `sudo apt update`
- - list upgrade packages:
- 	- `apt list --upgradable`
-	- `apt list -a --upgradable`
- - `sudo apt -y upgrade`
- - `sudo apt clean`
- - `sudo reboot`
  - `sudo raspi-config`
 	- 1 Change User Password `sudo passwd pi`
         - 2 Network Options
@@ -60,7 +53,7 @@
 		`sudo raspi-config nonint do_memory_split 32|128` (normal|camera)
 	- A1 Expand Filesystem
 		- `sudo parted /dev/mmcblk0 resizepart 2 100%`
-                - `sudo resize2fs /dev/mmcblk0p2`
+		- `sudo resize2fs /dev/mmcblk0p2`
 		- `sudo parted /dev/sda resizepart 2 100%`
 		- `sudo resize2fs /dev/sda2`
  - modify mounts
@@ -70,6 +63,12 @@
   	- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2     "/ fstab`
 	- `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/mmcblk0p1"/ fstab`
 	- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ fstab`
+ - `sudo apt update`
+ - list upgrade packages:
+ 	- `apt list --upgradable`
+	- `apt list -a --upgradable`
+ - `sudo apt -y upgrade`
+ - `sudo apt clean`
  - `sudo reboot`
 
 ## optional
