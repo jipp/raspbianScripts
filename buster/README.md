@@ -28,8 +28,9 @@
  	- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2"/ cmdline.txt`
 	- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ cmdline.txt`
  - `sudo raspi-config`
-	- 1 Change User Password `sudo passwd pi`
-        - 2 Network Options
+	- 1 Change User Password
+	`sudo passwd pi`
+	- 2 Network Options
                 - N1 Hostname
                 `sudo raspi-config nonint do_hostname <hostname>`
 	- 4 Localisation Options
