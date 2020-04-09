@@ -1,0 +1,4 @@
+10c10
+< #DAEMON_CONF=""
+---
+> DAEMON_CONF="/etc/hostapd/hostapd.conf"

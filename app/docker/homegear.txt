@@ -1,0 +1,36 @@
+docker exec -it homegear /bin/sh
+
+
+homegear:
+sudo rm -rf /homegear-data
+
+sudo mkdir -p /homegear-data/etc
+sudo mkdir /homegear-data/lib
+sudo mkdir /homegear-data/log
+
+docker run -d --rm -v /homegear-data/etc:/etc/homegear:Z -v /homegear-data/lib:/var/lib/homegear:Z -v /homegear-data/log:/var/log/homegear:Z -e TZ=Europe/Berlin -e HOST_USER_ID=$(id -u) -e HOST_USER_GID=$(id -g) -p 2001:2001 -p 2002:2002 -p 2003:2003 --name homegear homegear/homegear:stable
+docker run -d --rm -v /homegear-data/etc:/etc/homegear:Z -v /homegear-data/lib:/var/lib/homegear:Z -v /homegear-data/log:/var/log/homegear:Z -e TZ=Europe/Berlin -e HOST_USER_ID=$(id -u) -e HOST_USER_GID=$(id -g) -p 2001:2001 -p 2002:2002 -p 2003:2003 --device=/dev/ttyUSB0 --name homegear homegear/homegear:stable
+
+docker stop --time 60 homegear
+
+docker run -d --restart always -p 2001:2001 -p 2002:2002 -p 2003:2003 -v /homegear-data/etc:/etc/homegear:Z -v /homegear-data/lib:/var/lib/homegear:Z -v /homegear-data/log:/var/log/homegear:Z -e TZ=Europe/Berlin -e HOST_USER_ID=$(id -u) -e HOST_USER_GID=$(id -g) --device=/dev/ttyAMA0 --name homegear homegear/homegear:stable
+
+
+
+sudo rm -rf /homegear-data-testing
+
+sudo mkdir -p /homegear-data-testing/etc
+sudo mkdir /homegear-data-testing/lib
+sudo mkdir /homegear-data-testing/log
+
+docker run -d --rm -v /homegear-data-testing/etc:/etc/homegear:Z -v /homegear-data-testing/lib:/var/lib/homegear:Z -v /homegear-data-testing/log:/var/log/homegear:Z -e TZ=Europe/Berlin -e HOST_USER_ID=$(id -u) -e HOST_USER_GID=$(id -g) -p 2001:2001 -p 2002:2002 -p 2003:2003 --name homegear homegear/homegear:testing
+
+
+
+sudo rm -rf /homegear-data-nightly
+
+sudo mkdir -p /homegear-data-nightly/etc
+sudo mkdir /homegear-data-nightly/lib
+sudo mkdir /homegear-data-nightly/log
+
+docker run -d --rm -v /homegear-data-nightly/etc:/etc/homegear:Z -v /homegear-data-nightly/lib:/var/lib/homegear:Z -v /homegear-data-nightly/log:/var/log/homegear:Z -e TZ=Europe/Berlin -e HOST_USER_ID=$(id -u) -e HOST_USER_GID=$(id -g) -p 2001:2001 -p 2002:2002 -p 2003:2003 --name homegear homegear/homegear:nightly

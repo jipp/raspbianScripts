@@ -1,0 +1,36 @@
+13c13
+< debugLevel = 4
+---
+> debugLevel = 3
+70c70
+< familyDataPath = /var/lib/homegear/families
+---
+> familyDataPath = /data/homegear/families
+84c84
+< databaseMemoryJournal = false
+---
+> databaseMemoryJournal = true
+89c89
+< databaseWALJournal = true
+---
+> databaseWALJournal = false
+94c94
+< databaseSynchronous = true
+---
+> databaseSynchronous = false
+97c97
+< # databasePath =
+---
+> databasePath = /data/homegear/db
+101c101
+< # databaseBackupPath =
+---
+> databaseBackupPath = /data/homegear/db
+195c195
+< nodeBlueDataPath = /var/lib/homegear/node-blue/data
+---
+> nodeBlueDataPath = /data/homegear/node-blue/data
+246c246
+< tempPath = /var/lib/homegear/tmp
+---
+> tempPath = /var/tmp/homegear/tmp

@@ -1,0 +1,147 @@
+networks:
+  woke: {}
+services:
+
+  eclipse-mosquitto:
+    deploy:
+      replicas: 1
+    image: eclipse-mosquitto
+    networks:
+      woke: null
+    ports:
+    - 1883:1883/tcp
+    - 8883:8883/tcp
+    volumes:
+    - eclipse-mosquitto-config:/mosquitto/config:rw
+    - eclipse-mosquitto-data:/mosquitto/data:rw
+    - eclipse-mosquitto-log:/mosquitto/log:rw
+
+  influxdb:
+    deploy:
+      replicas: 1
+    image: influxdb
+    networks:
+      woke: null
+    ports:
+    - 8086:8086/tcp
+    volumes:
+    - influxdb-data:/var/lib/influxdb:rw
+
+  telegraf:
+    environment:
+    - HOST_PROC=/host/proc
+    command: -config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d
+    depends_on:
+    - influxdb
+    - eclipse-mosquitto
+    deploy:
+      replicas: 1
+    image: telegraf
+    networks:
+      woke: null
+    volumes:
+    - telegraf-config:/etc/telegraf:ro
+    - /proc:/host/proc:ro
+    - /var/run/docker.sock:/var/run/docker.sock:rw
+
+  grafana:
+    depends_on:
+    - influxdb
+    deploy:
+      replicas: 1
+    image: grafana/grafana
+    networks:
+      woke: null
+    ports:
+    - 3000:3000/tcp
+    volumes:
+    - grafana-data:/var/lib/grafana:rw
+
+  chronograf:
+    command: --influxdb-url=http://influxdb:8086
+    depends_on:
+    - influxdb
+    deploy:
+      replicas: 1
+    image: chronograf
+    networks:
+      woke: null
+    ports:
+    - 8888:8888/tcp
+    volumes:
+    - chronograf-data:/var/lib/chronograf:rw
+
+  kapacitor:
+    environment:
+    - KAPACITOR_INFLUXDB_0_URLS_0=http://influxdb:8086
+    depends_on:
+    - influxdb
+    deploy:
+      replicas: 1
+    image: kapacitor
+    networks:
+      woke: null
+    ports:
+    - 9092:9092/tcp
+    volumes:
+    - kapacitor-config:/etc/kapacitor:ro
+    - kapacitor-data:/var/lib/kapacitor:rw
+
+version: '3.0'
+volumes:
+  eclipse-mosquitto-log:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/eclipse-mosquitto/log"
+  eclipse-mosquitto-data:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/eclipse-mosquitto/data"
+  eclipse-mosquitto-config:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/eclipse-mosquitto/config"
+  influxdb-data:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/influxdb/data"
+  telegraf-config:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/telegraf/config"
+  grafana-data:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/grafana/data"
+  chronograf-data:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/chronograf/data"
+  kapacitor-data:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/kapacitor/data"
+  kapacitor-config:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=192.168.178.47,rw
+      device: ":/home/docker/kapacitor/config"
+
+
