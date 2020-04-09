@@ -1,5 +1,0 @@
-35c35,36
-< #   StrictHostKeyChecking ask
----
-> StrictHostKeyChecking no
-> UserKnownHostsFile /dev/null

@@ -1,4 +1,0 @@
-6c6
-< /usr/bin/homegear -u homegear -g homegear -p /var/run/homegear/homegear.pid -pre
----
-> #/usr/bin/homegear -u homegear -g homegear -p /var/run/homegear/homegear.pid -pre
