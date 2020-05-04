@@ -112,6 +112,7 @@ docker run -d \
 docker build . --tag collectd/jipp --force-rm
 
 sudo mkdir -p /docker/collectd-data/etc
+docker run --rm collectd/jipp cat /usr/share/collectd/types.db > types.db
 
 docker run -d \
  --restart always \
