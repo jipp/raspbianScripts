@@ -1,55 +1,136 @@
-# install docker 
+# install docker
  - `curl -sSL https://get.docker.com | sh`
  - `sudo usermod -aG docker pi`
- 
- ## for zero w
- 
- - `sh get-docker.sh --dry-run`
- - follow all steps like lister frm the dry-run except the latest
- - last step: `apt-get install -y -qq --no-install-recommends 'docker-ce=18.06.*'`
- 
-# install docker-compose
- - sudo apt install -y python-pip
- - sudo apt install -y libffi-dev libssl-dev
- - sudo pip install docker-compose
 
-# docker-compose
-docker-compose up -c docker-compose.yml --no-start
 
-# swarm init
- - docker swarm init
+# create docker network
+docker network create \
+ --driver bridge \
+ --ipv6 \
+ --subnet=2002:b0c6:b8e2:1::/64 \
+ lemonpi-net
 
-# deploy
- - docker stack deploy -c docker-compose.yml raspi
 
-# folder permissions
-ls -l *
--rw-r--r-- 1 root root 3157 Jun 10 17:51 docker-compose.yml
+# eclipse-mosquitto
 
-chronograf:
-total 4
-drwxr-xr-x 3 999 spi 4096 Jun 24 22:10 data
+sudo mkdir -p /docker/mosquitto-data/config
+sudo mkdir /docker/mosquitto-data/data
+sudo mkdir /docker/mosquitto-data/log
+sudo chown -R 1883:1883 /docker/mosquitto-data/config /docker/mosquitto-data/data /docker/mosquitto-data/log
 
-eclipse-mosquitto:
-total 12
-drwxr-xr-x 4 1883 1883 4096 Jun 10 13:29 config
-drwxr-xr-x 2 1883 1883 4096 Jul 10 10:22 data
-drwxr-xr-x 2 1883 1883 4096 Jun  7 13:15 log
+docker run -d \
+ --restart always \
+ -p 1883:1883 \
+ -p 8883:8883 \
+ -v /docker/mosquitto-data/config:/mosquitto/config \
+ -v /docker/mosquitto-data/log:/mosquitto/log \
+ -v /docker/mosquitto-data/data:/mosquitto/data \
+ --hostname mosquitto \
+ --name mosquitto \
+ --network lemonpi-net \
+ eclipse-mosquitto
 
-grafana:
-total 4
-drwxrwxrwx 4 472 472 4096 Jul 10 10:36 data
 
-influxdb:
-total 4
-drwxr-xr-x 5 999 spi 4096 Jun  7 14:55 data
+# homegear
 
-kapacitor:
-total 8
-drwxr-xr-x 2 root root 4096 Jun 10 17:54 config
-drwxr-xr-x 3  999 spi  4096 Jun 10 17:52 data
+sudo mkdir -p /docker/homegear-data/etc
+sudo mkdir /docker/homegear-data/lib
+sudo mkdir /docker/homegear-data/log
 
-telegraf:
-total 4
-drwxr-xr-x 3 root root 4096 Jun 10 18:09 config
+docker run -d \
+ --restart always \
+ -v /docker/homegear-data/etc:/etc/homegear:Z \
+ -v /docker/homegear-data/lib:/var/lib/homegear:Z \
+ -v /docker/homegear-data/log:/var/log/homegear:Z \
+ -v /sys:/sys \
+ -e TZ=Europe/Berlin -e HOST_USER_ID=$(id -u) \
+ -e HOST_USER_GID=$(id -g) \
+ -p 2001:2001 \
+ -p 2002:2002 \
+ -p 2003:2003 \
+ --device=/dev/ttyAMA0 \
+ --device=/dev/ttyACM0 \
+ --name homegear \
+ --hostname homegear \
+ --network lemonpi-net \
+ homegear/homegear:testing
 
+
+# influxdb
+
+sudo mkdir -p /docker/influxdb-data/etc
+sudo mkdir /docker/influxdb-data/lib
+
+docker run --rm influxdb influxd config > influxdb.conf
+
+docker run -d \
+ --restart always \
+ -v /docker/influxdb-data/etc:/etc/influxdb \
+ -v /docker/influxdb-data/lib:/var/lib/influxdb \
+ -p 8086:8086 \
+ --expose 25826/udp \
+ -p 25826:25826/udp \
+ --name influxdb \
+ --hostname influxdb \
+ --network lemonpi-net \
+ influxdb
+
+
+# telegraf
+
+sudo mkdir -p /docker/telegraf-data
+
+docker run --rm telegraf telegraf config > telegraf.conf
+
+docker run -d \
+ --restart always \
+ -e HOST_PROC=/host/proc \
+ -v /docker/telegraf-data/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+ -v /var/run/docker.sock:/var/run/docker.sock:ro \
+ -v /proc:/host/proc \
+ --name telegraf \
+ --hostname telegraf \
+ --network lemonpi-net \
+ telegraf
+
+
+# chronograf
+
+sudo mkdir -p /docker/chronograf-data/lib
+
+docker run -d \
+ --restart always \
+ -v /docker/chronograf-data/lib:/var/lib/chronograf \
+ -p 8888:8888 \
+ --name chronograf \
+ --network lemonpi-net \
+ chronograf --influxdb-url=http://influxdb:8086
+
+
+# collectd
+
+docker build . --tag collectd/jipp --force-rm
+
+sudo mkdir -p /docker/collectd-data/etc
+
+docker run -d \
+ --restart always \
+ -v /docker/collectd-data/etc:/etc/collectd:ro \
+ --name collectd \
+ --hostname collectd \
+ --network lemonpi-net \
+ collectd/jipp
+
+
+# grafana
+
+docker volume create grafana-storage
+
+docker run -d \
+ --restart always \
+ -v grafana-storage:/var/lib/grafana \
+ -p 3000:3000 \
+ --name grafana \
+ --hostname grafana \
+ --network lemonpi-net \
+ grafana/grafana
