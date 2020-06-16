@@ -1,13 +1,13 @@
 
 
 
-# image preparation
-## mount/unmout installation image on linux
+# installation image preparation
+## mount/unmout
  - `sudo losetup -P /dev/loop0 <image>`
  - `sudo mount /dev/loop0p1 /mnt/`
  - `sudo umount /mnt`
  - `sudo losetup -D`
-## prepare installation image
+## prepare
    - `cd /mnt`
    - `sudo cp config.txt config.txt.orig`
    - `sudo cp cmdline.txt cmdline.txt.orig`
@@ -15,13 +15,12 @@
    - `sudo touch ssh`
    - `sudo cp /etc/wpa/wpa_supplicant.conf .`
    - `cd`
-### 
-## prepare SD card
+## write
 copy image (depending on where card is located)
  - `sudo dd bs=4M if=<image> of=/dev/sda`
  - `sudo dd bs=4M if=<image> of=/dev/sdb`
  - `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
- 
+ # RaspberryPiOS preparation
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MjYyNDQ2OTZdfQ==
+eyJoaXN0b3J5IjpbMzc4Mzc1NDBdfQ==
 -->
