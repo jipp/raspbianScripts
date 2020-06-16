@@ -16,9 +16,11 @@
    - `sudo cp /etc/wpa/wpa_supplicant.conf .`
    - `cd`
 ## write
-copy image (depending on where card is located)
+depending on where card is located
  - `sudo dd bs=4M if=<image> of=/dev/sda`
+ or
  - `sudo dd bs=4M if=<image> of=/dev/sdb`
+ or
  - `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
  # RaspberryPiOS preparation
  ## madatory
@@ -48,10 +50,12 @@ copy image (depending on where card is located)
 		- A3 Memory Split
 		`sudo raspi-config nonint do_memory_split 32|128` (normal|camera)
 	- A1 Expand Filesystem
+depending on where card is located
 		- `sudo parted /dev/mmcblk0 resizepart 2 100%`
 		- `sudo resize2fs /dev/mmcblk0p2`
+		or
 		- `sudo parted /dev/sda resizepart 2 100%`
 		- `sudo resize2fs /dev/sda2`
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwNTg4MjM4NzldfQ==
+eyJoaXN0b3J5IjpbLTM1ODg0ODEzNV19
 -->
