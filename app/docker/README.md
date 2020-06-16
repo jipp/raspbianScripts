@@ -1,6 +1,8 @@
 # install docker
  - `curl -sSL https://get.docker.com | sh`
  - `sudo usermod -aG docker pi`
+ - `sudo apt install -y python3-pip`
+ - `sudo pip3 install docker-compose`
 
 
 # create docker network
@@ -8,6 +10,7 @@ docker network create \
  --driver bridge \
  --ipv6 \
  --subnet=2002:b0c6:b8e2:1::/64 \
+ --opt com.docker.network.bridge.name=br-lemonpi \
  lemonpi-net
 
 
@@ -43,7 +46,8 @@ docker run -d \
  -v /docker/homegear-data/lib:/var/lib/homegear:Z \
  -v /docker/homegear-data/log:/var/log/homegear:Z \
  -v /sys:/sys \
- -e TZ=Europe/Berlin -e HOST_USER_ID=$(id -u) \
+ -e TZ=Europe/Berlin \
+ -e HOST_USER_ID=$(id -u) \
  -e HOST_USER_GID=$(id -g) \
  -p 2001:2001 \
  -p 2002:2002 \
@@ -53,7 +57,7 @@ docker run -d \
  --name homegear \
  --hostname homegear \
  --network lemonpi-net \
- homegear/homegear:testing
+ homegear/homegear
 
 
 # influxdb
@@ -109,10 +113,8 @@ docker run -d \
 
 # collectd
 
-docker build . --tag collectd/jipp --force-rm
-
 sudo mkdir -p /docker/collectd-data/etc
-docker run --rm collectd/jipp cat /usr/share/collectd/types.db > types.db
+docker run --rm jipp13/fritzcollecd cat /usr/share/collectd/types.db > types.db
 
 docker run -d \
  --restart always \
@@ -120,7 +122,7 @@ docker run -d \
  --name collectd \
  --hostname collectd \
  --network lemonpi-net \
- collectd/jipp
+ jipp13/fritzcollecd
 
 
 # grafana
@@ -135,3 +137,19 @@ docker run -d \
  --hostname grafana \
  --network lemonpi-net \
  grafana/grafana
+
+# homebridge
+
+sudo mkdir -p /docker/homebridge-data
+
+docker run -d \
+ --restart always \
+ -v /docker/homebridge-data:/homebridge \
+ -e TZ=Europe/Berlin \
+ -e PGID=1000 \
+ -e PUID=1000 \
+ -e HOMEBRIDGE_CONFIG_UI=1 \
+ -e HOMEBRIDGE_CONFIG_UI_PORT=8080 \
+ --name homebridge \
+ --network host \
+ oznu/homebridge
