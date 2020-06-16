@@ -7,7 +7,7 @@
  - `sudo mount /dev/loop0p1 /mnt/`
  - `sudo umount /mnt`
  - `sudo losetup -D`
-## prepare SW image
+## prepare installation image
  - `cd /mnt`
  - `sudo cp config.txt config.txt.orig`
  - `sudo cp cmdline.txt cmdline.txt.orig`
@@ -16,10 +16,11 @@
  - `sudo cp /etc/wpa/wpa_supplicant.conf .`
  - `cd`
 
-## create SD image
- - create image
- 	- `sudo dd bs=4M if=<image> of=/dev/sda`
+## prepare SD card
+ copy image (depending on where card is located)
+- `sudo dd bs=4M if=<image> of=/dev/sda`
+ 	- `sudo dd bs=4M if=<image> of=/dev/sdb`
 	- `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzkyNjg1MTE2XX0=
+eyJoaXN0b3J5IjpbMjExNzgyMTgyMV19
 -->
