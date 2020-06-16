@@ -35,9 +35,9 @@ copy image (depending on where card is located)
 		`sudo raspi-config nonint do_wifi_country DE`
 	- 5 Interfacing Options
 		- P1 Camera
-		`sudo raspi-config nonint do_camera 0|1` (enable|disable)
+		`sudo raspi-config nonint do_camera 0|1`  (enable|disable)
 		- P2 SSH
-		`sudo raspi-config nonint do_ssh 0`
+		`sudo raspi-config nonint do_ssh 0|1` (enable|disable)
 		- P4 SPI
 		`sudo raspi-config nonint do_spi 0|1` (enable|disable)
 		- P5 I2C
@@ -53,5 +53,5 @@ copy image (depending on where card is located)
 		- `sudo parted /dev/sda resizepart 2 100%`
 		- `sudo resize2fs /dev/sda2`
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MjY0NTAxODhdfQ==
+eyJoaXN0b3J5IjpbLTIwNTg4MjM4NzldfQ==
 -->
