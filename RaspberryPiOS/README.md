@@ -21,6 +21,8 @@ copy image (depending on where card is located)
  - `sudo dd bs=4M if=<image> of=/dev/sdb`
  - `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
  # RaspberryPiOS preparation
+ ## madatory
+ 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzc4Mzc1NDBdfQ==
+eyJoaXN0b3J5IjpbMTA4OTI5NTc4M119
 -->
