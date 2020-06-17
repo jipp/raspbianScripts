@@ -54,7 +54,7 @@ depending on where the card is located
 
 ## optional
 
-### file system expansion
+### manual file system expansion
 
 - `sudo raspi-config`
 - 7 Advanced Options
@@ -109,8 +109,8 @@ depending on where the card is located
 
 ### wifi ap
 
- - `~~sudo apt -y  install dnsmasq hostapd`~~
- - ~~`sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig`~~
+ - `sudo apt -y  install dnsmasq hostapd`
+ - `sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig`
 
 ```bash
 sudo sh -c "cat <<EOT >> /etc/dhcpcd.conf
@@ -120,7 +120,7 @@ nohook wpa_supplicant
 EOT"
 ```
 
- - ~~`sudo touch /etc/hostapd/hostapd.conf.orig`~~
+ - `sudo touch /etc/hostapd/hostapd.conf.orig`
 
 ```bash
 sudo sh -c "cat <<EOT >> /etc/hostapd/hostapd.conf
@@ -140,10 +140,10 @@ wpa_passphrase=testtest
 EOT"
 ```
 
- - ~~`sudo patch -b /etc/default/hostapd hostapd.patch`~~
- - ~~`sudo systemctl unmask hostapd`~~
- - ~~`sudo systemctl enable hostapd`~~
- - ~~`sudo touch /etc/dnsmasq.d/wlan0.conf.orig`~~
+ - `sudo patch -b /etc/default/hostapd hostapd.patch`
+ - `sudo systemctl unmask hostapd`
+ - `sudo systemctl enable hostapd`
+ - `sudo touch /etc/dnsmasq.d/wlan0.conf.orig`
 
 ```bash
 sudo sh -c "cat <<EOT >> /etc/dnsmasq.d/wlan0.conf
@@ -152,16 +152,14 @@ dhcp-range=192.168.1.100,192.168.1.150,24h
 EOT"
 ```
 
- - ~~for read-only~~ 
-   - ~~`sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`~~
-
 ### rtc
 
- - HW i2c:
-   `sudo raspi-config nonint do_i2c 0`
-   `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
-- SW i2c: 
-  `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
+ - i2c:
+    - HW i2c:
+      `sudo raspi-config nonint do_i2c 0`
+      `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
+   - SW i2c: 
+     `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
  - ~~`sudo systemctl stop fake-hwclock.service`~~
  - ~~`sudo systemctl disable fake-hwclock.service`~~
  - ~~`sudo patch -b /etc/default/hwclock hwclock.patch`~~
@@ -172,9 +170,9 @@ EOT"
 
 ### otg
 
- - ~~cmdline.txt: modules-load=dwc2,g_serial~~
- - ~~echo "dtoverlay=dwc2" | sudo tee -a /boot/config.txt~~
- - ~~systemctl enable getty@ttyGS0.service~~
+ - `sudo sed -i '$s/$/ modules-load=dwc2,g_serial/' /boot/cmdline.txt`
+ - `sudo sh -c "echo 'dtoverlay=dwc2' >> /boot/config.txt"`
+ - `systemctl enable getty@ttyGS0.service`
 
 ### add-on
 
@@ -185,7 +183,7 @@ EOT"
  - `sudo apt -y install gcc-avr avr-libc avrdude`
  - `sudo apt -y install ntp`
 - `sudo apt -y install i2c-tools`
-   - `sudo apt -y install sshguard`
+- `sudo apt -y install sshguard`
 
 # read-only setup
 
@@ -251,11 +249,15 @@ EOT"
  - `sudo sh -c "echo '*.*     @192.168.0.27' >> /etc/rsyslog.d/loghost.conf"`
  - `sudo systemctl restart rsyslog`
 
+### wifi ap
+
+-   `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
+
 ## APP
 
-#### create service and script for read-only workarounds
+### workaround
 
-##### service
+#### service
 
  - `sudo touch /lib/systemd/system/setup-tmpfs.service.orig`
 
@@ -280,7 +282,7 @@ EOT"
 
  - `sudo systemctl enable setup-tmpfs.service`
 
-##### script
+#### script
 
  - `sudo mkdir /lib/systemd/scripts`
  - `sudo touch /lib/systemd/scripts/setup-tmpfs.sh.orig`
@@ -333,13 +335,13 @@ EOT"
 
  - `sudo chmod +x /lib/systemd/scripts/setup-tmpfs.sh`
 
-#### mosquitto
+### mosquitto
 
  - `mkdir /data/mosquitto`
  - `chown -R mosquitto:root /data/mosquitto`
  - `patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch`
 
-#### homegear
+### homegear
 
  - `patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch`
  - `patch -b /etc/homegear/main.conf main.conf.patch`
@@ -351,7 +353,7 @@ EOT"
  - `mkdir -p /data/homegear/flows/data`
  - `chown -R homegear:homegear /data/homegear`
 
-#### lighttpd
+### lighttpd
 
  - `mv /var/lib/php/sessions /var/lib/php/sessions.orig`
  - `ln -s /var/tmp/sessions /var/lib/php/sessions`

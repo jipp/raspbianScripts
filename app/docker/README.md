@@ -1,26 +1,39 @@
-# install docker
- - `curl -sSL https://get.docker.com | sh`
- - `sudo usermod -aG docker pi`
- - `sudo apt install -y python3-pip`
- - `sudo pip3 install docker-compose`
+# install
+
+## docker
+
+- `curl -sSL https://get.docker.com | sh`
+- `sudo usermod -aG docker pi`
+
+## docker-compose
+
+- `sudo apt install -y python3-pip`
+- `sudo pip3 install docker-compose`
 
 
-# create docker network
+# network
+```bash
 docker network create \
  --driver bridge \
  --ipv6 \
  --subnet=2002:b0c6:b8e2:1::/64 \
  --opt com.docker.network.bridge.name=br-lemonpi \
  lemonpi-net
+```
+
+# app
 
 
-# eclipse-mosquitto
+## eclipse-mosquitto
 
+```bash
 sudo mkdir -p /docker/mosquitto-data/config
 sudo mkdir /docker/mosquitto-data/data
 sudo mkdir /docker/mosquitto-data/log
 sudo chown -R 1883:1883 /docker/mosquitto-data/config /docker/mosquitto-data/data /docker/mosquitto-data/log
+```
 
+```bash
 docker run -d \
  --restart always \
  -p 1883:1883 \
@@ -32,14 +45,18 @@ docker run -d \
  --name mosquitto \
  --network lemonpi-net \
  eclipse-mosquitto
+```
 
 
-# homegear
+## homegear
 
+```bash
 sudo mkdir -p /docker/homegear-data/etc
 sudo mkdir /docker/homegear-data/lib
 sudo mkdir /docker/homegear-data/log
+```
 
+```bash
 docker run -d \
  --restart always \
  -v /docker/homegear-data/etc:/etc/homegear:Z \
@@ -58,15 +75,21 @@ docker run -d \
  --hostname homegear \
  --network lemonpi-net \
  homegear/homegear
+```
 
 
-# influxdb
+## influxdb
 
+```bash
 sudo mkdir -p /docker/influxdb-data/etc
 sudo mkdir /docker/influxdb-data/lib
+```
 
+```bash
 docker run --rm influxdb influxd config > influxdb.conf
+```
 
+```bash
 docker run -d \
  --restart always \
  -v /docker/influxdb-data/etc:/etc/influxdb \
@@ -78,14 +101,20 @@ docker run -d \
  --hostname influxdb \
  --network lemonpi-net \
  influxdb
+```
 
 
-# telegraf
+## telegraf
 
+```bash
 sudo mkdir -p /docker/telegraf-data
+```
 
+```bash
 docker run --rm telegraf telegraf config > telegraf.conf
+```
 
+```bash
 docker run -d \
  --restart always \
  -e HOST_PROC=/host/proc \
@@ -96,12 +125,16 @@ docker run -d \
  --hostname telegraf \
  --network lemonpi-net \
  telegraf
+```
 
 
-# chronograf
+## chronograf
 
+```bash
 sudo mkdir -p /docker/chronograf-data/lib
+```
 
+```bash
 docker run -d \
  --restart always \
  -v /docker/chronograf-data/lib:/var/lib/chronograf \
@@ -109,13 +142,20 @@ docker run -d \
  --name chronograf \
  --network lemonpi-net \
  chronograf --influxdb-url=http://influxdb:8086
+```
 
 
-# collectd
+## collectd
 
+```bash
 sudo mkdir -p /docker/collectd-data/etc
-docker run --rm jipp13/fritzcollecd cat /usr/share/collectd/types.db > types.db
+```
 
+```bash
+docker run --rm jipp13/fritzcollecd cat /usr/share/collectd/types.db > types.db
+```
+
+```bash
 docker run -d \
  --restart always \
  -v /docker/collectd-data/etc:/etc/collectd:ro \
@@ -123,12 +163,16 @@ docker run -d \
  --hostname collectd \
  --network lemonpi-net \
  jipp13/fritzcollecd
+```
 
 
-# grafana
+## grafana
 
+```bash
 docker volume create grafana-storage
+```
 
+```bash
 docker run -d \
  --restart always \
  -v grafana-storage:/var/lib/grafana \
@@ -137,11 +181,15 @@ docker run -d \
  --hostname grafana \
  --network lemonpi-net \
  grafana/grafana
+```
 
-# homebridge
+## homebridge
 
+```bash
 sudo mkdir -p /docker/homebridge-data
+```
 
+```bash
 docker run -d \
  --restart always \
  -v /docker/homebridge-data:/homebridge \
@@ -153,3 +201,4 @@ docker run -d \
  --name homebridge \
  --network host \
  oznu/homebridge
+```
