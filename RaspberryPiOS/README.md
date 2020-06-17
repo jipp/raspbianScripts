@@ -1,116 +1,110 @@
-# installation image
+# Rasperry Pi OS
 
-## mount/unmount
- - `sudo losetup -P /dev/loop0 <image>`
- - `sudo mount /dev/loop0p1 /mnt/`
- - `sudo umount /mnt`
- - `sudo losetup -D`
-## prepare
-   - `cd /mnt`
-   - `sudo cp config.txt config.txt.orig`
-   - `sudo cp cmdline.txt cmdline.txt.orig`
-   - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`                                                    
-   - `sudo touch ssh`
-   - `sudo cp /etc/wpa/wpa_supplicant.conf .`
-   - `cd`
-## write
-depending on where the card is located
- - `sudo dd bs=4M if=<image> of=/dev/sda`
- `sudo dd bs=4M if=<image> of=/dev/sdb`
-`sudo dd bs=4M if=<image> of=/dev/mmcblk0`
- # Raspberry Pi OS
- ## mandatory
+## installation image
+
+### mount/unmount
+
+- `sudo losetup -P /dev/loop0 <image>`
+- `sudo mount /dev/loop0p1 /mnt/`
+- `sudo umount /mnt`
+- `sudo losetup -D`
+
+### prepare
+
+- `cd /mnt`
+- `sudo cp config.txt config.txt.orig`
+- `sudo cp cmdline.txt cmdline.txt.orig`
+- `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
+- `sudo touch ssh`
+- `sudo cp /etc/wpa/wpa_supplicant.conf .`
+- `cd`
+
+### write
+
+- `sudo dd bs=4M if=<image> of=/dev/sda`
+- `sudo dd bs=4M if=<image> of=/dev/sdb`
+- `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
+
+## Raspberry Pi OS
+
+### mandatory
+
 - `sudo raspi-config`
 
-- 1 Change User Password
-`sudo passwd pi`
+- 1 Change User Password: `sudo passwd pi`
 - 2 Network Options
-            - N1 Hostname
-            `sudo raspi-config nonint do_hostname <hostname>`
+  - N1 Hostname: `sudo raspi-config nonint do_hostname <hostname>`
 - 4 Localisation Options
-	- I2 Change Timezone
-	`sudo raspi-config nonint do_change_timezone Europe/Berlin`
-	- I4 Change Wi-fi Country
-	`sudo raspi-config nonint do_wifi_country DE`
+  - I2 Change Timezone: `sudo raspi-config nonint do_change_timezone Europe/Berlin`
+  - I4 Change Wi-fi Country: `sudo raspi-config nonint do_wifi_country DE`
 - 5 Interfacing Options
-	- P1 Camera
-	`sudo raspi-config nonint do_camera 0|1`  (enable|disable)
-	- P2 SSH
-	`sudo raspi-config nonint do_ssh 0|1` (enable|disable)
-	- P4 SPI
-	`sudo raspi-config nonint do_spi 0|1` (enable|disable)
-	- P5 I2C
-	`sudo raspi-config nonint do_i2c 0|1` (enable|disable)
-	- P6 Serial
-	`sudo raspi-config nonint do_serial 1`; `sudo raspi-config nonint set_config_var enable_uart 1 /boot/config.txt`
+  - P1 Camera: `sudo raspi-config nonint do_camera 0|1` (enable|disable)
+  - P2 SSH: `sudo raspi-config nonint do_ssh 0|1` (enable|disable)
+  - P4 SPI: `sudo raspi-config nonint do_spi 0|1` (enable|disable)
+  - P5 I2C: `sudo raspi-config nonint do_i2c 0|1` (enable|disable)
+  - P6 Serial: `sudo raspi-config nonint do_serial 1; sudo raspi-config nonint set_config_var enable_uart 1 /boot/config.txt`
 - 7 Advanced Options
-  - A3 Memory Split
-  `sudo raspi-config nonint do_memory_split 32|128` (normal|camera)
-- `sudo apt update`
- - `apt list --upgradable`
-      `apt list -a --upgradable`
- - `sudo apt -y upgrade`
- - `sudo apt clean`
+  - A3 Memory Split: `sudo raspi-config nonint do_memory_split 32|128` (normal|camera)
+- `sudo apt update && sudo apt -y upgrade && sudo apt clean`
 
-## optional
+### optional
 
-### manual file system expansion
+#### manual file system expansion
 
 - `sudo raspi-config`
 - 7 Advanced Options
-  - A1 Expand Filesystem
-    depending on where card is located
-    - `sudo parted /dev/mmcblk0 resizepart 2 100%`
-      `sudo parted /dev/sda resizepart 2 100%`
-    - `sudo resize2fs /dev/mmcblk0p2`
-      `sudo resize2fs /dev/sda2`
+  - A1 Expand Filesystem:
+    - `sudo parted /dev/mmcblk0 resizepart 2 100% && sudo resize2fs /dev/mmcblk0p2`
+    - `sudo parted /dev/sda resizepart 2 100% && sudo resize2fs /dev/sda2`
 
-### boot reference
+#### boot reference
 
 - cd /boot
-- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2"/ cmdline.txt`
-  `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ cmdline.txt`
+- cmdline.txt:
+  - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2"/ cmdline.txt`
+  - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ cmdline.txt`
 - `cd /etc`
 - `sudo cp fstab fstab.orig`
-- `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/sda1     "/ fstab`
-  `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/mmcblk0p1"/ fstab`
-- `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2     "/ fstab` 
-  `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ fstab`
+- fstab:
+  - `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/sda1     "/ fstab`
+  - `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/mmcblk0p1"/ fstab`
+  - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2     "/ fstab`
+  - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ fstab`
 
-### disable wifi
+#### disable wifi
 
- - `sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"`
+- `sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"`
 
-### disable bluetooth
+#### disable bluetooth
 
- - `sudo sh -c "echo 'dtoverlay=pi3-disable-bt' >> /boot/config.txt"`
- - `sudo systemctl disable hciuart`
+- `sudo sh -c "echo 'dtoverlay=pi3-disable-bt' >> /boot/config.txt"`
+- `sudo systemctl disable hciuart`
 
-### disable audio
+#### disable audio
 
- - `sudo raspi-config nonint set_config_var dtparam=audio off /boot/config.txt`
+- `sudo raspi-config nonint set_config_var dtparam=audio off /boot/config.txt`
 
-### enable gpio-shutdown
+#### enable gpio-shutdown
 
 - `sudo sh -c "echo 'dtoverlay=gpio-shutdown' >> /boot/config.txt"`
 
-### enable gpio-heartbeat
+#### enable gpio-heartbeat
 
- - `sudo sh -c "echo 'dtoverlay=pi3-act-led,gpio=21,act_led_trigger=heartbeat' >> /boot/config.txt"`
+- `sudo sh -c "echo 'dtoverlay=pi3-act-led,gpio=21,act_led_trigger=heartbeat' >> /boot/config.txt"`
 
-### enable gpio-fan
+#### enable gpio-fan
 
- - `sudo sh -c "echo 'dtoverlay=gpio-fan' >> /boot/config.txt"`
+- `sudo sh -c "echo 'dtoverlay=gpio-fan' >> /boot/config.txt"`
 
-### wifi client
+#### wifi client
 
 - `sudo cp /etc/wpa_supplicant/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf.orig`
 - `wpa_passphrase "testing" "testingPassword" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null`
 
-### wifi ap
+#### wifi ap
 
- - `sudo apt -y  install dnsmasq hostapd`
- - `sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig`
+- `sudo apt -y  install dnsmasq hostapd`
+- `sudo cp /etc/dhcpcd.conf /etc/dhcpcd.conf.orig`
 
 ```bash
 sudo sh -c "cat <<EOT >> /etc/dhcpcd.conf
@@ -120,7 +114,7 @@ nohook wpa_supplicant
 EOT"
 ```
 
- - `sudo touch /etc/hostapd/hostapd.conf.orig`
+- `sudo touch /etc/hostapd/hostapd.conf.orig`
 
 ```bash
 sudo sh -c "cat <<EOT >> /etc/hostapd/hostapd.conf
@@ -140,10 +134,10 @@ wpa_passphrase=testtest
 EOT"
 ```
 
- - `sudo patch -b /etc/default/hostapd hostapd.patch`
- - `sudo systemctl unmask hostapd`
- - `sudo systemctl enable hostapd`
- - `sudo touch /etc/dnsmasq.d/wlan0.conf.orig`
+- `sudo patch -b /etc/default/hostapd hostapd.patch`
+- `sudo systemctl unmask hostapd`
+- `sudo systemctl enable hostapd`
+- `sudo touch /etc/dnsmasq.d/wlan0.conf.orig`
 
 ```bash
 sudo sh -c "cat <<EOT >> /etc/dnsmasq.d/wlan0.conf
@@ -152,62 +146,61 @@ dhcp-range=192.168.1.100,192.168.1.150,24h
 EOT"
 ```
 
-### rtc
+#### rtc
 
- - i2c:
-    - HW i2c:
-      `sudo raspi-config nonint do_i2c 0`
-      `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
-   - SW i2c: 
-     `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
- - ~~`sudo systemctl stop fake-hwclock.service`~~
- - ~~`sudo systemctl disable fake-hwclock.service`~~
- - ~~`sudo patch -b /etc/default/hwclock hwclock.patch`~~
- - ~~`sudo patch -b /lib/udev/hwclock-set hwclock-set.patch`~~
- - `sudo reboot`
- - `sudo hwclock -r`
- - `sudo hwclock -w`
+- i2c:
+  - HW i2c:
+    - `sudo raspi-config nonint do_i2c 0`
+    - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
+  - SW i2c:
+    - `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
+- ~~`sudo systemctl stop fake-hwclock.service`~~
+- ~~`sudo systemctl disable fake-hwclock.service`~~
+- ~~`sudo patch -b /etc/default/hwclock hwclock.patch`~~
+- ~~`sudo patch -b /lib/udev/hwclock-set hwclock-set.patch`~~
+- `sudo reboot`
+- `sudo hwclock -r`
+- `sudo hwclock -w`
 
-### otg
+#### otg
 
- - `sudo sed -i '$s/$/ modules-load=dwc2,g_serial/' /boot/cmdline.txt`
- - `sudo sh -c "echo 'dtoverlay=dwc2' >> /boot/config.txt"`
- - `systemctl enable getty@ttyGS0.service`
+- `sudo sed -i '$s/$/ modules-load=dwc2,g_serial/' /boot/cmdline.txt`
+- `sudo sh -c "echo 'dtoverlay=dwc2' >> /boot/config.txt"`
+- `systemctl enable getty@ttyGS0.service`
 
-### add-on
+#### add-on
 
 - `sudo apt -y install nmap dnsutils tcpdump`
-
- - `sudo apt -y install git`
- - `sudo apt -y install python-dev python-pip virtualenv`
- - `sudo apt -y install gcc-avr avr-libc avrdude`
- - `sudo apt -y install ntp`
+- `sudo apt -y install git`
+- `sudo apt -y install python-dev python-pip virtualenv`
+- `sudo apt -y install gcc-avr avr-libc avrdude`
+- `sudo apt -y install ntp`
 - `sudo apt -y install i2c-tools`
 - `sudo apt -y install sshguard`
 
-# read-only setup
+## read-only setup
 
-## OS
+### OS
 
-### disable ssh key save
+#### disable ssh key save
 
- - patch -b /etc/ssh/ssh_config ssh_config.patch
+- patch -b /etc/ssh/ssh_config ssh_config.patch
 
-### disable swap
+#### disable swap
 
- - `sudo systemctl stop dphys-swapfile`
- - `sudo systemctl disable dphys-swapfile`
- - `sudo dphys-swapfile swapoff`
- - `sudo dphys-swapfile uninstall`
+- `sudo systemctl stop dphys-swapfile`
+- `sudo systemctl disable dphys-swapfile`
+- `sudo dphys-swapfile swapoff`
+- `sudo dphys-swapfile uninstall`
 
-### create data partition
+#### create data partition
 
- - `sudo parted /dev/mmcblk0 resizepart 2 8000M`
- - `sudo resize2fs /dev/mmcblk0p2`
- - `sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%`
- - `sudo mkfs.ext4 /dev/mmcblk0p3`
- - `sudo mkdir /data`
- - `sudo cp /etc/fstab /etc/fstab.orig`
+- `sudo parted /dev/mmcblk0 resizepart 2 8000M`
+- `sudo resize2fs /dev/mmcblk0p2`
+- `sudo parted /dev/mmcblk0 mkpart primary 15630336s 100%`
+- `sudo mkfs.ext4 /dev/mmcblk0p3`
+- `sudo mkdir /data`
+- `sudo cp /etc/fstab /etc/fstab.orig`
 
 ```bash
 sudo sh -c "cat <<EOT > /etc/fstab
@@ -226,40 +219,40 @@ tmpfs          /var/tmp           tmpfs defaults,noatime,mode=1777,uid=root,gid=
 EOT"
 ```
 
- - `sudo mount -a`
+- `sudo mount -a`
 
-### resolv.conf
+#### resolv.conf
 
- - `sudo mv /etc/resolv.conf /etc/resolv.conf.orig`
- - `sudo ln -s /var/tmp/resolv.conf /etc/resolv.conf`
+- `sudo mv /etc/resolv.conf /etc/resolv.conf.orig`
+- `sudo ln -s /var/tmp/resolv.conf /etc/resolv.conf`
 
-### daily_lock
+#### daily_lock
 
- - `sudo mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig`
- - `sudo ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock`
+- `sudo mv /var/lib/apt/daily_lock /var/lib/apt/daily_lock.orig`
+- `sudo ln -s /var/tmp/daily_lock /var/lib/apt/daily_lock`
 
-### fake-hwclock
+#### fake-hwclock
 
- - `sudo mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig`
- - `sudo ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data`
+- `sudo mv /etc/fake-hwclock.data /etc/fake-hwclock.data.orig`
+- `sudo ln -s /var/tmp/fake-hwclock.data /etc/fake-hwclock.data`
 
-### rsyslog
+#### rsyslog
 
- - `sudo touch /etc/rsyslog.d/loghost.conf.orig`
- - `sudo sh -c "echo '*.*     @192.168.0.27' >> /etc/rsyslog.d/loghost.conf"`
- - `sudo systemctl restart rsyslog`
+- `sudo touch /etc/rsyslog.d/loghost.conf.orig`
+- `sudo sh -c "echo '*.*     @192.168.0.27' >> /etc/rsyslog.d/loghost.conf"`
+- `sudo systemctl restart rsyslog`
 
-### wifi ap
+#### wifi ap
 
--   `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
+- `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
 
-## APP
+### APP
 
-### workaround
+#### workaround
 
-#### service
+##### service
 
- - `sudo touch /lib/systemd/system/setup-tmpfs.service.orig`
+- `sudo touch /lib/systemd/system/setup-tmpfs.service.orig`
 
 ```bash
 sudo sh -c "cat <<EOT > /lib/systemd/system/setup-tmpfs.service
@@ -280,12 +273,12 @@ WantedBy=sysinit.target
 EOT"
 ```
 
- - `sudo systemctl enable setup-tmpfs.service`
+- `sudo systemctl enable setup-tmpfs.service`
 
-#### script
+##### script
 
- - `sudo mkdir /lib/systemd/scripts`
- - `sudo touch /lib/systemd/scripts/setup-tmpfs.sh.orig`
+- `sudo mkdir /lib/systemd/scripts`
+- `sudo touch /lib/systemd/scripts/setup-tmpfs.sh.orig`
 
 ```bash
 sudo sh -c "cat <<EOT > /lib/systemd/scripts/setup-tmpfs.sh
@@ -333,29 +326,29 @@ fi
 EOT"
 ```
 
- - `sudo chmod +x /lib/systemd/scripts/setup-tmpfs.sh`
+- `sudo chmod +x /lib/systemd/scripts/setup-tmpfs.sh`
 
-### mosquitto
+#### mosquitto
 
- - `mkdir /data/mosquitto`
- - `chown -R mosquitto:root /data/mosquitto`
- - `patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch`
+- `mkdir /data/mosquitto`
+- `chown -R mosquitto:root /data/mosquitto`
+- `patch -b /etc/mosquitto/mosquitto.conf mosquitto.conf.patch`
 
-### homegear
+#### homegear
 
- - `patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch`
- - `patch -b /etc/homegear/main.conf main.conf.patch`
- - `patch -b /etc/homegear/management.conf management.conf.patch`
- - `patch -b /etc/homegear/php.ini php.ini.patch`
- - `mkdir -p /data/homegear/backup`
- - `mkdir -p /data/homegear/db`
- - `mkdir -p /data/homegear/families`
- - `mkdir -p /data/homegear/flows/data`
- - `chown -R homegear:homegear /data/homegear`
+- `patch -b /etc/homegear/homegear-start.sh homegear-start.sh.patch`
+- `patch -b /etc/homegear/main.conf main.conf.patch`
+- `patch -b /etc/homegear/management.conf management.conf.patch`
+- `patch -b /etc/homegear/php.ini php.ini.patch`
+- `mkdir -p /data/homegear/backup`
+- `mkdir -p /data/homegear/db`
+- `mkdir -p /data/homegear/families`
+- `mkdir -p /data/homegear/flows/data`
+- `chown -R homegear:homegear /data/homegear`
 
 ### lighttpd
 
- - `mv /var/lib/php/sessions /var/lib/php/sessions.orig`
- - `ln -s /var/tmp/sessions /var/lib/php/sessions`
- - `mkdir /data/lighttpd`
- - `chown -R www-data:www-data /data/lighttpd`
+- `mv /var/lib/php/sessions /var/lib/php/sessions.orig`
+- `ln -s /var/tmp/sessions /var/lib/php/sessions`
+- `mkdir /data/lighttpd`
+- `chown -R www-data:www-data /data/lighttpd`
