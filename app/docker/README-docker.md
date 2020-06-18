@@ -9,6 +9,7 @@
 
 - `sudo apt install -y python3-pip`
 - `sudo pip3 install docker-compose`
+- `docker-compose -f docker-compose.yml -p woke up`
 
 ## network
 
