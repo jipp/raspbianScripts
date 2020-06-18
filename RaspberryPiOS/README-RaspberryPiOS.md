@@ -25,7 +25,7 @@
 - `sudo dd bs=4M if=<image> of=/dev/sdb`
 - `sudo dd bs=4M if=<image> of=/dev/mmcblk0`
 
-## Raspberry Pi OS
+## setup
 
 ### mandatory
 
@@ -346,7 +346,7 @@ EOT"
 - `mkdir -p /data/homegear/flows/data`
 - `chown -R homegear:homegear /data/homegear`
 
-### lighttpd
+#### lighttpd
 
 - `mv /var/lib/php/sessions /var/lib/php/sessions.orig`
 - `ln -s /var/tmp/sessions /var/lib/php/sessions`
