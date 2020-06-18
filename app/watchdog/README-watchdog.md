@@ -1,5 +1,9 @@
-installation
+# watchdog
+
+## installation
+
 - `sudo apt -y install watchdog`
 
-# configuration
+## configuration
+
 - `sudo patch -b /etc/watchdog.conf watchdog.conf.patch`

@@ -19,7 +19,7 @@ services:
       target: 8888
     restart: always
     volumes:
-    - /docker/chronograf-data/lib:/var/lib/chronograf:rw
+    - /docker/chronograf/lib:/var/lib/chronograf:rw
   collectd:
     depends_on:
     - influxdb
@@ -29,7 +29,7 @@ services:
       backend: null
     restart: always
     volumes:
-    - /docker/collectd-data/etc:/etc/collectd:ro
+    - /docker/collectd/etc:/etc/collectd:ro
   grafana:
     depends_on:
     - influxdb
@@ -58,7 +58,7 @@ services:
     network_mode: host
     restart: always
     volumes:
-    - /docker/homebridge-data:/homebridge:rw
+    - /docker/homebridge:/homebridge:rw
   homegear:
     devices:
     - /dev/ttyAMA0:/dev/ttyAMA0
@@ -83,9 +83,9 @@ services:
       target: 2003
     restart: always
     volumes:
-    - /docker/homegear-data/etc:/etc/homegear:Z
-    - /docker/homegear-data/lib:/var/lib/homegear:Z
-    - /docker/homegear-data/log:/var/log/homegear:Z
+    - /docker/homegear/etc:/etc/homegear:Z
+    - /docker/homegear/lib:/var/lib/homegear:Z
+    - /docker/homegear/log:/var/log/homegear:Z
     - /sys:/sys:rw
   influxdb:
     expose:
@@ -103,8 +103,8 @@ services:
       target: 25826
     restart: always
     volumes:
-    - /docker/influxdb-data/etc:/etc/influxdb:rw
-    - /docker/influxdb-data/lib:/var/lib/influxdb:rw
+    - /docker/influxdb/etc:/etc/influxdb:rw
+    - /docker/influxdb/lib:/var/lib/influxdb:rw
   mosquitto:
     hostname: mosquitto
     image: eclipse-mosquitto
@@ -119,9 +119,9 @@ services:
       target: 8883
     restart: always
     volumes:
-    - /docker/mosquitto-data/config:/mosquitto/config:rw
-    - /docker/mosquitto-data/data:/mosquitto/data:rw
-    - /docker/mosquitto-data/log:/mosquitto/log:rw
+    - /docker/mosquitto/config:/mosquitto/config:rw
+    - /docker/mosquitto/data:/mosquitto/data:rw
+    - /docker/mosquitto/log:/mosquitto/log:rw
   telegraf:
     depends_on:
     - influxdb
@@ -134,7 +134,7 @@ services:
       backend: null
     restart: always
     volumes:
-    - /docker/telegraf-data/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    - /docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     - /var/run/docker.sock:/var/run/docker.sock:ro
     - /proc:/host/proc:rw
 version: '3.8'

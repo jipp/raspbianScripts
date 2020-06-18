@@ -3,7 +3,7 @@
 ---
 > #[Serial]
 9c9
-< id = ConBeeII
+< id = Serial1
 ---
 > #id = Serial1
 11c11

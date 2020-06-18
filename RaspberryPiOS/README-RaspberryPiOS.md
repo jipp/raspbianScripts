@@ -1,4 +1,4 @@
-# Rasperry Pi OS
+# RasperryPiOS
 
 ## installation image
 
@@ -242,7 +242,7 @@ EOT"
 - `sudo sh -c "echo '*.*     @192.168.0.27' >> /etc/rsyslog.d/loghost.conf"`
 - `sudo systemctl restart rsyslog`
 
-#### wifi ap
+#### dnsmasq.leases
 
 - `sudo ln -s /var/tmp/dnsmasq.leases /var/lib/misc/dnsmasq.leases`
 
