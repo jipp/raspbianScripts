@@ -83,7 +83,7 @@ sudo mkdir /docker/influxdb/lib
 ```
 
 ```bash
-docker run --rm influxdb influxd config > influxdb.conf
+sudo sh -c "docker run --rm influxdb influxd config > /docker/influxdb/etc/influxdb.conf"
 ```
 
 ```bash
@@ -107,7 +107,7 @@ sudo mkdir -p /docker/telegraf
 ```
 
 ```bash
-docker run --rm telegraf telegraf config > telegraf.conf
+sudo sh -c "docker run --rm telegraf telegraf config > /docker/telegraf/telegraf.conf"
 ```
 
 ```bash
@@ -146,7 +146,7 @@ sudo mkdir -p /docker/collectd/etc
 ```
 
 ```bash
-docker run --rm jipp13/fritzcollecd cat /usr/share/collectd/types.db > types.db
+sudo sh -c "docker run --rm jipp13/fritzcollecd cat /usr/share/collectd/types.db > /docker/influxdb/etc/types.db"
 ```
 
 ```bash

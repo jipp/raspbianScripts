@@ -2,4 +2,4 @@
 
 ## installation
 
-- `apt-get -y install tor tor-arm`
+- `sudo apt-get -y install tor tor-arm`

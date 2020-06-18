@@ -167,6 +167,7 @@ EOT"
 - `sudo apt -y install nmap dnsutils tcpdump`
 - `sudo apt -y install git`
 - `sudo apt -y install python-dev python-pip virtualenv`
+- `sudo apt -y install python3-dev python3-pip virtualenv`
 - `sudo apt -y install gcc-avr avr-libc avrdude`
 - `sudo apt -y install ntp`
 - `sudo apt -y install i2c-tools`
