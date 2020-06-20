@@ -24,7 +24,7 @@ services:
     depends_on:
     - influxdb
     hostname: collectd
-    image: jipp13/fritzcollecd
+    image: jipp13/fritzcollectd
     networks:
       backend: null
     restart: always

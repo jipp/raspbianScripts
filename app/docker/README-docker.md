@@ -147,7 +147,7 @@ sudo mkdir -p /docker/collectd/etc
 ```
 
 ```bash
-sudo sh -c "docker run --rm jipp13/fritzcollecd cat /usr/share/collectd/types.db > /docker/influxdb/etc/types.db"
+sudo sh -c "docker run --rm jipp13/fritzcollectd cat /usr/share/collectd/types.db > /docker/influxdb/etc/types.db"
 ```
 
 ```bash
@@ -157,7 +157,7 @@ docker run -d \
  --name collectd \
  --hostname collectd \
  --network lemonpi-net \
- jipp13/fritzcollecd
+ jipp13/fritzcollectd
 ```
 
 ### grafana
