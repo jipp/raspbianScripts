@@ -61,8 +61,8 @@
 - `sudo cp fstab fstab.orig`
 - fstab:
   - `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/sda1     "/ fstab`
-  - `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/mmcblk0p1"/ fstab`
   - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2     "/ fstab`
+  - `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/mmcblk0p1"/ fstab`
   - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ fstab`
 
 #### disable wifi
