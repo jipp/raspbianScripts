@@ -3,6 +3,10 @@ networks:
     driver: bridge
     driver_opts:
       com.docker.network.bridge.name: br-backend
+    ipam:
+      config:
+      - subnet: 172.16.0.0/24
+      driver: default
     name: backend
 services:
   chronograf:
@@ -12,7 +16,8 @@ services:
     hostname: chronograf
     image: chronograf
     networks:
-      backend: null
+      backend:
+        ipv4_address: 172.16.0.10
     ports:
     - protocol: tcp
       published: 8888
@@ -26,7 +31,8 @@ services:
     hostname: collectd
     image: jipp13/fritzcollectd
     networks:
-      backend: null
+      backend:
+        ipv4_address: 172.16.0.12
     restart: always
     volumes:
     - /docker/collectd/etc:/etc/collectd:ro
@@ -36,7 +42,8 @@ services:
     hostname: grafana
     image: grafana/grafana
     networks:
-      backend: null
+      backend:
+        ipv4_address: 172.16.0.14
     ports:
     - protocol: tcp
       published: 3000
@@ -70,7 +77,8 @@ services:
     hostname: homegear
     image: homegear/homegear
     networks:
-      backend: null
+      backend:
+        ipv4_address: 172.16.0.16
     ports:
     - protocol: tcp
       published: 2001
@@ -93,7 +101,8 @@ services:
     hostname: influxdb
     image: influxdb
     networks:
-      backend: null
+      backend:
+        ipv4_address: 172.16.0.18
     ports:
     - protocol: tcp
       published: 8086
@@ -109,7 +118,8 @@ services:
     hostname: mosquitto
     image: eclipse-mosquitto
     networks:
-      backend: null
+      backend:
+        ipv4_address: 172.16.0.20
     ports:
     - protocol: tcp
       published: 1883
@@ -131,7 +141,8 @@ services:
     hostname: telegraf
     image: telegraf
     networks:
-      backend: null
+      backend:
+        ipv4_address: 172.16.0.22
     restart: always
     volumes:
     - /docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
@@ -139,5 +150,6 @@ services:
     - /proc:/host/proc:rw
 version: '3.8'
 volumes:
-  grafana-storage: {}
+  grafana-storage:
+    name: grafana-storage
 
