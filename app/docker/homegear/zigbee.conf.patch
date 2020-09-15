@@ -10,12 +10,11 @@
 < deviceType = serial
 ---
 > #deviceType = serial
-14c14
+16c16
 < password = 32B8D75EC774901ACE0AFFE04BB62578
 ---
 > #password = 16CFA1797F981EC8651DDD45F8BF0FC6
-17c17,18
+20c20
 < device = /dev/ttyACM0
 ---
-> #device = /dev/serial/by-id/usb-0658_0200-if00
 > #device = /dev/ttyACM0
