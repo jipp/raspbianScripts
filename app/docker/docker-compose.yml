@@ -9,76 +9,21 @@ networks:
       driver: default
     name: backend
 services:
-  chronograf:
-    command: --influxdb-url=http://influxdb:8086
-    depends_on:
-    - influxdb
-    hostname: chronograf
-    image: chronograf
-    networks:
-      backend:
-        ipv4_address: 172.16.0.10
-    ports:
-    - protocol: tcp
-      published: 8888
-      target: 8888
-    restart: always
-    volumes:
-    - /docker/chronograf/lib:/var/lib/chronograf:rw
-  collectd:
-    depends_on:
-    - influxdb
-    hostname: collectd
-    image: jipp13/fritzcollectd
-    networks:
-      backend:
-        ipv4_address: 172.16.0.12
-    restart: always
-    volumes:
-    - /docker/collectd/etc:/etc/collectd:ro
-  grafana:
-    depends_on:
-    - influxdb
-    hostname: grafana
-    image: grafana/grafana
-    networks:
-      backend:
-        ipv4_address: 172.16.0.14
-    ports:
-    - protocol: tcp
-      published: 3000
-      target: 3000
-    restart: always
-    volumes:
-    - grafana-storage:/var/lib/grafana:rw
-  homebridge:
+  homegear:
+    container_name: homegear
     depends_on:
     - mosquitto
-    environment:
-      HOMEBRIDGE_CONFIG_UI: 1
-      HOMEBRIDGE_CONFIG_UI_PORT: 8080
-      PGID: 1000
-      PUID: 1000
-      TZ: Europe/Berlin
-    hostname: homebridge
-    image: oznu/homebridge
-    network_mode: host
-    restart: always
-    volumes:
-    - /docker/homebridge:/homebridge:rw
-  homegear:
     devices:
     - /dev/ttyAMA0:/dev/ttyAMA0
     - /dev/ttyACM0:/dev/ttyACM0
     environment:
-      HOST_USER_GID: $$(id -g)
-      HOST_USER_ID: $$(id -u)
+      HOST_USER_GID: '1000'
+      HOST_USER_ID: '1000'
       TZ: Europe/Berlin
     hostname: homegear
-    image: homegear/homegear
+    image: homegear/homegear:testing
     networks:
-      backend:
-        ipv4_address: 172.16.0.16
+      backend: null
     ports:
     - protocol: tcp
       published: 2001
@@ -89,37 +34,19 @@ services:
     - protocol: tcp
       published: 2003
       target: 2003
-    restart: always
+    restart: unless-stopped
+    stop_grace_period: 60s
     volumes:
-    - /docker/homegear/etc:/etc/homegear:Z
-    - /docker/homegear/lib:/var/lib/homegear:Z
-    - /docker/homegear/log:/var/log/homegear:Z
+    - /docker/homegear-testing/etc:/etc/homegear:Z
+    - /docker/homegear-testing/lib:/var/lib/homegear:Z
+    - /docker/homegear-testing/log:/var/log/homegear:Z
     - /sys:/sys:rw
-  influxdb:
-    expose:
-    - 25826/udp
-    hostname: influxdb
-    image: influxdb
-    networks:
-      backend:
-        ipv4_address: 172.16.0.18
-    ports:
-    - protocol: tcp
-      published: 8086
-      target: 8086
-    - protocol: udp
-      published: 25826
-      target: 25826
-    restart: always
-    volumes:
-    - /docker/influxdb/etc:/etc/influxdb:rw
-    - /docker/influxdb/lib:/var/lib/influxdb:rw
   mosquitto:
+    container_name: mosquitto
     hostname: mosquitto
     image: eclipse-mosquitto
     networks:
-      backend:
-        ipv4_address: 172.16.0.20
+      backend: null
     ports:
     - protocol: tcp
       published: 1883
@@ -127,29 +54,9 @@ services:
     - protocol: tcp
       published: 8883
       target: 8883
-    restart: always
+    restart: unless-stopped
     volumes:
     - /docker/mosquitto/config:/mosquitto/config:rw
     - /docker/mosquitto/data:/mosquitto/data:rw
     - /docker/mosquitto/log:/mosquitto/log:rw
-  telegraf:
-    depends_on:
-    - influxdb
-    - mosquitto
-    environment:
-      HOST_PROC: /host/proc
-    hostname: telegraf
-    image: telegraf
-    networks:
-      backend:
-        ipv4_address: 172.16.0.22
-    restart: always
-    volumes:
-    - /docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    - /var/run/docker.sock:/var/run/docker.sock:ro
-    - /proc:/host/proc:rw
 version: '3.8'
-volumes:
-  grafana-storage:
-    name: grafana-storage
-
