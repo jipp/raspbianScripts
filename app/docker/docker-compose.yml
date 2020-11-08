@@ -37,12 +37,40 @@ services:
     restart: unless-stopped
     stop_grace_period: 60s
     volumes:
+    - /docker/homegear/etc:/etc/homegear:Z
+    - /docker/homegear/lib:/var/lib/homegear:Z
+    - /docker/homegear/log:/var/log/homegear:Z
+    - /sys:/sys:rw
+  homegear-testing:
+    container_name: homegear-testing
+    environment:
+      HOST_USER_GID: '1000'
+      HOST_USER_ID: '1000'
+      TZ: Europe/Berlin
+    hostname: homegear-testing
+    image: homegear/homegear:testing
+    networks:
+      backend: null
+    ports:
+    - protocol: tcp
+      published: 3001
+      target: 2001
+    - protocol: tcp
+      published: 3002
+      target: 2002
+    - protocol: tcp
+      published: 3003
+      target: 2003
+    restart: "no"
+    stop_grace_period: 60s
+    volumes:
     - /docker/homegear-testing/etc:/etc/homegear:Z
     - /docker/homegear-testing/lib:/var/lib/homegear:Z
     - /docker/homegear-testing/log:/var/log/homegear:Z
-    - /sys:/sys:rw
   mosquitto:
     container_name: mosquitto
+    environment:
+      TZ: Europe/Berlin
     hostname: mosquitto
     image: eclipse-mosquitto
     networks:
