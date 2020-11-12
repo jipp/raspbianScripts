@@ -16,7 +16,7 @@
 - `sudo cp cmdline.txt cmdline.txt.orig`
 - `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
 - `sudo touch ssh`
-- `sudo cp /etc/wpa/wpa_supplicant.conf .`
+- `sudo cp /etc/wpa_supplicant/wpa_supplicant.conf .`
 - `cd`
 
 ### write
