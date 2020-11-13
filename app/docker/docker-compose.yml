@@ -1,11 +1,13 @@
 networks:
   backend:
     driver: bridge
+    enable_ipv6: true
     driver_opts:
       com.docker.network.bridge.name: br-backend
     ipam:
       config:
       - subnet: 172.16.0.0/24
+      - subnet: 2002:b0c6:d4db:0:12::/80
       driver: default
     name: backend
 services:

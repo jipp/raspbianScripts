@@ -22,6 +22,9 @@ docker network create \
  lemonpi-net
 ```
 
+## ipv6
+- `sudo apt install ndppd`
+
 ## app
 
 ### eclipse-mosquitto

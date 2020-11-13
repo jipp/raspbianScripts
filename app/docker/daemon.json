@@ -1,4 +1,4 @@
 {
   "ipv6": true,
-  "fixed-cidr-v6": "2002:b0c6:b8e2::/64"
+  "fixed-cidr-v6": "2002:b0c6:d4db:0:11::/80"
 }
