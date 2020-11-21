@@ -1,24 +1,24 @@
-110c110
-<   enabled = false
+111c111
+<   enabled = true
 ---
->   enabled = true
-113,121c113,121
-<   retention-policy = ""
-<   batch-size = 5000
-<   batch-pending = 10
-<   batch-timeout = "10s"
-<   read-buffer = 0
-<   typesdb = "/usr/share/collectd/types.db"
-<   security-level = "none"
-<   auth-file = "/etc/collectd/auth_file"
-<   parse-multivalue-plugin = "split"
+>   enabled = false
+114,122c114,122
+< #  retention-policy = ""
+< #  batch-size = 5000
+< #  batch-pending = 10
+< #  batch-timeout = "10s"
+< #  read-buffer = 0
+<   typesdb = "/etc/influxdb/types.db"
+< #  security-level = "none"
+< #  auth-file = "/etc/collectd/auth_file"
+< #  parse-multivalue-plugin = "split"
 ---
-> #  retention-policy = ""
-> #  batch-size = 5000
-> #  batch-pending = 10
-> #  batch-timeout = "10s"
-> #  read-buffer = 0
->   typesdb = "/etc/influxdb/types.db"
-> #  security-level = "none"
-> #  auth-file = "/etc/collectd/auth_file"
-> #  parse-multivalue-plugin = "split"
+>   retention-policy = ""
+>   batch-size = 5000
+>   batch-pending = 10
+>   batch-timeout = "10s"
+>   read-buffer = 0
+>   typesdb = "/usr/share/collectd/types.db"
+>   security-level = "none"
+>   auth-file = "/etc/collectd/auth_file"
+>   parse-multivalue-plugin = "split"

@@ -1,10 +1,10 @@
 113d112
 <   urls = ["http://influxdb:8086"]
-2371c2370
+2896c2895
 < [[inputs.docker]]
 ---
 > # [[inputs.docker]]
-2375c2374
+2900c2899
 <   endpoint = "unix:///var/run/docker.sock"
 ---
 > #   endpoint = "unix:///var/run/docker.sock"
