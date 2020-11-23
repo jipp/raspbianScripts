@@ -2,7 +2,7 @@
 < SUBSYSTEM=="bcm2835-gpiomem", GROUP="gpio", MODE="0660"
 ---
 > #SUBSYSTEM=="bcm2835-gpiomem", GROUP="gpio", MODE="0660"
-6,11c6,11
+10,15c10,15
 < SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
 < SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c '\
 < 	chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio;\
