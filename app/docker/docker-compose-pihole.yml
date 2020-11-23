@@ -1,0 +1,45 @@
+networks:
+  pihole:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-pihole
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 172.19.0.0/24
+      - subnet: 2002:b0c6:d4db:0:19::/80
+      driver: default
+    name: pihole
+services:
+  pihole:
+    cap_add:
+    - NET_ADMIN
+    container_name: pihole
+    environment:
+      TZ: Europe/Berlin
+    image: pihole/pihole:latest
+    labels:
+      docker.group: home
+    networks:
+      pihole: null
+    ports:
+    - protocol: tcp
+      published: 53
+      target: 53
+    - protocol: udp
+      published: 53
+      target: 53
+    - protocol: udp
+      published: 67
+      target: 67
+    - protocol: tcp
+      published: 80
+      target: 80
+    - protocol: tcp
+      published: 443
+      target: 443
+    restart: unless-stopped
+    volumes:
+    - /docker/pihole/etc/pihole:/etc/pihole:rw
+    - /docker/pihole/etc/dnsmasq.d:/etc/dnsmasq.d:rw
+version: '3'

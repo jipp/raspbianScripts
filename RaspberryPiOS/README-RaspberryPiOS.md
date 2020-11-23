@@ -67,11 +67,11 @@
 
 #### disable wifi
 
-- `sudo sh -c "echo 'dtoverlay=pi3-disable-wifi' >> /boot/config.txt"`
+- `sudo sh -c "echo 'dtoverlay=disable-wifi' >> /boot/config.txt"`
 
 #### disable bluetooth
 
-- `sudo sh -c "echo 'dtoverlay=pi3-disable-bt' >> /boot/config.txt"`
+- `sudo sh -c "echo 'dtoverlay=disable-bt' >> /boot/config.txt"`
 - `sudo systemctl disable hciuart`
 
 #### disable audio
@@ -84,7 +84,7 @@
 
 #### enable gpio-heartbeat
 
-- `sudo sh -c "echo 'dtoverlay=pi3-act-led,gpio=21,act_led_trigger=heartbeat' >> /boot/config.txt"`
+- `sudo sh -c "echo 'dtoverlay=act-led,gpio=21,act_led_trigger=heartbeat' >> /boot/config.txt"`
 
 #### enable gpio-fan
 
@@ -164,14 +164,15 @@ EOT"
 
 #### add-on
 
-- `sudo apt -y install nmap dnsutils tcpdump`
 - `sudo apt -y install git`
+- `sudo apt -y install sshguard`
+- `sudo apt -y install watchdog`
+- `sudo apt -y install nmap dnsutils tcpdump`
 - `sudo apt -y install python-dev python-pip virtualenv`
 - `sudo apt -y install python3-dev python3-pip virtualenv`
 - `sudo apt -y install gcc-avr avr-libc avrdude`
 - `sudo apt -y install ntp`
 - `sudo apt -y install i2c-tools`
-- `sudo apt -y install sshguard`
 
 ## read-only setup
 
@@ -179,7 +180,15 @@ EOT"
 
 #### disable ssh key save
 
-- patch -b /etc/ssh/ssh_config ssh_config.patch
+- `patch -b /etc/ssh/ssh_config ssh_config.patch`
+
+#### whitelist sshguard
+
+- `patch -b /etc/sshguard/whitelist whitelist.patch`
+
+#### watchguard
+
+- `sudo patch -b /etc/watchdog.conf watchdog.conf.patch`
 
 #### disable swap
 

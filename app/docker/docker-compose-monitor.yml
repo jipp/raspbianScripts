@@ -1,24 +1,30 @@
 networks:
-  backend:
+  monitor:
     driver: bridge
     driver_opts:
-      com.docker.network.bridge.name: br-backend
+      com.docker.network.bridge.name: br-monitor
+    enable_ipv6: true
     ipam:
       config:
-      - subnet: 172.16.0.0/24
+      - subnet: 172.18.0.0/24
+      - subnet: 2002:b0c6:d4db:0:18::/80
       driver: default
-    name: backend
+    name: monitor
 services:
   chronograf:
     command: --influxdb-url=http://influxdb:8086
     container_name: chronograf
     depends_on:
-    - influxdb
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
     hostname: chronograf
-    image: chronograf
+    image: chronograf:latest
+    labels:
+      docker.group: monitor
     networks:
-      backend:
-        ipv4_address: 172.16.0.10
+      monitor: null
     ports:
     - protocol: tcp
       published: 8888
@@ -29,24 +35,30 @@ services:
   collectd:
     container_name: collectd
     depends_on:
-    - influxdb
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
     hostname: collectd
-    image: jipp13/fritzcollectd
+    image: jipp13/fritzcollectd:latest
+    labels:
+      docker.group: monitor
     networks:
-      backend:
-        ipv4_address: 172.16.0.12
+      monitor: null
     restart: unless-stopped
     volumes:
     - /docker/collectd/etc:/etc/collectd:ro
   grafana:
     container_name: grafana
     depends_on:
-    - influxdb
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
     hostname: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     networks:
-      backend:
-        ipv4_address: 172.16.0.14
+      monitor: null
     ports:
     - protocol: tcp
       published: 3000
@@ -54,45 +66,18 @@ services:
     restart: unless-stopped
     volumes:
     - grafana-storage:/var/lib/grafana:rw
-  homegear:
-    container_name: homegear
-    devices:
-    - /dev/ttyAMA0:/dev/ttyAMA0
-    - /dev/ttyACM0:/dev/ttyACM0
-    environment:
-      HOST_USER_GID: '1000'
-      HOST_USER_ID: '1000'
-      TZ: Europe/Berlin
-    hostname: homegear
-    image: homegear/homegear
-    networks:
-      backend:
-        ipv4_address: 172.16.0.16
-    ports:
-    - protocol: tcp
-      published: 2001
-      target: 2001
-    - protocol: tcp
-      published: 2002
-      target: 2002
-    - protocol: tcp
-      published: 2003
-      target: 2003
-    restart: unless-stopped
-    volumes:
-    - /docker/homegear/etc:/etc/homegear:Z
-    - /docker/homegear/lib:/var/lib/homegear:Z
-    - /docker/homegear/log:/var/log/homegear:Z
-    - /sys:/sys:rw
   influxdb:
     container_name: influxdb
+    environment:
+      TZ: Europe/Berlin
     expose:
     - 25826/udp
     hostname: influxdb
-    image: influxdb
+    image: influxdb:latest
+    labels:
+      docker.group: monitor
     networks:
-      backend:
-        ipv4_address: 172.16.0.18
+      monitor: null
     ports:
     - protocol: tcp
       published: 8086
@@ -104,44 +89,26 @@ services:
     volumes:
     - /docker/influxdb/etc:/etc/influxdb:rw
     - /docker/influxdb/lib:/var/lib/influxdb:rw
-  mosquitto:
-    container_name: mosquitto
-    hostname: mosquitto
-    image: eclipse-mosquitto
-    networks:
-      backend:
-        ipv4_address: 172.16.0.20
-    ports:
-    - protocol: tcp
-      published: 1883
-      target: 1883
-    - protocol: tcp
-      published: 8883
-      target: 8883
-    restart: unless-stopped
-    volumes:
-    - /docker/mosquitto/config:/mosquitto/config:rw
-    - /docker/mosquitto/data:/mosquitto/data:rw
-    - /docker/mosquitto/log:/mosquitto/log:rw
   telegraf:
     container_name: telegraf
     depends_on:
-    - influxdb
-    - mosquitto
+      influxdb:
+        condition: service_started
     environment:
       HOST_PROC: /host/proc
+      TZ: Europe/Berlin
     hostname: telegraf
-    image: telegraf
+    image: telegraf:latest
+    labels:
+      docker.group: monitor
     networks:
-      backend:
-        ipv4_address: 172.16.0.22
+      monitor: null
     restart: unless-stopped
     volumes:
-    - /docker/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    - /docker/telegraf/etc:/etc/telegraf:ro
     - /var/run/docker.sock:/var/run/docker.sock:ro
     - /proc:/host/proc:rw
 version: '3.8'
 volumes:
   grafana-storage:
     name: grafana-storage
-
