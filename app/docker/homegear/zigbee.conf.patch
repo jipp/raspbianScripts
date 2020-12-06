@@ -1,20 +1,20 @@
-7c7
-< [Serial]
----
-> #[Serial]
 9c9
-< id = Serial1
+< #[Serial]
 ---
-> #id = Serial1
+> [Serial]
 11c11
-< deviceType = serial
+< #id = Serial1
 ---
-> #deviceType = serial
-16c16
-< password = 32B8D75EC774901ACE0AFFE04BB62578
+> id = Serial1
+13c13
+< #deviceType = serial
 ---
-> #password = 16CFA1797F981EC8651DDD45F8BF0FC6
-20c20
-< device = /dev/ttyACM0
+> deviceType = serial
+18c18
+< #password = 16CFA1797F981EC8651DDD45F8BF0FC6
 ---
-> #device = /dev/ttyACM0
+> password = 32B8D75EC774901ACE0AFFE04BB62578
+22c22
+< #device = /dev/ttyACM0
+---
+> device = /dev/ttyACM0

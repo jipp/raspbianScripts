@@ -14,6 +14,9 @@
 ## ipv6
 - `sudo apt install ndppd`
 
+## cgroup memory
+- `sed -i 's/$/ cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt`
+
 ## app
 
 ### influxdb

@@ -1,32 +1,32 @@
 17c17
-< centralAddress = 0xFD0801
+< #centralAddress = 0xFD0001
 ---
-> #centralAddress = 0xFD0001
+> centralAddress = 0xFD0801
 25c25
-< rfKey = 037539348579599A9876F77699BCEFFA
+< rfKey = 00112233445566778899AABBCCDDEEFF
 ---
-> rfKey = 00112233445566778899AABBCCDDEEFF
+> rfKey = 037539348579599A9876F77699BCEFFA
 181c181
-< [COC, SCC, CSM, CCD]
+< #[COC, SCC, CSM, CCD]
 ---
-> #[COC, SCC, CSM, CCD]
+> [COC, SCC, CSM, CCD]
 184c184
-< id = A3E298
+< #id = My-COC
 ---
-> #id = My-COC
+> id = A3E298
 192c192
-< deviceType = coc
+< #deviceType = coc
 ---
-> #deviceType = coc
+> deviceType = coc
 194c194
-< device = /dev/ttyAMA0
+< #device = /dev/ttyAMA0
 ---
-> #device = /dev/ttyAMA0
+> device = /dev/ttyAMA0
 202c202
-< gpio1 = 17
+< #gpio1 = 17
 ---
-> #gpio1 = 17
+> gpio1 = 17
 206c206
-< gpio2 = 18
+< #gpio2 = 18
 ---
-> #gpio2 = 18
+> gpio2 = 18

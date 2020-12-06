@@ -19,7 +19,7 @@ services:
       TZ: Europe/Berlin
     image: pihole/pihole:latest
     labels:
-      docker.group: home
+      docker.group: pihole
     networks:
       pihole: null
     ports:
@@ -43,3 +43,4 @@ services:
     - /docker/pihole/etc/pihole:/etc/pihole:rw
     - /docker/pihole/etc/dnsmasq.d:/etc/dnsmasq.d:rw
 version: '3'
+

@@ -1,15 +1,15 @@
 networks:
-  home:
+  homegear:
     driver: bridge
     driver_opts:
-      com.docker.network.bridge.name: br-home
+      com.docker.network.bridge.name: br-homegear
     enable_ipv6: true
     ipam:
       config:
       - subnet: 172.17.0.0/24
       - subnet: 2002:b0c6:d4db:0:17::/80
       driver: default
-    name: home
+    name: homegear
 services:
   homegear:
     container_name: homegear
@@ -26,9 +26,9 @@ services:
     hostname: homegear
     image: homegear/homegear:testing
     labels:
-      docker.group: home
+      docker.group: homegear
     networks:
-      home: null
+      homegear: null
     ports:
     - protocol: tcp
       published: 2001
@@ -47,15 +47,19 @@ services:
     - /docker/homegear/log:/var/log/homegear:Z
     - /sys:/sys:rw
   mosquitto:
+    build:
+      context: /home/pi/docker-compose-mosquitto
+      dockerfile: Dockerfile
     container_name: mosquitto
     environment:
       TZ: Europe/Berlin
     hostname: mosquitto
-    image: eclipse-mosquitto:latest
+    image: mosquitto:latest
+#    image: eclipse-mosquitto:latest
     labels:
-      docker.group: home
+      docker.group: homegear
     networks:
-      home: null
+      homegear: null
     ports:
     - protocol: tcp
       published: 1883
@@ -69,3 +73,4 @@ services:
     - /docker/mosquitto/data:/mosquitto/data:rw
     - /docker/mosquitto/log:/mosquitto/log:rw
 version: '3.8'
+

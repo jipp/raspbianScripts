@@ -1,0 +1,70 @@
+networks:
+  testing:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-testing
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 172.20.0.0/24
+      - subnet: 2002:b0c6:d4db:0:20::/80
+      driver: default
+    name: testing
+services:
+  homegear-testing:
+    container_name: homegear-testing
+    environment:
+      HOST_USER_GID: '1000'
+      HOST_USER_ID: '1000'
+      TZ: Europe/Berlin
+    hostname: homegear-testing
+    image: homegear/homegear:testing
+#    mem_limit: 700m
+    labels:
+      docker.group: testing
+    networks:
+      testing: null
+    ports:
+    - protocol: tcp
+      published: 4001
+      target: 2001
+    - protocol: tcp
+      published: 4002
+      target: 2002
+    - protocol: tcp
+      published: 4003
+      target: 2003
+    restart: unless-stopped
+    stop_grace_period: 60s
+    volumes:
+    - /docker/homegear-testing/etc:/etc/homegear:Z
+    - /docker/homegear-testing/lib:/var/lib/homegear:Z
+    - /docker/homegear-testing/log:/var/log/homegear:Z
+    - /sys:/sys:rw
+  mosquitto-testing:
+    container_name: mosquitto-testing
+    environment:
+      TZ: Europe/Berlin
+    hostname: mosquitto-testing
+    build:
+      dockerfile: Dockerfile
+      context: ./woke
+    image: mosquitto
+    labels:
+      docker.group: testing
+    networks:
+      testing: null
+#    ports:
+#    - protocol: tcp
+#      published: 1883
+#      target: 1883
+#    - protocol: tcp
+#      published: 8883
+#      target: 8883
+    restart: unless-stopped
+    volumes:
+    - /docker/mosquitto-testing/config:/mosquitto/config:rw
+    - /docker/mosquitto-testing/data:/mosquitto/data:rw
+    - /docker/mosquitto-testing/log:/mosquitto/log:rw
+version: '3.8'
+
