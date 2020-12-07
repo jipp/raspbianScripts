@@ -2,14 +2,14 @@
 
 ## installation image
 
-### mount/unmount
+### mount/unmount image
 
 - `sudo losetup -P /dev/loop0 <image>`
-- `sudo mount /dev/loop0p1 /mnt/`
+- `sudo mount /dev/loop0p1 /mnt`
 - `sudo umount /mnt`
 - `sudo losetup -D`
 
-### prepare
+### prepare image
 
 - `cd /mnt`
 - `sudo cp config.txt config.txt.orig`
@@ -19,7 +19,7 @@
 - `sudo cp /etc/wpa_supplicant/wpa_supplicant.conf .`
 - `cd`
 
-### write
+### write image
 
 - `sudo dd bs=4M if=<image> of=/dev/sda`
 - `sudo dd bs=4M if=<image> of=/dev/sdb`
@@ -148,10 +148,6 @@ EOT"
     - `sudo sh -c "echo 'dtoverlay=i2c-rtc,ds3231' >> /boot/config.txt"`
   - SW i2c:
     - `sudo sh -c "echo 'dtoverlay=i2c-rtc-gpio,ds3231,i2c_gpio_sda=10,i2c_gpio_scl=9' >> /boot/config.txt"`
-- ~~`sudo systemctl stop fake-hwclock.service`~~
-- ~~`sudo systemctl disable fake-hwclock.service`~~
-- ~~`sudo patch -b /etc/default/hwclock hwclock.patch`~~
-- ~~`sudo patch -b /lib/udev/hwclock-set hwclock-set.patch`~~
 - `sudo reboot`
 - `sudo hwclock -r`
 - `sudo hwclock -w`

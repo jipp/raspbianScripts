@@ -14,6 +14,13 @@
 ## ipv6
 - `sudo apt install ndppd`
 
+cat /etc/docker/daemon.json 
+{
+  "bip": "192.168.16.1/24",
+  "ipv6": true,
+  "fixed-cidr-v6": "2002:b0c6:d4db:0:16::/80"
+}
+
 ## cgroup memory
 - `sed -i 's/$/ cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt`
 
