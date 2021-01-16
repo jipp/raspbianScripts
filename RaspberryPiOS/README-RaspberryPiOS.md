@@ -183,11 +183,12 @@ EOT"
 
 #### whitelist sshguard
 
-- `patch -b /etc/sshguard/whitelist whitelist.patch`
+- `sudo patch -b /etc/sshguard/whitelist whitelist.patch`
 
 #### watchguard
 
 - `sudo patch -b /etc/watchdog.conf watchdog.conf.patch`
+- `sudo sh -c "echo 'dtparam=watchdog=on' >> /boot/config.txt"`
 
 #### disable swap
 
