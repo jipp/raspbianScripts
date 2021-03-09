@@ -7,10 +7,12 @@
 
 ## docker-compose
 
-- `sudo apt install -y python3-pip`
-- `sudo pip3 install docker-compose`
-- `docker-compose -f docker-compose.yml -p woke up`
-- update: `sudo pip3 install -U docker-compose`
+- installation:
+  - `sudo apt install -y python3-pip`
+  - `sudo pip3 install docker-compose`
+  - `docker-compose -f docker-compose.yml -p woke up`
+- update:
+  - `sudo pip3 install -U docker-compose`
 
 ## docker daemon
 
@@ -33,7 +35,7 @@ EOT"
 - `sudo touch /usr/lib/dhcpcd/dhcpcd-hooks/99-sysctl.orig`
 
 ```bash
-sudo sh -c "cat <EOT> /usr/lib/dhcpcd/dhcpcd-hooks/99-sysctl
+sudo sh -c "cat <<EOT > /usr/lib/dhcpcd/dhcpcd-hooks/99-sysctl
 sysctl net.ipv6.conf.eth0.accept_ra=2
 EOT"
 ```

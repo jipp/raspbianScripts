@@ -173,14 +173,6 @@ EOT"
 - `sudo apt -y install ntp`
 - `sudo apt -y install i2c-tools`
 
-## read-only setup
-
-### OS
-
-#### disable ssh key save
-
-- `patch -b /etc/ssh/ssh_config ssh_config.patch`
-
 #### whitelist sshguard
 
 - `sudo patch -b /etc/sshguard/whitelist whitelist.patch`
@@ -189,6 +181,14 @@ EOT"
 
 - `sudo patch -b /etc/watchdog.conf watchdog.conf.patch`
 - `sudo sh -c "echo 'dtparam=watchdog=on' >> /boot/config.txt"`
+
+## read-only setup
+
+### OS
+
+#### disable ssh key save
+
+- `patch -b /etc/ssh/ssh_config ssh_config.patch`
 
 #### disable swap
 
