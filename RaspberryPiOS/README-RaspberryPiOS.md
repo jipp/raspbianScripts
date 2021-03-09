@@ -1,23 +1,26 @@
 # RasperryPiOS
 
-## installation image
+## prepare installation image
 
-### mount/unmount image
+### mount image
 
 - `sudo losetup -P /dev/loop0 <image>`
 - `sudo mount /dev/loop0p1 /mnt`
-- `sudo umount /mnt`
-- `sudo losetup -D`
 
 ### prepare image
 
 - `cd /mnt`
 - `sudo cp config.txt config.txt.orig`
 - `sudo cp cmdline.txt cmdline.txt.orig`
-- `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
 - `sudo touch ssh`
 - `sudo cp /etc/wpa_supplicant/wpa_supplicant.conf .`
+- optional: `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
 - `cd`
+
+### unmount image
+
+- `sudo umount /mnt`
+- `sudo losetup -D`
 
 ### write image
 
@@ -53,7 +56,7 @@
 
 #### boot reference
 
-- cd /boot
+- `cd /boot`
 - cmdline.txt:
   - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2"/ cmdline.txt`
   - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ cmdline.txt`
@@ -180,11 +183,12 @@ EOT"
 
 #### whitelist sshguard
 
-- `patch -b /etc/sshguard/whitelist whitelist.patch`
+- `sudo patch -b /etc/sshguard/whitelist whitelist.patch`
 
 #### watchguard
 
 - `sudo patch -b /etc/watchdog.conf watchdog.conf.patch`
+- `sudo sh -c "echo 'dtparam=watchdog=on' >> /boot/config.txt"`
 
 #### disable swap
 
