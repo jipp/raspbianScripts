@@ -23,10 +23,12 @@ EOT"
 
 ```bash
 sudo sh -c "cat <<EOT > passwd
-homegear:+7peTuBAFhTZG0eUu4CNfZxoH8Aj5mxU4L36OB6Z52RWv5bQ3Gxb3qg+jvBzqa5Edw==
-wohnzimmer:WK0DysUP/R3sGhj/KR8Z65JdGweue2DAFFtl41m2WBwOATc7ol1+svopPZn7jhsNXFAe0xAXKBASG3K5c8hEPn++5yEGFni1QA==
-schlafzimmer:+DOLHQpfg5REj2gTK2qDUCHBw2j4ZWqx4hWNW1GnJvkKjsqvCLNFQpJPCJUkqZKe0lGj2s+9VJ4Grw==
-garage:/KsDgfbclEMH5+4NPQda46RrxQXMYZ47vLOmifEbV35RM0WXUt9rX7kOaQ==
+homegear:$6$hyOh5RLgjiTEcrJV$ZJy6bDtdXj4oTPMBaqPf+7peTuBAFhTZG0eUu4CNfZxoH8Aj5mxU4L36OB6Z52RWv5bQ3Gxb3qg+jvBzqa5Edw==
+wohnzimmer:$6$2WK0DysUP/R3sGhj$ejO/KR8Z65JdGweue2DAFFtl41m2WBwOATc7ol1+svopPZn7jhsNXFAe0xAXKBASG3K5c8hEPn++5yEGFni1QA==
+schlafzimmer:$6$ySLV08R3nubhbm3R$byJbaIyz+DOLHQpfg5REj2gTK2qDUCHBw2j4ZWqx4hWNW1GnJvkKjsqvCLNFQpJPCJUkqZKe0lGj2s+9VJ4Grw==
+garage:$6$tfYSMWZWlv8vEyTt$wD6iRLJExkE4DHdXBAA3RxQP4f7l/KsDgfbclEMH5+4NPQda46RrxQXMYZ47vLOmifEbV35RM0WXUt9rX7kOaQ==
+trial:$6$tfYSMWZWlv8vEyTt$wD6iRLJExkE4DHdXBAA3RxQP4f7l/KsDgfbclEMH5+4NPQda46RrxQXMYZ47vLOmifEbV35RM0WXUt9rX7kOaQ==
+octoprint:$6$tfYSMWZWlv8vEyTt$wD6iRLJExkE4DHdXBAA3RxQP4f7l/KsDgfbclEMH5+4NPQda46RrxQXMYZ47vLOmifEbV35RM0WXUt9rX7kOaQ==
 EOT"
 ```
 
@@ -60,9 +62,9 @@ listener 1883
 
 listener 8883
 tls_version tlsv1.2
-cafile /mosquitto/config/ca_certificates/ca.crt
-certfile /mosquitto/config/certs/server.crt
-keyfile /mosquitto/config/certs/server.key
+cafile /mosquitto/config/certs/ca/ca.crt
+certfile /mosquitto/config/certs/broker/broker.crt
+keyfile /mosquitto/config/certs/broker/broker.key
 EOT"
 ```
 

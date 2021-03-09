@@ -1,0 +1,12 @@
+111c111
+<   enabled = true
+---
+>   enabled = false
+119c119
+<   typesdb = "/etc/influxdb/types.db"
+---
+>   typesdb = "/usr/share/collectd/types.db"
+121c121
+< #  auth-file = "/etc/collectd/auth_file"
+---
+>   auth-file = "/etc/collectd/auth_file"
