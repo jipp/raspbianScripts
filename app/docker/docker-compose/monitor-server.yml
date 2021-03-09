@@ -1,0 +1,147 @@
+networks:
+  monitor:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-monitor
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.4.0/24
+      - subnet: fd00:0:0:4::/64
+      driver: default
+    name: monitor
+services:
+  chronograf:
+    command: --influxdb-url=http://influxdb:8086
+    container_name: chronograf
+    depends_on:
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
+    hostname: chronograf
+    image: chronograf:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    ports:
+    - protocol: tcp
+      published: 8888
+      target: 8888
+    restart: unless-stopped
+    volumes:
+    - /docker/chronograf/lib:/var/lib/chronograf:rw
+  collectd:
+    container_name: collectd
+    depends_on:
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
+    hostname: collectd
+    image: jipp13/fritzcollectd:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    restart: unless-stopped
+    security_opt:
+    - seccomp:default.json
+    volumes:
+    - /docker/collectd/etc:/etc/collectd:ro
+  grafana:
+    container_name: grafana
+    depends_on:
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
+    hostname: grafana
+    image: grafana/grafana:latest
+    networks:
+      monitor: null
+    ports:
+    - protocol: tcp
+      published: 3000
+      target: 3000
+    restart: unless-stopped
+    volumes:
+    - grafana-storage:/var/lib/grafana:rw
+  influxdb:
+    container_name: influxdb
+    environment:
+      TZ: Europe/Berlin
+    expose:
+    - 25826/udp
+    hostname: influxdb
+    image: influxdb:1.8
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    ports:
+    - protocol: tcp
+      published: 8086
+      target: 8086
+    - protocol: udp
+      published: 25826
+      target: 25826
+    restart: unless-stopped
+    volumes:
+    - /docker/influxdb/etc:/etc/influxdb:rw
+    - /docker/influxdb/lib:/var/lib/influxdb:rw
+  rtl433:
+    command:
+    - -Mtime:unix:usec:utc
+    - -Mbits
+    - -Mlevel
+    - -Mprotocol
+    - -Mstats:2:300
+    - -Finflux://influxdb:8086/write?db=rtl433
+    - -Fjson
+    container_name: rtl433
+    depends_on:
+      influxdb:
+        condition: service_started
+    devices:
+    - /dev/bus/usb/001/003
+    environment:
+      TZ: Europe/Berlin
+    hostname: rtl433
+    image: hertzg/rtl_433:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    restart: unless-stopped
+    security_opt:
+    - seccomp:default.json
+  telegraf:
+    container_name: telegraf
+    depends_on:
+      influxdb:
+        condition: service_started
+    environment:
+      HOST_PROC: /host/proc
+      TZ: Europe/Berlin
+    hostname: lemonpi
+    image: telegraf:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    ports:
+    - protocol: udp
+      published: 6514
+      target: 6514
+    restart: unless-stopped
+    volumes:
+    - /docker/telegraf/etc:/etc/telegraf:ro
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /proc:/host/proc:rw
+version: '3'
+volumes:
+  grafana-storage:
+    name: grafana-storage
+

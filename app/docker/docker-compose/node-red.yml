@@ -1,0 +1,32 @@
+networks:
+  node-red:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-node-red
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.20.0/24
+      - subnet: 2002:b0c6:d4db:0:20::/80
+      driver: default
+    name: node-red
+services:
+  node-red:
+    container_name: node-red
+    environment:
+      TZ: Europe/Berlin
+    hostname: node-red
+    image: nodered/node-red
+    labels:
+      docker.group: node-red
+    networks:
+      node-red: null
+    ports:
+    - protocol: tcp
+      published: 1880
+      target: 1880
+    restart: unless-stopped
+    volumes:
+    - /docker/node-red/data:/data:rw
+version: '3'
+
