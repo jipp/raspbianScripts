@@ -1,7 +1,6 @@
 <?php
 
 class Ical {
-
 	private $events = array();
 
 	public function __construct(...$files) {
@@ -85,7 +84,6 @@ class Ical {
 	public function printContent() {
 		var_dump($this->events);
 	}
-
 }
 
 ?>

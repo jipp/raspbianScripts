@@ -2,23 +2,11 @@
 <   enabled = true
 ---
 >   enabled = false
-114,122c114,122
-< #  retention-policy = ""
-< #  batch-size = 5000
-< #  batch-pending = 10
-< #  batch-timeout = "10s"
-< #  read-buffer = 0
+119c119
 <   typesdb = "/etc/influxdb/types.db"
-< #  security-level = "none"
-< #  auth-file = "/etc/collectd/auth_file"
-< #  parse-multivalue-plugin = "split"
 ---
->   retention-policy = ""
->   batch-size = 5000
->   batch-pending = 10
->   batch-timeout = "10s"
->   read-buffer = 0
 >   typesdb = "/usr/share/collectd/types.db"
->   security-level = "none"
+121c121
+< #  auth-file = "/etc/collectd/auth_file"
+---
 >   auth-file = "/etc/collectd/auth_file"
->   parse-multivalue-plugin = "split"

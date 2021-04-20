@@ -80,4 +80,3 @@ services:
     - /docker/mosquitto/data:/mosquitto/data:rw
     - /docker/mosquitto/log:/mosquitto/log:rw
 version: '3'
-

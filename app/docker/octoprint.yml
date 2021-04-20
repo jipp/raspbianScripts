@@ -1,0 +1,40 @@
+networks:
+  octoprint:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-octoprint
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.11.0/24
+      - subnet: fd00:0:0:11::/64
+      driver: default
+    name: octoprint
+services:
+  octoprint:
+    container_name: octoprint
+    devices:
+    - /dev/ttyACM0:/dev/ttyACM0
+    - /dev/video0:/dev/video0
+    environment:
+      CAMERA_DEV: /dev/video0
+      ENABLE_MJPG_STREAMER: "true"
+      MJPG_STREAMER_INPUT: -y -n -r 1280x720
+      TZ: Europe/Berlin
+    hostname: octoprint
+    image: octoprint/octoprint
+    labels:
+      docker.group: octoprint
+    networks:
+      octoprint: null
+    ports:
+    - published: 80
+      target: 80
+    restart: unless-stopped
+    volumes:
+    - octoprint-storage:/octoprint:rw
+version: '3'
+volumes:
+  octoprint-storage:
+    name: octoprint-storage
+

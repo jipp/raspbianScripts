@@ -49,7 +49,7 @@
   - A1 Expand Filesystem:
     - `sudo parted /dev/mmcblk0 resizepart 2 100% && sudo resize2fs /dev/mmcblk0p2`
     - `sudo parted /dev/sda resizepart 2 100% && sudo resize2fs /dev/sda2`
-  - A3 Memory Split: `sudo raspi-config nonint do_memory_split 32|128` (normal|camera)
+  - A3 Memory Split: `sudo raspi-config nonint do_memory_split 32`
 - `sudo apt update && sudo apt -y upgrade && sudo apt clean`
 
 ### optional
@@ -173,6 +173,15 @@ EOT"
 - `sudo apt -y install ntp`
 - `sudo apt -y install i2c-tools`
 
+#### whitelist sshguard
+
+- `sudo patch -b /etc/sshguard/whitelist whitelist.patch`
+
+#### watchdog
+
+- `sudo patch -b /etc/watchdog.conf watchdog.conf.patch`
+- `sudo sh -c "echo 'dtparam=watchdog=on' >> /boot/config.txt"`
+
 ## read-only setup
 
 ### OS
@@ -180,15 +189,6 @@ EOT"
 #### disable ssh key save
 
 - `patch -b /etc/ssh/ssh_config ssh_config.patch`
-
-#### whitelist sshguard
-
-- `sudo patch -b /etc/sshguard/whitelist whitelist.patch`
-
-#### watchguard
-
-- `sudo patch -b /etc/watchdog.conf watchdog.conf.patch`
-- `sudo sh -c "echo 'dtparam=watchdog=on' >> /boot/config.txt"`
 
 #### disable swap
 
