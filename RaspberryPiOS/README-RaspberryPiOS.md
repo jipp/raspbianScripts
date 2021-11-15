@@ -12,6 +12,7 @@
 - `cd /mnt`
 - `sudo cp config.txt config.txt.orig`
 - `sudo cp cmdline.txt cmdline.txt.orig`
+- `sudo cp fstab fstab.orig`
 - `sudo touch ssh`
 - `sudo cp /etc/wpa_supplicant/wpa_supplicant.conf .`
 - optional: `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
@@ -61,7 +62,6 @@
   - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2"/ cmdline.txt`
   - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/mmcblk0p2"/ cmdline.txt`
 - `cd /etc`
-- `sudo cp fstab fstab.orig`
 - fstab:
   - `sudo sed -i s/"PARTUUID=........-01"/"\/dev\/sda1     "/ fstab`
   - `sudo sed -i s/"PARTUUID=........-02"/"\/dev\/sda2     "/ fstab`
