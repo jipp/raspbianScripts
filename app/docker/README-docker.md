@@ -46,6 +46,7 @@ EOT"
 ## dhcpcd.conf
 ```bash
 sudo sh -c "cat <<EOT > /etc/dhcpcd.conf
+
 denyinterfaces veth*
 EOT"
 ```
