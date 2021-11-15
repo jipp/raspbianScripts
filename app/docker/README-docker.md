@@ -24,9 +24,9 @@ sudo sh -c "cat <<EOT > /etc/docker/daemon.json
   \"debug\": false,
   \"experimental\": true,
   \"ipv6\": true,
-  \"ip6tables\": false,
+  \"ip6tables\": true,
   \"bip\": "192.168.16.1/24",
-  \"fixed-cidr-v6\": \"2002:b0c6:d4db:0:16::/80\"
+  \"fixed-cidr-v6\": \"fd00:0:0:1::/64\"
   \"dns\": [\"192.168.178.1\"]
 }
 EOT"
@@ -42,6 +42,13 @@ EOT"
 
 ## cgroup memory
 - `sudo sed -i 's/$/ cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt`
+
+## dhcpcd.conf
+```bash
+sudo sh -c "cat <<EOT > /etc/dhcpcd.conf
+denyinterfaces veth*
+EOT"
+```
 
 ## app
 
