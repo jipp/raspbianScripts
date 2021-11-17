@@ -6,6 +6,22 @@
 > [[inputs.docker]]
 3543a3545
 >   endpoint = "unix:///var/run/docker.sock"
+3574c3576
+< #   perdevice = true
+---
+>   perdevice = false
+3579c3581
+< #   # perdevice_include = ["cpu"]
+---
+>   perdevice_include = ["cpu", "blkio", "network"]
+3585c3587
+< #   total = false
+---
+>   total = true
+3591c3593
+< #   # total_include = ["cpu", "blkio", "network"]
+---
+>   total_include = ["cpu", "blkio", "network"]
 3881c3883
 < # [[inputs.file]]
 ---
