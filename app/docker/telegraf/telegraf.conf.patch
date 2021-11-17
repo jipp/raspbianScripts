@@ -1,23 +1,24 @@
-113d112
-<   urls = ["http://influxdb:8086"]
-2940c2939
-< [[inputs.docker]]
+115a116
+>   urls = ["http://lemonpi:8086"]
+3539c3540
+< # [[inputs.docker]]
 ---
-> # [[inputs.docker]]
-2944c2943
-<   endpoint = "unix:///var/run/docker.sock"
+> [[inputs.docker]]
+3543a3545
+>   endpoint = "unix:///var/run/docker.sock"
+3881c3883
+< # [[inputs.file]]
 ---
-> #   endpoint = "unix:///var/run/docker.sock"
-7354c7353
-< [[inputs.syslog]]
+> [[inputs.file]]
+3903a3906,3910
+>   files = ["/sys/class/thermal/thermal_zone0/hwmon0/temp1_input"]
+>   name_override = "cpu_thermal"
+>   data_format = "value"
+>   data_type = "integer"
+>
+8592c8599
+< # [[inputs.syslog]]
 ---
-> # [[inputs.syslog]]
-7360d7358
-<   server = "udp://:6514"
-7691,7696d7688
-<
-< [[inputs.file]]
-<   files = ["/sys/class/thermal/thermal_zone0/hwmon0/temp1_input"]
-<   name_override = "cpu_thermal"
-<   data_format = "value"
-<   data_type = "integer"
+> [[inputs.syslog]]
+8597a8605
+>   server = "udp://:6514"
