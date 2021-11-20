@@ -44,9 +44,10 @@ EOT"
 - `sudo sed -i 's/$/ cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt`
 
 ## dhcpcd.conf
-```bash
-sudo sh -c "cat <<EOT > /etc/dhcpcd.conf
+- `sudo touch /etc/dhcpcd.conf.orig`
 
+```bash
+sudo sh -c "cat <<EOT >> /etc/dhcpcd.conf
 denyinterfaces veth*
 EOT"
 ```
