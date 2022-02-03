@@ -25,7 +25,7 @@ sudo sh -c "cat <<EOT > /etc/docker/daemon.json
   \"experimental\": true,
   \"ipv6\": true,
   \"ip6tables\": true,
-  \"bip\": "192.168.16.1/24",
+  \"bip\": \"192.168.16.1/24\",
   \"fixed-cidr-v6\": \"fd00:0:0:1::/64\"
   \"dns\": [\"192.168.178.1\"]
 }
