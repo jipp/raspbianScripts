@@ -5,17 +5,24 @@
 ### mount image
 
 - `sudo losetup -P /dev/loop0 <image>`
-- `sudo mount /dev/loop0p1 /mnt`
+- `sudo mount /dev/loop0p<1|2> /mnt`
 
 ### prepare image
+
+#### boot partition
 
 - `cd /mnt`
 - `sudo cp config.txt config.txt.orig`
 - `sudo cp cmdline.txt cmdline.txt.orig`
-- `sudo cp fstab fstab.orig`
 - `sudo touch ssh`
 - `sudo cp /etc/wpa_supplicant/wpa_supplicant.conf .`
 - optional: `sudo sed -i s/" init=\/usr\/lib\/raspi-config\/init_resize.sh"// cmdline.txt`
+- `cd`
+
+#### root partition
+
+- `cd /mnt`
+- `sudo cp etc/fstab etc/fstab.orig`
 - `cd`
 
 ### unmount image
