@@ -1,0 +1,120 @@
+networks:
+  monitor:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-monitor
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.4.0/24
+      - subnet: fd00:0:0:4::/64
+      driver: default
+    name: monitor
+services:
+  collectd:
+    container_name: collectd
+    depends_on:
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
+    hostname: collectd
+    image: jipp13/fritzcollectd:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    restart: unless-stopped
+    volumes:
+    - /docker/collectd/etc:/etc/collectd:ro
+  grafana:
+    container_name: grafana
+    depends_on:
+      influxdb:
+        condition: service_started
+    environment:
+      TZ: Europe/Berlin
+    healthcheck:
+      interval: 3s
+      retries: 5
+      test: wget http://localhost:3000/api/health -O /dev/null -q > /dev/null 2>&1
+      timeout: 10s
+    hostname: grafana
+    image: grafana/grafana:latest
+    networks:
+      monitor: null
+    ports:
+    - protocol: tcp
+      published: 3000
+      target: 3000
+    restart: unless-stopped
+    volumes:
+    - grafana-storage:/var/lib/grafana:rw
+  influxdb:
+    container_name: influxdb
+    environment:
+      TZ: Europe/Berlin
+    healthcheck:
+      interval: 3s
+      retries: 5
+      start_period: 10s
+      test: curl -f http://localhost:8086/ping
+      timeout: 10s
+    hostname: influxdb
+    image: influxdb:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    ports:
+    - protocol: tcp
+      published: 8086
+      target: 8086
+    restart: unless-stopped
+    volumes:
+    - /docker/influxdb2/etc:/etc/influxdb2:rw
+    - /docker/influxdb2/lib:/var/lib/influxdb2:rw
+  telegraf:
+    container_name: telegraf
+    depends_on:
+      influxdb:
+        condition: service_started
+    environment:
+      HOST_PROC: /host/proc
+      HOST_SYS: /host/sys
+      HOST_ETC: /host/etc
+      TZ: Europe/Berlin
+    healthcheck:
+      interval: 3s
+      retries: 5
+      test: curl -f http://localhost:8080
+      timeout: 10s
+    hostname: lemonpi
+    image: telegraf:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    ports:
+    - protocol: tcp
+      published: 8186
+      target: 8186
+    - protocol: udp
+      published: 6514
+      target: 6514
+    - protocol: udp
+      published: 25826
+      target: 25826
+    restart: unless-stopped
+    user: telegraf:995
+    volumes:
+    - /docker/telegraf/etc:/etc/telegraf:ro
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /proc:/host/proc:ro
+    - /sys:/host/sys:ro
+    - /etc:/host/etc:ro
+version: '3'
+volumes:
+  grafana-storage:
+    name: grafana-storage
+

@@ -1,0 +1,39 @@
+networks:
+  homeassistant:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-homeassistant
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.3.0/24
+      - subnet: fd00:0:0:3::/64
+      driver: default
+    name: homeassistant
+services:
+  homeassistant:
+    container_name: homeassistant
+#    devices:
+#    - /dev/ttyACM0
+    environment:
+      TZ: Europe/Berlin
+    healthcheck:
+      interval: 3s
+      retries: 5
+      test: wget http://localhost:8123 -O /dev/null -q > /dev/null 2>&1
+      timeout: 10s
+    hostname: homeassistant
+    image: homeassistant/home-assistant:latest
+    labels:
+      docker.group: homeassistant
+    network_mode: host
+#    ports:
+#    - protocol: tcp
+#      published: 8123
+#      target: 8123
+    privileged: true
+    restart: unless-stopped
+    volumes:
+    - /docker/homeassistant/config:/config:rw
+version: '3'
+

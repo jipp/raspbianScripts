@@ -1,0 +1,89 @@
+networks:
+  homegear:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-homegear
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.2.0/24
+      - subnet: fd00:0:0:2::/64
+      driver: default
+    name: homegear
+services:
+  homegear:
+    container_name: homegear
+    depends_on:
+      mosquitto:
+        condition: service_started
+    devices:
+    - /dev/ttyAMA0:/dev/ttyAMA0
+#    - /dev/ttyACM0:/dev/ttyACM0
+    environment:
+      HOST_USER_GID: '1000'
+      HOST_USER_ID: '1000'
+      TZ: Europe/Berlin
+    healthcheck:
+      interval: 20s
+      retries: 3
+      start_period: 30s
+      test: ps -q `cat /var/run/homegear/homegear.pid` || bash -c 'kill -s 15 -1'
+      timeout: 10s
+    hostname: homegear
+    image: homegear/homegear:latest
+    labels:
+      docker.group: homegear
+    networks:
+      homegear: null
+    ports:
+    - protocol: tcp
+      published: 80
+      target: 80
+    - protocol: tcp
+      published: 443
+      target: 443
+    - protocol: tcp
+      published: 2001
+      target: 2001
+    - protocol: tcp
+      published: 2002
+      target: 2002
+    - protocol: tcp
+      published: 2003
+      target: 2003
+    restart: unless-stopped
+    stop_grace_period: 60s
+    volumes:
+    - /docker/homegear/etc:/etc/homegear:Z
+    - /docker/homegear/lib:/var/lib/homegear:Z
+    - /docker/homegear/log:/var/log/homegear:Z
+    - /sys:/sys:rw
+  mosquitto:
+    container_name: mosquitto
+    environment:
+      TZ: Europe/Berlin
+    healthcheck:
+      interval: 3s
+      retries: 5
+      test: mosquitto_sub -h localhost -p 1882 -t '$$SYS/#' -C 1 > /dev/null 2>&1
+      timeout: 10s
+    hostname: mosquitto
+    image: eclipse-mosquitto:latest
+    labels:
+      docker.group: homegear
+    networks:
+      homegear: null
+    ports:
+    - protocol: tcp
+      published: 1883
+      target: 1883
+    - protocol: tcp
+      published: 8883
+      target: 8883
+    restart: unless-stopped
+    volumes:
+    - /docker/mosquitto/config:/mosquitto/config:rw
+    - /docker/mosquitto/data:/mosquitto/data:rw
+    - /docker/mosquitto/log:/mosquitto/log:rw
+version: '3'
+
