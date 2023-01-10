@@ -1,0 +1,40 @@
+networks:
+  tor:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-tor
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.19.0/24
+      - subnet: fd00:0:0:19::/64
+      driver: default
+    name: tor
+services:
+  tor:
+    container_name: tor
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+    environment:
+      TZ: Europe/Berlin
+    hostname: tor
+    image: jipp13/torproxy:latest
+    labels:
+      docker.group: tor
+    networks:
+      tor: null
+    ports:
+    - protocol: tcp
+      published: 8118
+      target: 8118
+    - protocol: tcp
+      published: 9001
+      target: 9001
+    restart: unless-stopped
+    volumes:
+    - /docker/tor/etc:/usr/local/etc/tor:rw
+    - /docker/tor/lib:/usr/local/var/lib/tor:rw
+version: '3'
+

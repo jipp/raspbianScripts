@@ -1,0 +1,50 @@
+networks:
+  monitor:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-monitor
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 192.168.18.0/24
+      - subnet: fd00:0:0:18::/64
+      driver: default
+    name: monitor
+services:
+  telegraf:
+    container_name: telegraf
+    environment:
+      HOST_ETC: /hostfs/etc
+      HOST_PROC: /hostfs/proc
+      HOST_SYS: /hostfs/sys
+      HOST_VAR: /hostfs/var
+      HOST_RUN: /hostfs/run
+      HOST_MOUNT_PREFIX: /hostfs
+      TZ: Europe/Berlin
+    healthcheck:
+      interval: 3s
+      retries: 5
+      test: curl -f http://localhost:8080
+      timeout: 10s
+    hostname: octopi
+    image: telegraf:latest
+    labels:
+      docker.group: monitor
+    networks:
+      monitor: null
+    ports:
+    - protocol: udp
+      published: 6514
+      target: 6514
+    restart: unless-stopped
+    user: telegraf:995
+    volumes:
+    - /docker/telegraf/etc:/etc/telegraf:ro
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /etc:/hostfs/etc:ro
+    - /proc:/hostfs/proc:ro
+    - /sys:/hostfs/sys:ro
+    - /var:/hostfs/var:ro
+    - /run:/hostfs/run:ro
+version: '3'
+
