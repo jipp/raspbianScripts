@@ -2,7 +2,8 @@
 
 ## installation
 
-- `curl -sSL https://get.docker.com | sh`
+- `curl -fsSL https://get.docker.com -o get-docker.sh`
+- `sudo sh get-docker.sh`
 - `sudo usermod -aG docker pi`
 
 ## docker-compose
