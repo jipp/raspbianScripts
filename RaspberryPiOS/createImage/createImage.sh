@@ -21,6 +21,7 @@ sudo cp custom.toml /mnt
 sudo cp /mnt/config.txt /mnt/config.txt.orig
 sudo cp /mnt/cmdline.txt /mnt/cmdline.txt.orig
 ls -lh /mnt/*.orig
+ls -lh /mnt/*.toml
 sudo umount /mnt
 
 echo "modify part 2"
