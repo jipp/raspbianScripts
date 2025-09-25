@@ -18,26 +18,21 @@ sudo losetup -P /dev/loop0 $1
 echo "modify image part 1"
 sudo mount /dev/loop0p1 /mnt
 sudo cp custom.toml /mnt
-cd /mnt
-sudo cp config.txt config.txt.orig
-sudo cp cmdline.txt cmdline.txt.orig
-ls -lh *.orig
-cd ~/createImage
+sudo cp /mnt/config.txt /mnt/config.txt.orig
+sudo cp /mnt/cmdline.txt /mnt/cmdline.txt.orig
+ls -lh /mnt/*.orig
 sudo umount /mnt
 
 echo "modify part 2"
 sudo mount /dev/loop0p2 /mnt
-cd /mnt/etc
-sudo cp fstab fstab.orig
-ls -lh *.orig
-cd ~/createImage
+sudo cp /mnt/etc/fstab /mnt/etc/fstab.orig
+ls -lh /mnt/etc/*.orig
 sudo umount /mnt
 
 echo "clean-up"
 sudo losetup -D
 
 echo "rename"
-cd ~/createImage
 mv $1 raspios.img
 
 echo "compress"
