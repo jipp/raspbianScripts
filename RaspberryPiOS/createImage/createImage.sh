@@ -37,5 +37,5 @@ echo "rename"
 mv $1 raspios.img
 
 echo "compress"
-xz -z raspios.img
+xz -kz raspios.img
 sha256sum raspios.img.xz > raspios.img.xz.sha256
