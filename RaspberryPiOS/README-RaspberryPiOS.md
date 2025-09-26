@@ -75,7 +75,7 @@ EOT"
 
 ### mandatory
 
-- `sudo apt update && sudo apt -y upgrade && sudo apt clean`
+- `sudo apt update && sudo apt -y upgrade && sudo apt clean && sudo apt autoremove -y`
 
 ### optional
 
